@@ -18,7 +18,7 @@ Class names should be `CapCase`
 Constants should be `ALL_CAPS`
 
 
-No space before opening braces
+Space before opening braces
 
 
 Braces should be on the same line
