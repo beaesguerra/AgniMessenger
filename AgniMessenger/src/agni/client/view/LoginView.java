@@ -1,5 +1,19 @@
 package agni.client.view;
 
-public class LoginView implements AgniClientView {
+import agni.client.action.*; 
 
+public class LoginView implements AgniClientView {
+    
+    private LoginActionHandler loginActionHandler;
+    private InfoRequestActionHandler infoRequestActionHandler;
+    private HeartbeatActionHandler heartbeatActionHandler;
+    
+    public LoginView(LoginActionHandler loginActionHandler,
+                     InfoRequestActionHandler infoRequestActionHandler,
+                     HeartbeatActionHandler heartbeatActionHandler) {
+        
+        this.loginActionHandler = loginActionHandler;
+        this.infoRequestActionHandler = infoRequestActionHandler;
+        this.heartbeatActionHandler = heartbeatActionHandler;
+    }
 }

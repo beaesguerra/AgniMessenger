@@ -1,5 +1,11 @@
 package agni.client.action;
 
-public class ChatActionHandler {
+import agni.client.communication.MessageSender;
 
+public class ChatActionHandler {
+    private MessageSender messageSender;
+
+    public ChatActionHandler(MessageSender messageSender) {
+        this.messageSender = messageSender;
+    }
 }

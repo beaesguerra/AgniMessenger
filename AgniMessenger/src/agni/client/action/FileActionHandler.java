@@ -1,5 +1,11 @@
 package agni.client.action;
 
-public class FileActionHandler {
+import agni.client.communication.MessageSender;
 
+public class FileActionHandler {
+    private MessageSender messageSender;
+
+    public FileActionHandler(MessageSender messageSender) {
+        this.messageSender = messageSender;
+    }
 }
