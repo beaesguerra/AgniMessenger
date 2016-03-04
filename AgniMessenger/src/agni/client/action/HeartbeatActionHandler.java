@@ -9,8 +9,8 @@ public class HeartbeatActionHandler {
         this.messageSender = messageSender;
     }
 
-	public void sendHeartbeat(byte status){
-		
-	}
-	
+    public void sendHeartbeat(byte status) {
+
+    }
+
 }

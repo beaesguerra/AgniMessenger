@@ -9,8 +9,8 @@ public class UserActionHandler {
         this.messageSender = messageSender;
     }
 
-    public void requestUserAction(byte userActionType){
-		
-	}
-    
+    public void requestUserAction(byte userActionType) {
+
+    }
+
 }

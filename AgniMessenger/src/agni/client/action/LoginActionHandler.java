@@ -9,8 +9,8 @@ public class LoginActionHandler {
         this.messageSender = messageSender;
     }
 
-	public void requestLogin(String username, String password){
-		
-	}
+    public void requestLogin(String username, String password) {
+
+    }
 
 }

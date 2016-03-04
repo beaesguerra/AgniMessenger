@@ -5,11 +5,11 @@ import agni.client.communication.MessageSender;
 public class ChatActionHandler {
     private MessageSender messageSender;
 
-	public ChatActionHandler(MessageSender messageSender) {
-    	this.messageSender = messageSender;
-	}	
+    public ChatActionHandler(MessageSender messageSender) {
+        this.messageSender = messageSender;
+    }
 
-	public void requestChatAction(String message){
-		
-	}
+    public void requestChatAction(String message) {
+
+    }
 }

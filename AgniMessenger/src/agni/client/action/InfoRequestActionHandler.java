@@ -9,9 +9,9 @@ public class InfoRequestActionHandler {
         this.messageSender = messageSender;
     }
 
-	
-	public void requestInfo(byte infoType){
-		
-	}
+
+    public void requestInfo(byte infoType) {
+
+    }
 
 }
