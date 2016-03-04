@@ -1,0 +1,4 @@
+*.class
+
+.fuse*
+.DS_Store
