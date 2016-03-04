@@ -9,7 +9,6 @@ public class InfoRequestActionHandler {
         this.messageSender = messageSender;
     }
 
-
     public void requestInfo(byte infoType) {
 
     }
