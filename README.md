@@ -23,7 +23,7 @@ Space before opening braces
 
 Braces should be on the same line
 ```java
-class Agni{
+class Agni {
     ...
 }
 ```
@@ -31,9 +31,9 @@ class Agni{
 
 `else` statements on the same line as the previous closing brace
 ```java
-if(true){\n
+if(true) {\n
     ...\n
-} else if (false){\n
+} else if (false) {\n
     ...\n
 } else {
     ...
