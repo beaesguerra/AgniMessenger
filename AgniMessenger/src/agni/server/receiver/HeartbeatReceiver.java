@@ -7,7 +7,7 @@ public class HeartbeatReceiver implements MessageParser {
 		
 	}
 	
-	private void notifyHeartbeatRequest() {
+	private void notifyHeartbeat() {
 		
 	}
 	
