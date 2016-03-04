@@ -1,5 +1,15 @@
 package agni.server.sender;
 
-public class InfoSender {
+import agni.client.communication.MessageSender;
 
+public class InfoSender {
+	private MessageSender messageSender;
+
+	public InfoSender(MessageSender messageSender) {
+		this.messageSender = messageSender;
+	}
+	
+//	public void sendInfo(dest_ip, message) {
+//		
+//	}
 }
