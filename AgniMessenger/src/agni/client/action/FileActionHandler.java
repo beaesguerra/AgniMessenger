@@ -8,4 +8,9 @@ public class FileActionHandler {
     public FileActionHandler(MessageSender messageSender) {
         this.messageSender = messageSender;
     }
+
+    public void requestFileAction(String fileName) {
+
+    }
+
 }

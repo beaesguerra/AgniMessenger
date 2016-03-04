@@ -8,4 +8,8 @@ public class ChatActionHandler {
     public ChatActionHandler(MessageSender messageSender) {
         this.messageSender = messageSender;
     }
+
+    public void requestChatAction(String message) {
+
+    }
 }

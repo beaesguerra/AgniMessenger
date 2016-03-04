@@ -8,4 +8,9 @@ public class HeartbeatActionHandler {
     public HeartbeatActionHandler(MessageSender messageSender) {
         this.messageSender = messageSender;
     }
+
+    public void sendHeartbeat(byte status) {
+
+    }
+
 }

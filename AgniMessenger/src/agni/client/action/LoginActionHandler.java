@@ -8,4 +8,9 @@ public class LoginActionHandler {
     public LoginActionHandler(MessageSender messageSender) {
         this.messageSender = messageSender;
     }
+
+    public void requestLogin(String username, String password) {
+
+    }
+
 }

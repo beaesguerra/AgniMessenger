@@ -8,5 +8,9 @@ public class InfoRequestActionHandler {
     public InfoRequestActionHandler(MessageSender messageSender) {
         this.messageSender = messageSender;
     }
-    
+
+    public void requestInfo(byte infoType) {
+
+    }
+
 }
