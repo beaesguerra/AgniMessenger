@@ -1,5 +1,12 @@
 package agni.client.action;
 
-public class InfoRequestActionHandler {
+import agni.client.communication.MessageSender;
 
+public class InfoRequestActionHandler {
+	private MessageSender messageSender;
+
+	public InfoRequestActionHandler(MessageSender messageSender) {
+		this.messageSender = messageSender;
+	}
+	
 }
