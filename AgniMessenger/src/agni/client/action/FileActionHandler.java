@@ -3,9 +3,9 @@ package agni.client.action;
 import agni.client.communication.MessageSender;
 
 public class FileActionHandler {
-	private MessageSender messageSender;
+    private MessageSender messageSender;
 
-	public FileActionHandler(MessageSender messageSender) {
-		this.messageSender = messageSender;
-	}
+    public FileActionHandler(MessageSender messageSender) {
+        this.messageSender = messageSender;
+    }
 }

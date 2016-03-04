@@ -3,9 +3,9 @@ package agni.client.action;
 import agni.client.communication.MessageSender;
 
 public class ChatActionHandler {
-	private MessageSender messageSender;
+    private MessageSender messageSender;
 
-	public ChatActionHandler(MessageSender messageSender) {
-		this.messageSender = messageSender;
-	}
+    public ChatActionHandler(MessageSender messageSender) {
+        this.messageSender = messageSender;
+    }
 }
