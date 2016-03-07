@@ -7,15 +7,15 @@ public class ChatDataGuard {
 		
 	}
 	
-//	public void history(chat) {
-//		
-//	}
-//	
-//	public void users(chat) {
-//		
-//	}
-//	
-//	public void lastMessage(chat) {
-//		
-//	}
+	public void history(String chat) {
+		
+	}
+	
+	public void users(String chat) {
+		
+	}
+	
+	public void lastMessage(String chat) {
+		
+	}
 }
