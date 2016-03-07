@@ -9,7 +9,7 @@ public class InfoSender {
 		this.messageSender = messageSender;
 	}
 	
-//	public void sendInfo(dest_ip, message) {
-//		
-//	}
+	public void sendInfo(String dest_ip, String message) {
+		
+	}
 }

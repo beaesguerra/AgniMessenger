@@ -7,15 +7,15 @@ public class FileDataGuard {
 		
 	}
 	
-//	public void isCached(user, file) {
-//		
-//	}
-//	
-//	public void cacheFile(user, file) {
-//		
-//	}
-//	
-//	public void getFile(user, file) {
-//		
-//	}
+	public void isCached(String user, String file) {
+		
+	}
+	
+	public void cacheFile(String user, String file) {
+		
+	}
+	
+	public void getFile(String user, String file) {
+		
+	}
 }

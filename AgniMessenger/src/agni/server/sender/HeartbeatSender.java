@@ -9,7 +9,7 @@ public class HeartbeatSender {
 		this.messageSender = messageSender;
 	}
 	
-//	public void sendHeartbeat(dest_ip) {
-//		
-//	}
+	public void sendHeartbeat(String dest_ip) {
+		
+	}
 }

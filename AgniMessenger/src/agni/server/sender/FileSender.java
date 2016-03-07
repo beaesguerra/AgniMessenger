@@ -9,7 +9,7 @@ public class FileSender {
 		this.messageSender = messageSender;
 	}
 	
-//	public void sendFile(dest_ip, srcName, message) {
-//		
-//	}
+	public void sendFile(String dest_ip, String srcName, String message) {
+		
+	}
 }
