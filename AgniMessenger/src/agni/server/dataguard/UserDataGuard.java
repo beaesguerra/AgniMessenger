@@ -7,19 +7,19 @@ public class UserDataGuard {
 		
 	}
 	
-//	public void authenticate(user, pass) {
-//		
-//	}
-//	
-//	public void lastKnownIp(user) {
-//		
-//	}	
-//	
-//	public void currentStatus(user) {
-//		
-//	}
-//	
-//	public void currentChat(user) {
-//		
-//	}
+	public void authenticate(String user, String pass) {
+		
+	}
+	
+	public void lastKnownIp(String user) {
+		
+	}	
+	
+	public void currentStatus(String user) {
+		
+	}
+	
+	public void currentChat(String user) {
+		
+	}
 }

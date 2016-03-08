@@ -9,7 +9,7 @@ public class StatusSender {
 		this.messageSender = messageSender;
 	}
 	
-//	public void sendStatus(dest_ip, friendName, message) {
-//		
-//	}
+	public void sendStatus(String dest_ip, String friendName, String message) {
+		
+	}
 }

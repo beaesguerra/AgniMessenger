@@ -18,6 +18,6 @@ public class InfoDataGuard {
 	
 	public int totalUsers() {
 		
-		return 0;
+		return 0; // change this
 	}
 }
