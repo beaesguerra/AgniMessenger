@@ -12,6 +12,4 @@ public class UserManager {
         this.infoSender = infoSender;
         this.userDataGuard = userDataGuard;
     }
-
-
 }

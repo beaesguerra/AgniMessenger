@@ -17,7 +17,4 @@ public class ChatManager {
         this.infoSender = infoSender;
         this.chatSender = chatSender;
     }
-
-
-
 }

@@ -12,5 +12,4 @@ public class StatusManager {
         this.statusSender = statusSender;
         this.userDataGuard = userDataGuard;
     }
-
 }

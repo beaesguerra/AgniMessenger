@@ -16,6 +16,4 @@ public class FileManager {
         this.fileSender = fileSender;
         this.fileDataGuard = fileDataGuard;
     }
-
-
 }
