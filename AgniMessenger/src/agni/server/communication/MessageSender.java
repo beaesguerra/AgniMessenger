@@ -9,7 +9,7 @@ public class MessageSender {
 
     }
 
-//  public void sendMessage(dest_ip, message) {
-//
-//  }
+	public void sendMessage(InetAddress dest_ip, byte[] message) {
+		// TODO
+	}
 }
