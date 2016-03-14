@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import agni.server.communication.MessageSender;
 import agni.server.sender.ChatSender;
+import test.AgniTestUtilijava.util.ties;
 
 public class ChatSenderTest {
 
@@ -38,11 +39,11 @@ public class ChatSenderTest {
     public void testMessageTypeByte() {
         context.checking(new Expectations() {{
             final String LENGTH_HEX = "00000024"; // 36 base 10  
-            final byte[] expectedMessage = hexStringToByteArray(LENGTH_HEX + 
-                                                                CHAT_BYTE_HEX + 
-                                                                SENDER_LENGTH_HEX + 
-                                                                SENDER_NAME_HEX + 
-                                                                MESSAGE_HEX);
+            final byte[] expectedMessage = AgniTestUtilities.hexStringToByteArray(LENGTH_HEX + 
+                                                                                  CHAT_BYTE_HEX + 
+                                                                                  SENDER_LENGTH_HEX + 
+                                                                                  SENDER_NAME_HEX + 
+                                                                                  MESSAGE_HEX);
 
             try {
                 oneOf(messageSender).sendMessage(InetAddress.getByName(TEST_IP), expectedMessage);
@@ -54,14 +55,5 @@ public class ChatSenderTest {
         chatSender.sendChat(TEST_IP, TEST_USER, TEST_MESSAGE);
     }
 
-    public static byte[] hexStringToByteArray(String s) {
-        int len = s.length();
-        byte[] data = new byte[len / 2];
-        for (int i = 0; i < len; i += 2) {
-            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
-                                 + Character.digit(s.charAt(i+1), 16));
-        }
-        return data;
-    }
 
 }
