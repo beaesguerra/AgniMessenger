@@ -2,26 +2,66 @@ package test.agni.server.sender;
 
 import static org.junit.Assert.*;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Test;
 
 import agni.server.communication.MessageSender;
+import agni.server.sender.ChatSender;
 
 public class ChatSenderTest {
 
+    final String TEST_IP = "localhost";
+    final String CHAT_BYTE_HEX = "09"; 
+    
+    // ASCII converted to hex at http://www.asciitohex.com/
+    final String TEST_USER = "TestUser";
+    final String SENDER_LENGTH_HEX = "08";
+    final String SENDER_NAME_HEX = "5465737455736572";
+    
+    final String TEST_MESSAGE = "This is a test message!";
+    final String MESSAGE_HEX = "5468697320697320612074657374206d657373616765"; // TEST_MESSAGE ASCII to hex
+    MessageSender messageSender;
+    ChatSender chatSender;
+    Mockery context;
+
     public void setup() {
-        Mockery context = new Mockery();
-        final MessageSender messageSender = context.mock(MessageSender.class);
+        this.context = new Mockery();
+        this.messageSender = context.mock(MessageSender.class);
+        this.chatSender = new ChatSender(messageSender);
     }
 
     @Test
-    public void test() {
-        fail("Not yet implemented");
+    public void testMessageTypeByte() {
+        context.checking(new Expectations() {{
+            final String LENGTH_HEX = "00000024"; // 36 base 10  
+            final byte[] expectedMessage = hexStringToByteArray(LENGTH_HEX + 
+                                                                CHAT_BYTE_HEX + 
+                                                                SENDER_LENGTH_HEX + 
+                                                                SENDER_NAME_HEX + 
+                                                                MESSAGE_HEX);
+
+            try {
+                oneOf(messageSender).sendMessage(InetAddress.getByName(TEST_IP), expectedMessage);
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+        }});
+
+        chatSender.sendChat(TEST_IP, TEST_USER, TEST_MESSAGE);
     }
 
-    @Test
-    public void test() {
-        fail("Not yet implemented");
+    public static byte[] hexStringToByteArray(String s) {
+        int len = s.length();
+        byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                                 + Character.digit(s.charAt(i+1), 16));
+        }
+        return data;
     }
 
 }
