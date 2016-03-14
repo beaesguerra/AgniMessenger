@@ -16,13 +16,13 @@ import test.AgniTestUtilities;
 public class ChatSenderTest {
 
     final String TEST_IP = "localhost";
-    final String CHAT_BYTE_HEX = "09"; 
-    
+    final String CHAT_BYTE_HEX = "09";
+
     // ASCII converted to hex at http://www.asciitohex.com/
     final String TEST_USER = "TestUser";
     final String SENDER_LENGTH_HEX = "08";
     final String SENDER_NAME_HEX = "5465737455736572";
-    
+
     final String TEST_MESSAGE = "This is a test message!";
     final String MESSAGE_HEX = "5468697320697320612074657374206d657373616765"; // TEST_MESSAGE ASCII to hex
     MessageSender messageSender;
@@ -38,11 +38,11 @@ public class ChatSenderTest {
     @Test
     public void testMessageTypeByte() {
         context.checking(new Expectations() {{
-            final String LENGTH_HEX = "00000024"; // 36 base 10  
-            final byte[] expectedMessage = AgniTestUtilities.hexStringToByteArray(LENGTH_HEX + 
-                                                                                  CHAT_BYTE_HEX + 
-                                                                                  SENDER_LENGTH_HEX + 
-                                                                                  SENDER_NAME_HEX + 
+            final String LENGTH_HEX = "00000024"; // 36 base 10
+            final byte[] expectedMessage = AgniTestUtilities.hexStringToByteArray(LENGTH_HEX +
+                                                                                  CHAT_BYTE_HEX +
+                                                                                  SENDER_LENGTH_HEX +
+                                                                                  SENDER_NAME_HEX +
                                                                                   MESSAGE_HEX);
 
             try {
@@ -54,6 +54,4 @@ public class ChatSenderTest {
 
         chatSender.sendChat(TEST_IP, TEST_USER, TEST_MESSAGE);
     }
-
-
 }
