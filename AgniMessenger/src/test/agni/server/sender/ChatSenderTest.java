@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import agni.server.communication.MessageSender;
 import agni.server.sender.ChatSender;
-import test.AgniTestUtilijava.util.ties;
+import test.AgniTestUtilities;
 
 public class ChatSenderTest {
 
