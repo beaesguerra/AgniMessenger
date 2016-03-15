@@ -30,7 +30,7 @@ public class HeartbeatSenderTest {
     }
 
     @Test
-    public void testMessageTypeByte() {
+    public void normalHeartbeat() {
         context.checking(new Expectations() {{
             final byte[] expectedMessage = AgniTestUtilities.hexStringToByteArray(LENGTH_HEX + HEARTBEAT_BYTE_HEX);
             try {

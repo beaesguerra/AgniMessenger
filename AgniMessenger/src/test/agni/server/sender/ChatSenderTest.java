@@ -20,11 +20,11 @@ public class ChatSenderTest {
 
     // ASCII converted to hex at http://www.asciitohex.com/
     final String TEST_USER = "TestUser";
-    final String SENDER_LENGTH_HEX = "08";
-    final String SENDER_NAME_HEX = "5465737455736572";
+    final String TEST_SENDER_LENGTH_HEX = "08";
+    final String TEST_SENDER_NAME_HEX = "5465737455736572";
 
     final String TEST_MESSAGE = "This is a test message!";
-    final String MESSAGE_HEX = "5468697320697320612074657374206d657373616765"; // TEST_MESSAGE ASCII to hex
+    final String TEST_MESSAGE_HEX = "5468697320697320612074657374206d657373616765";
     MessageSender messageSender;
     ChatSender chatSender;
     Mockery context;
@@ -41,9 +41,9 @@ public class ChatSenderTest {
             final String LENGTH_HEX = "00000024"; // 36 base 10
             final byte[] expectedMessage = AgniTestUtilities.hexStringToByteArray(LENGTH_HEX +
                                                                                   CHAT_BYTE_HEX +
-                                                                                  SENDER_LENGTH_HEX +
-                                                                                  SENDER_NAME_HEX +
-                                                                                  MESSAGE_HEX);
+                                                                                  TEST_SENDER_LENGTH_HEX +
+                                                                                  TEST_SENDER_NAME_HEX +
+                                                                                  TEST_MESSAGE_HEX);
 
             try {
                 oneOf(messageSender).sendMessage(InetAddress.getByName(TEST_IP), expectedMessage);
