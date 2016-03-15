@@ -13,7 +13,7 @@ import agni.server.communication.MessageSender;
 import agni.server.sender.HeartbeatSender;
 import test.AgniTestUtilities;
 
-public class ChatSenderTest {
+public class HeartbeatSenderTest {
 
     final String TEST_IP = "localhost";
     final String HEARTBEAT_BYTE_HEX = "07";
@@ -40,11 +40,11 @@ public class ChatSenderTest {
             }
         }});
 
-        heartbeatSender.sendHearbeat(TEST_IP);
+        heartbeatSender.sendHeartbeat(TEST_IP);
     }   
     
     @Test(expected=NullPointerException.class) 
     public void nullIp() {
-        chatSender.sendChat(null);
+        heartbeatSender.sendHeartbeat(null);
     }
 }
