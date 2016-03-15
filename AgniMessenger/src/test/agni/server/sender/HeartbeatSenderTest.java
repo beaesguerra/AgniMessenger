@@ -41,9 +41,9 @@ public class HeartbeatSenderTest {
         }});
 
         heartbeatSender.sendHeartbeat(TEST_IP);
-    }   
-    
-    @Test(expected=NullPointerException.class) 
+    }
+
+    @Test(expected=NullPointerException.class)
     public void nullIp() {
         heartbeatSender.sendHeartbeat(null);
     }

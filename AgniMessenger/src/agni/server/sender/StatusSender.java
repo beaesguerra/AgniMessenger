@@ -6,7 +6,7 @@ public class StatusSender {
     private MessageSender messageSender;
 
     public enum Status {
-    	OFFLINE, 
+    	OFFLINE,
     	ONLINE,
     	AWAY
     }
