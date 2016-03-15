@@ -42,4 +42,9 @@ public class ChatSenderTest {
 
         heartbeatSender.sendHearbeat(TEST_IP);
     }   
+    
+    @Test(expected=NullPointerException.class) 
+    public void nullIp() {
+        chatSender.sendChat(null);
+    }
 }

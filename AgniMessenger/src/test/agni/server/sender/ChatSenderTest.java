@@ -54,4 +54,19 @@ public class ChatSenderTest {
 
         chatSender.sendChat(TEST_IP, TEST_USER, TEST_MESSAGE);
     }
+
+    @Test(expected=NullPointerException.class) 
+    public void nullIp() {
+        chatSender.sendChat(null, TEST_USER, TEST_MESSAGE)
+    }
+
+    @Test(expected=NullPointerException.class) 
+    public void nullUser() {
+        chatSender.sendChat(TEST_IP, null, TEST_MESSAGE)
+    }
+
+    @Test(expected=NullPointerException.class) 
+    public void nullMessage() {
+        chatSender.sendChat(TEST_IP, TEST_USER, null)
+    }
 }
