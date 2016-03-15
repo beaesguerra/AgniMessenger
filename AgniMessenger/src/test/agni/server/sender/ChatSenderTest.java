@@ -36,7 +36,7 @@ public class ChatSenderTest {
     }
 
     @Test
-    public void testMessageTypeByte() {
+    public void normalMessage() {
         context.checking(new Expectations() {{
             final String LENGTH_HEX = "00000024"; // 36 base 10
             final byte[] expectedMessage = AgniTestUtilities.hexStringToByteArray(LENGTH_HEX +

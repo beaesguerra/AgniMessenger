@@ -2,13 +2,44 @@ package test.agni.server.sender;
 
 import static org.junit.Assert.*;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+import org.jmock.Expectations;
+import org.jmock.Mockery;
 import org.junit.Test;
 
-public class HeartbeatSenderTest {
+import agni.server.communication.MessageSender;
+import agni.server.sender.HeartbeatSender;
+import test.AgniTestUtilities;
 
-    @Test
-    public void test() {
-        fail("Not yet implemented");
+public class ChatSenderTest {
+
+    final String TEST_IP = "localhost";
+    final String HEARTBEAT_BYTE_HEX = "07";
+    final String LENGTH_HEX = "00000005";
+
+    MessageSender messageSender;
+    HeartbeatSender heartbeatSender;
+    Mockery context;
+
+    public void setup() {
+        this.context = new Mockery();
+        this.messageSender = context.mock(MessageSender.class);
+        this.heartbeatSender = new HeartbeatSender(messageSender);
     }
 
+    @Test
+    public void testMessageTypeByte() {
+        context.checking(new Expectations() {{
+            final byte[] expectedMessage = AgniTestUtilities.hexStringToByteArray(LENGTH_HEX + HEARTBEAT_BYTE_HEX);
+            try {
+                oneOf(messageSender).sendMessage(InetAddress.getByName(TEST_IP), expectedMessage);
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+        }});
+
+        heartbeatSender.sendHearbeat(TEST_IP);
+    }   
 }
