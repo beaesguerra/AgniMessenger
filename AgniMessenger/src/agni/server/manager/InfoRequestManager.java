@@ -8,7 +8,7 @@ public class InfoRequestManager {
     private FileDataGuard fileDataGuard;
 
     public InfoRequestManager(InfoSender infoSender,
-                                FileDataGuard fileDataGuard) {
+                              FileDataGuard fileDataGuard) {
         this.infoSender = infoSender;
         this.fileDataGuard = fileDataGuard;
     }
