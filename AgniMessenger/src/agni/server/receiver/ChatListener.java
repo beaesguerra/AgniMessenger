@@ -2,5 +2,9 @@ package agni.server.receiver;
 
 public interface ChatListener {
 
-    public void chatRequest (ip, message);
+	/*
+	 * Receives user requests from the ChatReceiver
+	 * ip will have been converted from inet to String
+	 */
+    public void chatRequest (String ip, byte[] message);
 }

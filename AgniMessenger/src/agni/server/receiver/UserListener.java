@@ -1,6 +1,10 @@
 package agni.server.receiver;
 
-public interface UserListenerr {
+public interface UserListener {
 
-    public void userRequest (ip, type);
+	/*
+	 * Receives user requests from the UserReceiver
+	 * ip will have been converted from inet to String
+	 */
+    public void userRequest (String ip, byte type);
 }

@@ -2,5 +2,9 @@ package agni.server.receiver;
 
 public interface InfoListener {
 
-    public void infoRequest (ip, type);
+	/*
+	 * Receives user requests from the InfoRequestReceiver
+	 * ip will have been converted from inet to String
+	 */
+    public void infoRequest (String ip, byte[] type);
 }
