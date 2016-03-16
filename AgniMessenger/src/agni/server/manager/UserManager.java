@@ -8,7 +8,7 @@ public class UserManager {
     private UserDataGuard userDataGuard;
 
     public UserManager(InfoSender infoSender,
-                        UserDataGuard userDataGuard) {
+                       UserDataGuard userDataGuard) {
         this.infoSender = infoSender;
         this.userDataGuard = userDataGuard;
     }

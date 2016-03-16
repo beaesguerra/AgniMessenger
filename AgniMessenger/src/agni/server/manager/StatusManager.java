@@ -8,7 +8,7 @@ public class StatusManager {
     private UserDataGuard userDataGuard;
 
     public StatusManager(StatusSender statusSender,
-                            UserDataGuard userDataGuard) {
+                         UserDataGuard userDataGuard) {
         this.statusSender = statusSender;
         this.userDataGuard = userDataGuard;
     }

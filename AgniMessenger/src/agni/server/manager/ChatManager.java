@@ -11,8 +11,8 @@ public class ChatManager {
     private ChatSender chatSender;
 
     public ChatManager(ChatDataGuard chatDataGuard,
-                        InfoSender infoSender,
-                        ChatSender chatSender) {
+                       InfoSender infoSender,
+                       ChatSender chatSender) {
         this.chatDataGuard = chatDataGuard;
         this.infoSender = infoSender;
         this.chatSender = chatSender;
