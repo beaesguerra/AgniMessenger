@@ -1,5 +1,6 @@
 package agni.server.receiver;
 
-public interface UserListener {
+public interface UserListenerr {
 
+    public void userRequest (ip, type);
 }
