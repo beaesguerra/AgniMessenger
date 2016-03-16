@@ -1,6 +1,11 @@
 package test;
 
 public class AgniTestUtilities {
+
+    public AgniTestUtilities() {
+        
+    }
+
     public static byte[] hexStringToByteArray(String s) {
         int len = s.length();
         byte[] data = new byte[len / 2];

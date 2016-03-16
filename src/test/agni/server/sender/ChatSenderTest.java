@@ -18,7 +18,7 @@ public class ChatSenderTest {
     final String TEST_IP = "localhost";
     final String CHAT_BYTE_HEX = "09";
 
-    // ASCII converted to hex at http://www.asciitohex.com/
+    // ASCII converted to hex at http://www.5asciitohex.com/
     final String TEST_USER = "TestUser";
     final String TEST_SENDER_LENGTH_HEX = "08";
     final String TEST_SENDER_NAME_HEX = "5465737455736572";
