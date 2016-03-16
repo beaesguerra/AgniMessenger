@@ -1,6 +1,6 @@
 package agni.server.sender;
 
-import agni.client.communication.MessageSender;
+import agni.server.communication.MessageSender;
 
 public class ChatSender {
     private MessageSender messageSender;
