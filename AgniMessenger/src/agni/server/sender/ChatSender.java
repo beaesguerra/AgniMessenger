@@ -9,7 +9,7 @@ public class ChatSender {
         this.messageSender = messageSender;
     }
 
-	public void sendChat(String dest_ip, String srcName, String message) {
+    public void sendChat(String dest_ip, String srcName, String message) {
 
     }
 }
