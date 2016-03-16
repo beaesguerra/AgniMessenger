@@ -10,8 +10,8 @@ public class FileManager {
     private FileDataGuard fileDataGuard;
 
     public FileManager(InfoSender infoSender,
-                        FileSender fileSender,
-                        FileDataGuard fileDataGuard) {
+                       FileSender fileSender,
+                       FileDataGuard fileDataGuard) {
         this.infoSender = infoSender;
         this.fileSender = fileSender;
         this.fileDataGuard = fileDataGuard;
