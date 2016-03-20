@@ -30,8 +30,8 @@ public class AgniClient {
 		ChatActionHandler chatActionHandler = new ChatActionHandler(messageSender);
 		FileActionHandler fileActionHandler = new FileActionHandler(messageSender);
 		
-		LoginView loginView = new LoginView(loginActionHandler, 
-											infoRequestActionHandler, 
+		LoginView loginView = new LoginView(loginActionHandler,
+											infoRequestActionHandler,
 											heartbeatActionHandler);
 		IdleView idleView = new IdleView(infoRequestActionHandler,
 										 userActionHandler,
