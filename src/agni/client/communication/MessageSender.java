@@ -9,5 +9,9 @@ public class MessageSender {
 	public MessageSender() {
 		
 	}
+	
+	public void sendMessage(String message) {
+		
+	}
 
 }
