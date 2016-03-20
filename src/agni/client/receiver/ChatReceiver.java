@@ -6,4 +6,8 @@ public class ChatReceiver extends MessageParser {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	private void notifyChatReceived(String src, String message) {
+		
+	}
 }

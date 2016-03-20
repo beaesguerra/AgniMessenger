@@ -6,5 +6,9 @@ public class InformationReceiver extends MessageParser {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	private void notifyInfoReceived(String message) {
+		
+	}
 
 }

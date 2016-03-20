@@ -6,5 +6,9 @@ public class HeartbeatReceiver extends MessageParser {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	private void notifyHeartbeatReceived() {
+		
+	}
 
 }

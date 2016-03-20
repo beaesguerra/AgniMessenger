@@ -7,4 +7,7 @@ public class FileReceiver extends MessageParser {
 		// TODO Auto-generated constructor stub
 	}
 
+	private void notifyFileReceived(String src, String file) {
+		
+	}
 }
