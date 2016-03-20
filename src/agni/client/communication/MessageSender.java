@@ -2,8 +2,9 @@ package agni.client.communication;
 
 public class MessageSender {
 	
-	String ip;
-	int port;
+	private String ip;
+	private int tcpSocket;
+	private int port;
 	
 	public MessageSender() {
 		
