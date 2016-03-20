@@ -5,7 +5,7 @@ public class MessageSender {
 	String ip;
 	int port;
 	
-	public MessageSender(){
+	public MessageSender() {
 		
 	}
 
