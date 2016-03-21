@@ -18,7 +18,8 @@ public class LoginView implements AgniClientView {
     }
 
 	@Override
-	public void run() {
+	public NextState run() {
+		return null;
 		// TODO Auto-generated method stub
 		
 	}

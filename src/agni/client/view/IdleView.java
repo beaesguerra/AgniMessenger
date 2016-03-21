@@ -18,7 +18,8 @@ public class IdleView implements AgniClientView {
     }
 
 	@Override
-	public void run() {
+	public NextState run() {
+		return null;
 		// TODO Auto-generated method stub
 		
 	}
