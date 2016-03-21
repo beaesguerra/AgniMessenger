@@ -16,4 +16,11 @@ public class LoginView implements AgniClientView {
         this.infoRequestActionHandler = infoRequestActionHandler;
         this.heartbeatActionHandler = heartbeatActionHandler;
     }
+
+	@Override
+	public NextState run() {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
 }

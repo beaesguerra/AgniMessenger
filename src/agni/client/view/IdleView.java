@@ -16,4 +16,11 @@ public class IdleView implements AgniClientView {
         this.userActionHandler = userActionHandler;
         this.heartbeatActionHandler = heartbeatActionHandler;
     }
+
+	@Override
+	public NextState run() {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
 }
