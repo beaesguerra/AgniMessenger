@@ -9,6 +9,7 @@ import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Test;
 
+import agni.server.communication.I_MessageSender;
 import agni.server.communication.MessageSender;
 import agni.server.sender.InfoSender;
 import test.AgniTestUtilities;
@@ -22,13 +23,13 @@ public class InfoSenderTest {
     final String TEST_INFO_MESSAGE = "Message from the server!";
     final String TEST_INFO_MESSAGE_HEX = "0c4d6573736167652066726f6d207468652073657276657221";
 
-    MessageSender messageSender;
+    I_MessageSender messageSender;
     InfoSender infoSender;
     Mockery context;
 
     public void setup() {
         this.context = new Mockery();
-        this.messageSender = context.mock(MessageSender.class);
+        this.messageSender = context.mock(I_MessageSender.class);
         this.infoSender = new InfoSender(messageSender);
     }
 
