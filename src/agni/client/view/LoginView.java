@@ -47,4 +47,11 @@ public class LoginView implements AgniClientView {
         // TODO Auto-generated method stub
         return false;
     }
+
+    @Override
+    public NextState run() {
+        return null;
+        // TODO Auto-generated method stub
+
+    }
 }

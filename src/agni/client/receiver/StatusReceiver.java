@@ -13,22 +13,22 @@ public class StatusReceiver extends MessageParser {
 
     }
 
-	@Override
-	public void register(AgniClientView listener) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void register(AgniClientView listener) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void deregister(AgniClientView listener) {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void receiveMessage(String message) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void deregister(AgniClientView listener) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void receiveMessage(String message) {
+        // TODO Auto-generated method stub
+
+    }
 
 }

@@ -55,4 +55,10 @@ public class ChatView implements AgniClientView {
     }
 
 
+    @Override
+    public NextState run() {
+        return null;
+        // TODO Auto-generated method stub
+
+    }
 }
