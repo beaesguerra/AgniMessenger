@@ -1,13 +1,13 @@
-package agni.client.receiver;
+epackage agni.client.receiver;
 
 public class FileReceiver extends MessageParser {
 
-	public FileReceiver() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    public FileReceiver() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
-	private void notifyFileReceived(String src, String file) {
-		
-	}
+    private void notifyFileReceived(String src, String file) {
+
+    }
 }
