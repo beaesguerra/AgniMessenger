@@ -14,8 +14,6 @@ public class AgniClient {
     public static void main(String[] args) {
         MessageSender messageSender = new MessageSender();
         MessageReceiver messageReceiver = new MessageReceiver();
-        MessageParser messageParser = new MessageParser() {
-        };
 
         HeartbeatReceiver heartbeatReceiver = new HeartbeatReceiver();
         InformationReceiver informationReceiver = new InformationReceiver();

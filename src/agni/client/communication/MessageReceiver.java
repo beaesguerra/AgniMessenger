@@ -1,7 +1,9 @@
 package agni.client.communication;
 
+import java.net.Socket;
+
 public class MessageReceiver implements Runnable {
-    private int tcpSocket;
+    private Socket tcpSocket;
 
     public void MessageReceiver() {
 
