@@ -7,6 +7,7 @@ import java.net.UnknownHostException;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
+import org.junit.Before;
 import org.junit.Test;
 
 import agni.server.communication.I_MessageSender;
@@ -27,6 +28,7 @@ public class InfoSenderTest {
     InfoSender infoSender;
     Mockery context;
 
+    @Before
     public void setup() {
         this.context = new Mockery();
         this.messageSender = context.mock(I_MessageSender.class);
@@ -48,6 +50,7 @@ public class InfoSenderTest {
         }});
 
         infoSender.sendInfo(TEST_IP, TEST_INFO_MESSAGE);
+        context.assertIsSatisfied();
     }
 
     @Test(expected=NullPointerException.class)
