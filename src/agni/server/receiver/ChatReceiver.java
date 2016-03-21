@@ -9,10 +9,10 @@ public class ChatReceiver implements MessageParser {
         chatListeners = new Vector();
     }
 	
-    private void notifyChatRequest(String ip, byte[] message) {
+    private void notifyChatRequest(SocketChannel channel, byte[] message) {
 
         for( ChatListener  cListener: chatListeners )
-            cListener.chatRequest(ip, message);
+            cListener.chatRequest(channel, message);
     }
 	
     public void register(ChatListener cListener) {
@@ -29,10 +29,10 @@ public class ChatReceiver implements MessageParser {
 
 
     @Overide
-    public void receiveMessage(InetAddress ip, ByteBuffer message) {
+    public void receiveMessage(SocketChannel channel, ByteBuffer message) {
 
         byte[] parsedMessage = message.parseMessage(message); 
-        notifyChatRequest(ip.toString(), message);	
+        notifyChatRequest(channel, message);	
     }
 	
 }

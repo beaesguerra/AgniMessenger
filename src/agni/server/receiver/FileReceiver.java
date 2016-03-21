@@ -9,9 +9,9 @@ public class FileReceiver implements MessageParser {
 
     }
 	
-    private void notifyFileRequest(String ip, byte[] file) {
+    private void notifyFileRequest(SocketChannel channel, byte[] file) {
         for( FileListener  fListener: fileListeners )
-            fListener.infoRequest(ip, file);
+            fListener.infoRequest(channel, file);
     }
 	
     public void register(FileListener fListener) {
@@ -29,10 +29,10 @@ public class FileReceiver implements MessageParser {
 
 
     @Overide
-    public void receiveMessage(InetAddress ip, ByteBuffer message) {
+    public void receiveMessage(SocketChannel channel, ByteBuffer message) {
 
         byte[] parsedMessage = this.parseMessage(message); 
-        notifyFileRequest(ip.toString(), message);	
+        notifyFileRequest(channel, message);	
     }
 	
 }

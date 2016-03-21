@@ -8,10 +8,10 @@ public class InfoRequestReceiver implements MessageParser {
         infoListeners = new Vector();
     }
 
-    private void notifyInfoRequest(String ip, byte type) {
+    private void notifyInfoRequest(SocketChannel channel, byte type) {
 
         for( InfoListener  iListener: infoListeners )
-            iListener.infoRequest(ip, type);
+            iListener.infoRequest(channel, type);
     }
 
     public void register(InfoListener iListener) {
@@ -29,10 +29,10 @@ public class InfoRequestReceiver implements MessageParser {
 
 
     @Overide
-    public void receiveMessage(InetAddress ip, ByteBuffer message) {
+    public void receiveMessage(SocketChannel channel, ByteBuffer message) {
 
         byte[] parsedMessage = this.parseMessage(message); 
-        notifyInfoRequest(ip.toString(), message);  
+        notifyInfoRequest(channel, message);  
     }
 
 }

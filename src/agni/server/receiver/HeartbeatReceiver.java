@@ -9,10 +9,10 @@ public class HeartbeatReceiver implements MessageParser {
         statusListeners = new Vector();	
     }
 	
-    private void notifyHeartbeat(String ip, byte[] message) {
+    private void notifyHeartbeat(SocketChannel channel, byte[] message) {
 
         for( StatusListener  sListener: statusListeners )
-        sListener.ReceivedHeartBeat(ip,status);	
+        sListener.ReceivedHeartBeat(channel,status);	
     }
 	
     public void register(StatusListener sListener) {
@@ -30,9 +30,9 @@ public class HeartbeatReceiver implements MessageParser {
 
 
     @Overide
-    public void receiveMessage(InetAddress ip, ByteBuffer message) {
+    public void receiveMessage(SocketChannel channel, ByteBuffer message) {
 
         byte[] parsedMessage = this.parseMessage(message); 
-        notifyHeartBeat(ip.toString(), message);	
+        notifyHeartBeat(channel, message);	
     }
 }

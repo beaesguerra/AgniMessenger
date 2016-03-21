@@ -8,10 +8,10 @@ public class LoginReceiver implements MessageParser {
         loginListeners = new Vector();
     }
 
-    private void notifyLoginRequest(String ip, String user, String password) {
+    private void notifyLoginRequest(SocketChannel channel, String user, String password) {
 
         for( LoginListener  lListener: loginListeners )
-            lListener.loginRequest (ip, user, password);
+            lListener.loginRequest (channel, user, password);
     }
 
     public void register(LoginListener lListener) {
@@ -29,10 +29,10 @@ public class LoginReceiver implements MessageParser {
 
 
     @Overide
-    public void receiveMessage(InetAddress ip, ByteBuffer message) {
+    public void receiveMessage(SocketChannel channel, ByteBuffer message) {
 
         byte[] parsedMessage = this.parseMessage(message); 
-        notifyloginRequest(ip.toString(), message);  
+        notifyloginRequest(channel, message);  
     }
 
 }

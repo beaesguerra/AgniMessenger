@@ -9,10 +9,10 @@ public class UserReceiver implements MessageParser {
         userListeners = new Vector();
     }
 
-    private void notifyUserRequest(String ip, byte type) {
+    private void notifyUserRequest(SocketChannel channel, byte type) {
 
         for( UserListener  uListener: userListeners )
-            uListener.infoRequest(ip, type);
+            uListener.infoRequest(channel, type);
     }
 
     public void register(UserListener uListener) {
@@ -29,10 +29,10 @@ public class UserReceiver implements MessageParser {
     }
 
     @Overide
-    public void receiveMessage(InetAddress ip, ByteBuffer message) {
+    public void receiveMessage(SocketChannel channel, ByteBuffer message) {
 
         byte[] parsedMessage = this.parseMessage(message); 
-        notifyUserRequest(ip.toString(), message);  
+        notifyUserRequest(channel, message);  
     }
 
 }
