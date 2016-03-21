@@ -22,6 +22,12 @@ public class ChatView implements AgniClientView {
         this.fileActionHandler = fileActionHandler;
         this.heartbeatActionHandler = heartbeatActionHandler;
     }
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
     
     
 }
