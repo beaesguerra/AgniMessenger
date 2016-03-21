@@ -1,7 +1,6 @@
 package agni.client.receiver;
 
 import java.io.File;
-
 import agni.client.view.AgniClientView;
 
 public class FileReceiver extends MessageParser {
