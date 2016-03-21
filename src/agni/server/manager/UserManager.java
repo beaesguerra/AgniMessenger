@@ -5,7 +5,7 @@ import agni.server.sender.InfoSender;
 
 public class UserManager {
     private InfoSender infoSender;
-    private UserDataGuard userDataGuard;
+    private I_UserDataGuard userDataGuard;
 
     public UserManager(InfoSender infoSender,
                        UserDataGuard userDataGuard) {

@@ -5,7 +5,7 @@ import agni.server.sender.InfoSender;
 
 public class InfoRequestManager {
     private InfoSender infoSender;
-    private FileDataGuard fileDataGuard;
+    private I_FileDataGuard fileDataGuard;
 
     public InfoRequestManager(InfoSender infoSender,
                               FileDataGuard fileDataGuard) {

@@ -1,25 +1,25 @@
 package agni.server.dataguard;
 
-public class UserDataGuard {
+public class UserDataGuard implements I_UserDataGuard {
 //  private database;
 
     public UserDataGuard() {
 
     }
 
-    public void authenticate(String user, String pass) {
-
+    public String salt(String user) {
+        return null;
     }
 
-    public void lastKnownIp(String user) {
-
+    public String passwordHash(String user) {
+        return null;
     }
 
-    public void currentStatus(String user) {
-
+    public String[] friends(String user) {
+        return null;
     }
 
-    public void currentChat(String user) {
-
+    public String currentChat(String user) {
+        return null;
     }
 }

@@ -1,6 +1,6 @@
 package agni.server.dataguard;
 
-public class InfoDataGuard {
+public class InfoDataGuard implements I_InfoDataGuard {
 //  private database;
 
     public InfoDataGuard() {
@@ -8,16 +8,14 @@ public class InfoDataGuard {
     }
 
     public String serverName() {
-
-        return new String();
+        return null;
     }
 
-    public void currentOnline() {
-
+    public int currentOnline() {
+        return -1;
     }
 
     public int totalUsers() {
-
-        return 0; // change this
+        return -1;
     }
 }
