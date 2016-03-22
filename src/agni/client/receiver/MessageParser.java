@@ -5,15 +5,7 @@ import agni.client.view.*;
 public abstract class MessageParser {
     private ReceiverListener[] listeners;
 
-    public void register(AgniClientView listener) {
-
-    }
-
-    public void deregister(AgniClientView listener) {
-
-    }
-
-    public void receiveMessage(String message) {
-
-    }
+    public abstract void register(AgniClientView listener);
+    public abstract void deregister(AgniClientView listener);
+    public abstract void receiveMessage(String message);
 }
