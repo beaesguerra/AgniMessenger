@@ -1,10 +1,20 @@
 package agni.server.dataguard;
 
+import java.util.Date;
+
 public interface I_FileDataGuard {
 
-    public boolean isCached(String user, String file);
+    public Boolean isCached(String filepath);
 
-    public void cacheFile(String user, String file);
+    public Date fileUploadDateTime(String filepath);
 
-    public String getFilePath(String user, String file);
+    /*
+     * File size in bytes
+     */
+    public long fileSize(String filepath);
+
+    public String fileOwner(String filepath);
+
+    public void cacheFile(String filepath, String owner, long filesize);
+
 }
