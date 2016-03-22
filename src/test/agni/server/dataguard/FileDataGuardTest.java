@@ -3,43 +3,57 @@ package test.agni.server.dataguard;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import java.util.Date;
 
 public class FileDataGuardTest {
 
-    private fileDataGuard_;
+    private FileDataGuard fileDataGuard;
 
     @Before
     public void setup() {
-
+        fileDataGuard = new FileDataGuard('agni_test', 'test', '');
     }
 
     @Test
     public void isCachedPassTest() {
-        fail("Not yet implemented");
+        assertTrue(fileDataGuard.isCached('test/path.txt');
     }
 
     @Test
     public void isCachedFailTest() {
-        fail("Not yet implemented");
+        assertFalse(fileDataGuard.isCached('badtest/path.txt');
     }
 
     @Test
     public void fileUploadDateTimeTest() {
-        fail("Not yet implemented");
+        Date expectedDate = new Date(1995, 10, 7, 12, 34, 56);
+        assertEquals(fileDataGuard.fileUploadDateTime('test/path.txt', expectedDate);
     }
 
     @Test
     public void fileSizeTest() {
-        fail("Not yet implemented");
+        long expectedFileSize = 363462352;
+        assertEquals(fileDataGuard.fileSize('test/path.txt', expectedFileSize);
     }
 
     @Test
     public void fileOwnerTest(){
-        fail("Not yet implemented");
+        String expectedUser = 'TestUser';
+        assertEquals(fileDataGuard.fileOwner('test/path.txt', expectedFileSize);
     }
 
     @Test
     public void cacheFileTest(){
-        fail("Not yet implemented");
+        String expectedPath = 'billy/bob.txt';
+        String expectedOwner = 'BillyBob';
+        long expectedFileSize = 2349824234;
+        
+        assertFalse(fileDataGuard.isCached(expectedPath));
+        
+        fileDataGuard.cacheFile(expectedPath, expectedOwner, expectedFileSize);
+        
+        assertTrue(fileDataGuard.isCached(expectedPath));
+        assertEquals(fileDataGuard.fileSize(), expectedFileSize);
+        assertEquals(fileDataGuard.fileOwner(), expectedOwner);
     }
 }

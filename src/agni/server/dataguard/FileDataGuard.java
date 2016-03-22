@@ -2,7 +2,7 @@ package agni.server.dataguard;
 
 import java.util.Date;
 
-public class FileDataGuard implements I_FileDataGuard {
+public class FileDataGuard {
 //  private database;
 
     public FileDataGuard(String dbname, String username, String password) {
@@ -16,19 +16,19 @@ public class FileDataGuard implements I_FileDataGuard {
     public Date fileUploadDateTime(String filepath) {
         return null;
     }
-    
+
     /*
      * File size in bytes
      */
     public long fileSize(String filepath) {
-        return -1;
+        return null;
     }
-    
+
     public String fileOwner(String filepath) {
         return null;
     }
 
-    public void cacheFile(String filepath, String owner, long filesize){
+    public void cacheFile(String filepath, String owner, long filesize) {
 
     }
 }
