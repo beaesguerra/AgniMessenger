@@ -2,9 +2,20 @@ package agni.server.dataguard;
 
 public interface I_GroupChatDataGuard {
 
-    public void history(String chat);
+    public String[] allGroupChats();
+    
+    public void createGroupChat(String owner, String groupChatName);
 
-    public void users(String chat);
+    public void deleteGroupChat(String groupChatName);
 
-    public void lastMessage(String chat);
+    public String owner(String groupChatName);
+
+    public String[] history(String groupChatName);
+
+    public void addMessage(String message, String sender, String groupname);
+
+    public String[] users(String groupChatName);
+
+    public void addUser(String user, String groupChatName);
+
 }
