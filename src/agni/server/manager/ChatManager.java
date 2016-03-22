@@ -1,6 +1,7 @@
 package agni.server.manager;
 
 import agni.server.dataguard.GroupChatDataGuard;
+import agni.server.dataguard.I_GroupChatDataGuard;
 import agni.server.sender.ChatSender;
 import agni.server.sender.InfoSender;
 

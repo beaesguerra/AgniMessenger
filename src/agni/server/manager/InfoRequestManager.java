@@ -1,6 +1,7 @@
 package agni.server.manager;
 
 import agni.server.dataguard.FileDataGuard;
+import agni.server.dataguard.I_FileDataGuard;
 import agni.server.sender.InfoSender;
 
 public class InfoRequestManager {
