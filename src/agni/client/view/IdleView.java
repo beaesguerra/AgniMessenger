@@ -54,4 +54,5 @@ public class IdleView implements AgniClientView {
         // TODO Auto-generated method stub
 
     }
+
 }

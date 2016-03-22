@@ -54,4 +54,5 @@ public class LoginView implements AgniClientView {
         // TODO Auto-generated method stub
 
     }
+
 }
