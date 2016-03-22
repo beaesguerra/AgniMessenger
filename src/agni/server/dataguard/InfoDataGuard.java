@@ -15,6 +15,14 @@ public class InfoDataGuard implements I_InfoDataGuard {
         return -1;
     }
 
+    public void incrementUsersOnline() {
+
+    }
+
+    public void decrementUsersOnline() {
+
+    }
+
     public int totalUsers() {
         return -1;
     }

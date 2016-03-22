@@ -6,5 +6,9 @@ public interface I_InfoDataGuard {
 
     public int currentOnline();
 
+    public void incrementUsersOnline();
+
+    public void decrementUsersOnline();
+
     public int totalUsers();
 }
