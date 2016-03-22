@@ -10,7 +10,7 @@ public class MessageSender {
 
     }
 
-    public void sendMessage(String message) {
+    public void sendMessage(byte[] message) {
 
     }
 }
