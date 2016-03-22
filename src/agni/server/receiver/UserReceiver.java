@@ -6,11 +6,9 @@ import java.nio.channels.SocketChannel;
 import java.util.Vector;
 
 public class UserReceiver implements MessageParser {
-
     private Vector <UserListener> userListeners = null;
 
     public UserReceiver() {
-
         userListeners = new Vector<UserListener>();
     }
 

@@ -5,7 +5,6 @@ import java.nio.channels.SocketChannel;
 import java.util.Vector;
 
 public class ChatReceiver implements MessageParser {
-
     private Vector <ChatListener> chatListeners = null;
 	
     public ChatReceiver() {
@@ -33,7 +32,6 @@ public class ChatReceiver implements MessageParser {
         return parsedMessage;
     }
 
-
     @Override
     public void receiveMessage(SocketChannel channel, ByteBuffer message) {
     	String ip = null;
@@ -50,7 +48,4 @@ public class ChatReceiver implements MessageParser {
     }
 
 
-
-
-	
 }

@@ -6,7 +6,6 @@ import java.nio.channels.SocketChannel;
 import java.util.Vector;
 
 public class InfoRequestReceiver implements MessageParser {
-
     private Vector <InfoListener> infoListeners = null;
 
     public InfoRequestReceiver() {
@@ -31,7 +30,6 @@ public class InfoRequestReceiver implements MessageParser {
         byte parsedMessage = message.get(5);
         return parsedMessage;
     }
-
 
     @Override
     public void receiveMessage(SocketChannel channel, ByteBuffer message) {

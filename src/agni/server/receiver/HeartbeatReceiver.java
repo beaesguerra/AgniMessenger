@@ -6,7 +6,6 @@ import java.nio.channels.SocketChannel;
 import java.util.Vector;
 
 public class HeartbeatReceiver implements MessageParser {
-
     private Vector <StatusListener> statusListeners = null;
 	
     public HeartbeatReceiver() {
@@ -21,7 +20,6 @@ public class HeartbeatReceiver implements MessageParser {
 	
     public void register(StatusListener sListener) {
     	statusListeners.add(sListener);
-	
     }
     
     /*
@@ -33,7 +31,6 @@ public class HeartbeatReceiver implements MessageParser {
         byte parsedMessage = message.get(5);
         return parsedMessage;
     }
-
 
     @Override
     public void receiveMessage(SocketChannel channel, ByteBuffer message) {
