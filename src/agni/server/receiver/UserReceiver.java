@@ -1,5 +1,11 @@
 package agni.server.receiver;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.SocketChannel;
+import java.util.Vector;
 public class UserReceiver implements MessageParser {
 
     private Vector <UserListener> userListeners = null;
@@ -24,15 +30,23 @@ public class UserReceiver implements MessageParser {
         
         int length = message.remaining();
         byte[] parsedMessage = new byte[length];
-        message.get(parsedMessage, 5, (length);
+        message.get(parsedMessage, 5, (length));
         return parsedMessage;
     }
 
-    @Overide
+    @Override
     public void receiveMessage(SocketChannel channel, ByteBuffer message) {
+        InetSocketAddress address = null;
+        byte[] parsedMessage = this.parseMessage(message);
 
-        byte[] parsedMessage = this.parseMessage(message); 
-        notifyUserRequest(channel, message);  
+        try {
+             address = (InetSocketAddress)channel.getRemoteAddress();
+        } catch (IOException e) {
+           System.out.println("IOException unable to obtain channel's address");
+            e.printStackTrace();
+        }
+
+        notifyUserRequest(channel, parsedMessage);  
     }
 
 }

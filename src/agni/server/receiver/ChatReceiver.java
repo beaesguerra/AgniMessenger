@@ -1,4 +1,7 @@
 package agni.server.receiver;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.Vector;
@@ -33,8 +36,16 @@ public class ChatReceiver implements MessageParser {
 
     @Override
     public void receiveMessage(SocketChannel channel, ByteBuffer message) {
+        InetSocketAddress address = null;
+        byte[] parsedMessage = this.parseMessage(message);
 
-        byte[] parsedMessage = parseMessage(message); 
+        try {
+             address = (InetSocketAddress)channel.getRemoteAddress();
+        } catch (IOException e) {
+           System.out.println("IOException unable to obtain channel's address");
+            e.printStackTrace();
+        }
+
         notifyChatRequest(channel, parsedMessage);	
     }
 

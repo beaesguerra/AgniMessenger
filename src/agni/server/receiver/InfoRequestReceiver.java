@@ -38,14 +38,16 @@ public class InfoRequestReceiver implements MessageParser {
 
     @Override
     public void receiveMessage(SocketChannel channel, ByteBuffer message) {
-    	InetSocketAddress address = null;
+        InetSocketAddress address = null;
         byte[] parsedMessage = this.parseMessage(message);
+
         try {
-			 address = (InetSocketAddress)channel.getRemoteAddress();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+             address = (InetSocketAddress)channel.getRemoteAddress();
+        } catch (IOException e) {
+           System.out.println("IOException unable to obtain channel's address");
+            e.printStackTrace();
+        }
+
 		notifyInfoRequest(address, parsedMessage);  
     }
 

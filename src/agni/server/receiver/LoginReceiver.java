@@ -37,9 +37,17 @@ public class LoginReceiver implements MessageParser {
 
     @Override
     public void receiveMessage(SocketChannel channel, ByteBuffer message) {
+        InetSocketAddress address = null;
+        byte[] parsedMessage = this.parseMessage(message);
 
-        byte[] parsedMessage = this.parseMessage(message); 
-        notifyloginRequest(channel, message);  
+        try {
+             address = (InetSocketAddress)channel.getRemoteAddress();
+        } catch (IOException e) {
+           System.out.println("IOException unable to obtain channel's address");
+            e.printStackTrace();
+        }
+
+        notifyloginRequest(channel, parsedMessage);  
     }
 
 }
