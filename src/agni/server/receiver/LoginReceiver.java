@@ -1,11 +1,18 @@
 package agni.server.receiver;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.SocketChannel;
+import java.util.Vector;
+
 public class LoginReceiver implements MessageParser {
 
     private Vector <LoginListener> loginListeners = null;
 
     public LoginReceiver() {
-        loginListeners = new Vector();
+        loginListeners = new Vector<LoginListener>();
     }
 
     private void notifyLoginRequest(SocketChannel channel, String user, String password) {
@@ -23,12 +30,12 @@ public class LoginReceiver implements MessageParser {
         
         int length = message.remaining();
         byte[] parsedMessage = new byte[length];
-        message.get(parsedMessage, 5, (length);
+        message.get(parsedMessage, 5, (length));
         return parsedMessage;
     }
 
 
-    @Overide
+    @Override
     public void receiveMessage(SocketChannel channel, ByteBuffer message) {
 
         byte[] parsedMessage = this.parseMessage(message); 

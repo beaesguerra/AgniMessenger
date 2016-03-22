@@ -1,6 +1,7 @@
 package agni.server.receiver;
+import java.nio.channels.SocketChannel;
 
-public interface UserListenerr {
+public interface UserListener {
 
-    public void userRequest (ip, type);
+    public void userRequest (SocketChannel channel, byte[] type);
 }

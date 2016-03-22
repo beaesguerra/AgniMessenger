@@ -1,4 +1,7 @@
 package agni.server.receiver;
+import java.nio.ByteBuffer;
+import java.nio.channels.SocketChannel;
+import java.util.Vector;
 
 public class ChatReceiver implements MessageParser {
 
@@ -6,7 +9,7 @@ public class ChatReceiver implements MessageParser {
 	
     public ChatReceiver() {
 
-        chatListeners = new Vector();
+        chatListeners = new Vector<ChatListener>();
     }
 	
     private void notifyChatRequest(SocketChannel channel, byte[] message) {
@@ -23,16 +26,20 @@ public class ChatReceiver implements MessageParser {
     private byte[] parseMessage(ByteBuffer message) {
         int length = message.remaining();
         byte[] parsedMessage = new byte[length];
-        message.get(parsedMessage, 5, (length);
+        message.get(parsedMessage, 5, (length));
         return parsedMessage;
     }
 
 
-    @Overide
+    @Override
     public void receiveMessage(SocketChannel channel, ByteBuffer message) {
 
-        byte[] parsedMessage = message.parseMessage(message); 
-        notifyChatRequest(channel, message);	
+        byte[] parsedMessage = parseMessage(message); 
+        notifyChatRequest(channel, parsedMessage);	
     }
+
+
+
+
 	
 }
