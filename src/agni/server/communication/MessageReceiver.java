@@ -1,5 +1,6 @@
 package agni.server.communication;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
@@ -9,6 +10,8 @@ public class MessageReceiver {
 
     private Selector selector = null;
     private ServerSocketChannel channel = null;
+    
+    
 
 /*
 *@requires server port number
@@ -17,16 +20,21 @@ public class MessageReceiver {
 */
     public void initializeConnection(String port) {
 
-        ServerSocketChannel.open();
-        channel.configureBlocking(false);
-        InetSocketAddress isa = new InetSocketAddress (Integer.parseInt(port));
-        channel.socket().bind(isa);
+        try {
+			ServerSocketChannel.open();
+	        channel.configureBlocking(false);
+	        InetSocketAddress isa = new InetSocketAddress (Integer.parseInt(port));
+	        channel.socket().bind(isa);
 
-        selector = Selector.open();
-        channel.register(selector, SelectionKey.OP_ACCEPT);
+	        selector = Selector.open();
+	        channel.register(selector, SelectionKey.OP_ACCEPT);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
     }
 
 
 }
 
-}
