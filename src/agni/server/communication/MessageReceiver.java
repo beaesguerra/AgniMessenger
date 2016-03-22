@@ -10,8 +10,6 @@ public class MessageReceiver {
 
     private Selector selector = null;
     private ServerSocketChannel channel = null;
-    
-    
 
 /*
 *@requires server port number
