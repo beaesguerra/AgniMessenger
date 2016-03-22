@@ -3,7 +3,7 @@ package agni.server.dataguard;
 public class InfoDataGuard implements I_InfoDataGuard {
 //  private database;
 
-    public InfoDataGuard() {
+    public InfoDataGuard(String dbname, String username, String password) {
 
     }
 

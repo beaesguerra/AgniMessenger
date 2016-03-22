@@ -3,7 +3,7 @@ package agni.server.dataguard;
 public class GroupChatDataGuard implements I_GroupChatDataGuard {
 //  private database;
 
-    public GroupChatDataGuard() {
+    public GroupChatDataGuard(String dbname, String username, String password) {
 
     }
 

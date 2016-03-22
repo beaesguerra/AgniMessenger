@@ -3,7 +3,7 @@ package agni.server.dataguard;
 public class FileDataGuard implements I_FileChatDataGuard {
 //  private database;
 
-    public FileDataGuard() {
+    public FileDataGuard(String dbname, String username, String password) {
 
     }
 
