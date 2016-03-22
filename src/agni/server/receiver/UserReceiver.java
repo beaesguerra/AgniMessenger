@@ -46,7 +46,7 @@ public class UserReceiver implements MessageParser {
             e.printStackTrace();
         }
 
-        notifyUserRequest(channel, parsedMessage);  
+        notifyUserRequest(channel, type);  
     }
 
 }

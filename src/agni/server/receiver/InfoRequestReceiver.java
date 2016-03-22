@@ -15,7 +15,7 @@ public class InfoRequestReceiver implements MessageParser {
         infoListeners = new Vector<InfoListener>();
     }
 
-    private void notifyInfoRequest(InetSocketAddress address, byte[] type) {
+    private void notifyInfoRequest(InetSocketAddress address, String username,String password) {
 
         for( InfoListener  iListener: infoListeners )
             iListener.infoRequest(address, username, password);
@@ -48,7 +48,7 @@ public class InfoRequestReceiver implements MessageParser {
             e.printStackTrace();
         }
 
-		notifyInfoRequest(address, parsedMessage);  
+		notifyInfoRequest(address, username, password);  
     }
 
 }
