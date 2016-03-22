@@ -1,8 +1,6 @@
 package agni.server.receiver;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.Vector;
@@ -15,40 +13,39 @@ public class InfoRequestReceiver implements MessageParser {
         infoListeners = new Vector<InfoListener>();
     }
 
-    private void notifyInfoRequest(InetSocketAddress address, String username,String password) {
-
+    private void notifyInfoRequest(String ip, byte type) {
         for( InfoListener  iListener: infoListeners )
-            iListener.infoRequest(address, username, password);
+            iListener.infoRequest(ip, type);
     }
 
     public void register(InfoListener iListener) {
-
         infoListeners.add(iListener);
     }
     
-    //TODO parse message into username and password
-    private byte[] parseMessage(ByteBuffer message) {
-        
-        int length = message.remaining();
-        byte[] parsedMessage = new byte[length];
-        message.get(parsedMessage, 5, (length));
+    /*
+     * parse ByteBuffer into type byte
+     * @requires ByteBuffer Message
+     * @promises type as a byte
+     */
+    private byte parseMessage(ByteBuffer message) {
+        byte parsedMessage = message.get(5);
         return parsedMessage;
     }
 
 
     @Override
     public void receiveMessage(SocketChannel channel, ByteBuffer message) {
-        InetSocketAddress address = null;
-        byte[] parsedMessage = this.parseMessage(message);
+        String ip = null;
+        byte parsedMessage = parseMessage(message);
 
         try {
-             address = (InetSocketAddress)channel.getRemoteAddress();
-        } catch (IOException e) {
-           System.out.println("IOException unable to obtain channel's address");
-            e.printStackTrace();
-        }
+            ip = channel.getRemoteAddress().toString();
+       } catch (IOException e) {
+          System.out.println("IOException unable to obtain channel's ip");
+           e.printStackTrace();
+       }
 
-		notifyInfoRequest(address, username, password);  
+		notifyInfoRequest(ip, parsedMessage);  
     }
 
 }

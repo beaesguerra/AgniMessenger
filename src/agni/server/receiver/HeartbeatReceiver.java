@@ -1,11 +1,10 @@
 package agni.server.receiver;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.Vector;
+
 public class HeartbeatReceiver implements MessageParser {
 
     private Vector <StatusListener> statusListeners = null;
@@ -15,38 +14,39 @@ public class HeartbeatReceiver implements MessageParser {
         statusListeners = new Vector<StatusListener>();	
     }
 	
-    private void notifyHeartbeat(SocketChannel channel, byte[] status) {
-
+    private void notifyHeartbeat(String ip, byte status) {
         for( StatusListener  sListener: statusListeners )
-        sListener.ReceivedHeartBeat(channel,status);	
+        sListener.ReceivedHeartBeat(ip,status);	
     }
 	
     public void register(StatusListener sListener) {
     	statusListeners.add(sListener);
 	
     }
-
-    private byte[] parseMessage(ByteBuffer message) {
-    	
-        int length = message.remaining();
-        byte[] parsedMessage = new byte[length];
-        message.get(parsedMessage, 5, (length));
+    
+    /*
+     * parse ByteBuffer into status byte
+     * @requires ByteBuffer Message
+     * @promises status as byte
+     */
+    private byte parseMessage(ByteBuffer message) {
+        byte parsedMessage = message.get(5);
         return parsedMessage;
     }
 
 
     @Override
     public void receiveMessage(SocketChannel channel, ByteBuffer message) {
-        InetSocketAddress address = null;
-        byte[] parsedMessage = this.parseMessage(message);
+        String ip = null;
+        byte parsedMessage = this.parseMessage(message);
 
         try {
-             address = (InetSocketAddress)channel.getRemoteAddress();
-        } catch (IOException e) {
-           System.out.println("IOException unable to obtain channel's address");
-            e.printStackTrace();
-        }
+            ip = channel.getRemoteAddress().toString();
+       } catch (IOException e) {
+          System.out.println("IOException unable to obtain channel's ip");
+           e.printStackTrace();
+       }
 
-        notifyHeartbeat(channel, parsedMessage);	
+        notifyHeartbeat(ip, parsedMessage);	
     }
 }
