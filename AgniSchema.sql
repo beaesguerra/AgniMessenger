@@ -23,10 +23,10 @@ DROP TABLE IF EXISTS `Files`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Files` (
-  `uploaded_at` datetime NOT NULL,
+  `uploadedAt` datetime NOT NULL,
   `path` varchar(255) NOT NULL,
-  `sizeInBytes` bigint(20) DEFAULT NULL,
-  `userId` int(10) unsigned DEFAULT NULL,
+  `sizeInBytes` bigint(20) NOT NULL,
+  `userId` int(10) unsigned NOT NULL,
   PRIMARY KEY (`path`),
   KEY `userId` (`userId`),
   CONSTRAINT `Files_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `Users` (`id`)
@@ -54,8 +54,8 @@ CREATE TABLE `Friends` (
   `userIdTwo` int(10) unsigned NOT NULL,
   KEY `userIdOne` (`userIdOne`),
   KEY `userIdTwo` (`userIdTwo`),
-  CONSTRAINT `Friends_ibfk_2` FOREIGN KEY (`userIdTwo`) REFERENCES `Users` (`id`),
-  CONSTRAINT `Friends_ibfk_1` FOREIGN KEY (`userIdOne`) REFERENCES `Users` (`id`)
+  CONSTRAINT `Friends_ibfk_1` FOREIGN KEY (`userIdOne`) REFERENCES `Users` (`id`),
+  CONSTRAINT `Friends_ibfk_2` FOREIGN KEY (`userIdTwo`) REFERENCES `Users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -103,8 +103,8 @@ CREATE TABLE `GroupMembers` (
   `groupName` varchar(30) NOT NULL,
   KEY `userId` (`userId`),
   KEY `groupName` (`groupName`),
-  CONSTRAINT `GroupMembers_ibfk_2` FOREIGN KEY (`groupName`) REFERENCES `GroupChats` (`name`),
-  CONSTRAINT `GroupMembers_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `Users` (`id`)
+  CONSTRAINT `GroupMembers_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `Users` (`id`),
+  CONSTRAINT `GroupMembers_ibfk_2` FOREIGN KEY (`groupName`) REFERENCES `GroupChats` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -128,7 +128,7 @@ CREATE TABLE `Messages` (
   `messageId` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `senderId` int(10) unsigned NOT NULL,
   `sentAt` datetime NOT NULL,
-  `content` text,
+  `content` text NOT NULL,
   `groupName` varchar(30) NOT NULL,
   PRIMARY KEY (`messageId`),
   KEY `groupName` (`groupName`),
@@ -179,4 +179,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-21 12:14:33
+-- Dump completed on 2016-03-22 13:39:58
