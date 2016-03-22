@@ -3,7 +3,7 @@ package agni.server.communication;
 import java.net.InetAddress;
 import java.net.Socket;
 
-public class MessageSender {
+public class MessageSender implements I_MessageSender {
     private Socket tcpSocket;
 
     public MessageSender() {
