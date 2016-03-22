@@ -7,6 +7,10 @@ public class UserDataGuard implements I_UserDataGuard {
 
     }
 
+    public void addUser(String username, String salt, String passwordHash) {
+
+    }
+
     public String salt(String user) {
         return null;
     }
@@ -19,7 +23,15 @@ public class UserDataGuard implements I_UserDataGuard {
         return null;
     }
 
-    public String currentChat(String user) {
+    public void createFriendship(String user1, String user2) {
+
+    }
+
+    public void changeUserCurrentChat(String user, String chatname) {
+
+    }
+
+    public String userCurrentChat(String user) {
         return null;
     }
 }
