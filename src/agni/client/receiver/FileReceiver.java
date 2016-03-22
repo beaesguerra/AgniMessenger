@@ -13,21 +13,10 @@ public class FileReceiver extends MessageParser {
 
     }
 
-    @Override
-    public void register(AgniClientView listener) {
-        // TODO Auto-generated method stub
+	@Override
+	public void receiveMessage(byte[] message) {
+		// TODO Auto-generated method stub
+		
+	}
 
-    }
-
-    @Override
-    public void deregister(AgniClientView listener) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void receiveMessage(byte[] message) {
-        // TODO Auto-generated method stub
-
-    }
 }
