@@ -26,7 +26,7 @@ public class FileReceiver extends MessageParser {
     }
 
     @Override
-    public void receiveMessage(String message) {
+    public void receiveMessage(byte[] message) {
         // TODO Auto-generated method stub
 
     }

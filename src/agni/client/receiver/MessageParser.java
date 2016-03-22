@@ -7,5 +7,5 @@ public abstract class MessageParser {
 
     public abstract void register(AgniClientView listener);
     public abstract void deregister(AgniClientView listener);
-    public abstract void receiveMessage(String message);
+    public abstract void receiveMessage(byte[] message);
 }
