@@ -32,6 +32,11 @@ public class UserDataGuardTest {
     }
 
     @Test
+    public void userCurrentIp() {
+        fail("Not yet implemented!");
+    }
+
+    @Test
     public void currentChatTest() {
         fail("Not yet implemented!");
     }

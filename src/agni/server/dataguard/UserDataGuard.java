@@ -27,6 +27,14 @@ public class UserDataGuard implements I_UserDataGuard {
 
     }
 
+    public void changeUserCurrentIp(String user, String ip) {
+
+    }
+
+    public String userCurrentIp(String user) {
+        return null;
+    }
+
     public void changeUserCurrentChat(String user, String chatname) {
 
     }
