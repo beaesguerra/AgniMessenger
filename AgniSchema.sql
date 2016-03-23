@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.5.46, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: agni_test
+-- Host: localhost    Database: agni_schema
 -- ------------------------------------------------------
 -- Server version	5.5.46-0ubuntu0.14.04.2
 
@@ -77,8 +77,10 @@ DROP TABLE IF EXISTS `GroupChats`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `GroupChats` (
   `name` varchar(30) NOT NULL,
-  `owner` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`name`)
+  `ownerId` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`name`),
+  KEY `ownerId` (`ownerId`),
+  CONSTRAINT `GroupChats_ibfk_1` FOREIGN KEY (`ownerId`) REFERENCES `Users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -132,6 +134,8 @@ CREATE TABLE `Messages` (
   `groupName` varchar(30) NOT NULL,
   PRIMARY KEY (`messageId`),
   KEY `groupName` (`groupName`),
+  KEY `senderId` (`senderId`),
+  CONSTRAINT `Messages_ibfk_2` FOREIGN KEY (`senderId`) REFERENCES `Users` (`id`),
   CONSTRAINT `Messages_ibfk_1` FOREIGN KEY (`groupName`) REFERENCES `GroupChats` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -179,4 +183,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-22 13:39:58
+-- Dump completed on 2016-03-23 12:25:30
