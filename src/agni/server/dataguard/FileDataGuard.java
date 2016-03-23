@@ -21,7 +21,7 @@ public class FileDataGuard {
      * File size in bytes
      */
     public long fileSize(String filepath) {
-        return null;
+        return -1;
     }
 
     public String fileOwner(String filepath) {
