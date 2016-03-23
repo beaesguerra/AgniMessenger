@@ -31,6 +31,7 @@ public class UserDataGuard implements I_UserDataGuard {
 
     }
 
+    /* return null if user not online */
     public String userCurrentIp(String user) {
         return null;
     }
@@ -39,6 +40,7 @@ public class UserDataGuard implements I_UserDataGuard {
 
     }
 
+    /* return null if user not in a chat */
     public String userCurrentChat(String user) {
         return null;
     }
