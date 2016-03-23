@@ -15,8 +15,9 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
 
     }
 
+    /* Throw IllegalArgumentException if groupChat does not exist */
     public void deleteGroupChat(String groupChatName) {
-
+    	
     }
 
     public String owner(String groupChatName) {

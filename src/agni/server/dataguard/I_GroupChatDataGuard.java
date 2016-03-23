@@ -6,6 +6,7 @@ public interface I_GroupChatDataGuard {
     
     public void createGroupChat(String owner, String groupChatName);
 
+    /* Throw IllegalArgumentException if groupChat does not exist */
     public void deleteGroupChat(String groupChatName);
 
     public String owner(String groupChatName);
