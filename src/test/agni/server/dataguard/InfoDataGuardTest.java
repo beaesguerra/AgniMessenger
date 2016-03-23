@@ -1,8 +1,12 @@
 package test.agni.server.dataguard;
 
 import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
 
+import org.junit.Before;
 import org.junit.Test;
+
+import agni.server.dataguard.InfoDataGuard;
 
 public class InfoDataGuardTest {
 
@@ -10,16 +14,16 @@ public class InfoDataGuardTest {
 
     @Before
     public void setup() {
-        infoDataGuard = new InfoDataGuard('agni_test', 'test', '');
+        infoDataGuard = new InfoDataGuard("agni_test", "test", "");
     }
 
     @Test
-    public String serverNameNotNullTest() {
+    public void serverNameNotNullTest() {
         assertThat(infoDataGuard.serverName(), not(null));
     }
 
     @Test
-    public int currentOnlineTest() {
+    public void currentOnlineTest() {
         assertEquals(infoDataGuard.currentOnline(), 0);
         
         infoDataGuard.incrementUsersOnline();
@@ -28,13 +32,13 @@ public class InfoDataGuardTest {
         infoDataGuard.incrementUsersOnline();
         assertEquals(infoDataGuard.currentOnline(), 2);
         
-        infoDataGuard.decerementUsersOnline();
-        infoDataGuard.decerementUsersOnline();
+        infoDataGuard.decrementUsersOnline();
+        infoDataGuard.decrementUsersOnline();
         assertEquals(infoDataGuard.currentOnline(), 0);
     }
 
     @Test
-    public int totalUsersTest() {
+    public void totalUsersTest() {
         assertEquals(infoDataGuard.totalUsers(), 0);
     }
 }
