@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import agni.server.dataguard.FileDataGuard;
 
+import java.io.IOException;
 import java.util.Date;
 
 public class FileDataGuardTest {
@@ -15,7 +16,13 @@ public class FileDataGuardTest {
 
     @Before
     public void setup() {
-        fileDataGuard = new FileDataGuard("agni_test", "test", "");
+        Runtime rt = Runtime.getRuntime();
+        try {
+            rt.exec("mysql -u agni_tester agni_test < AgniTest.sql");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        fileDataGuard = new FileDataGuard("agni_test", "agni_tester", "");
     }
 
     @Test
@@ -41,21 +48,21 @@ public class FileDataGuardTest {
     }
 
     @Test
-    public void fileOwnerTest(){
+    public void fileOwnerTest() {
         String expectedUser = "TestUser";
         assertEquals(fileDataGuard.fileOwner("test/path.txt"), expectedUser);
     }
 
     @Test
-    public void cacheFileTest(){
+    public void cacheFileTest() {
         String expectedPath = "billy/bob.txt";
         String expectedOwner = "BillyBob";
         long expectedFileSize = 2349824234L;
-        
+
         assertFalse(fileDataGuard.isCached(expectedPath));
-        
+
         fileDataGuard.cacheFile(expectedPath, expectedOwner, expectedFileSize);
-        
+
         assertTrue(fileDataGuard.isCached(expectedPath));
         assertEquals(fileDataGuard.fileSize(expectedPath), expectedFileSize);
         assertEquals(fileDataGuard.fileOwner(expectedPath), expectedOwner);

@@ -2,6 +2,7 @@ package test.agni.server.dataguard;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 import org.junit.Before;
@@ -15,7 +16,13 @@ public class GroupChatDataGuardTest {
 
     @Before
     public void setup() {
-        groupChatDataGuard = new GroupChatDataGuard("agni_test", "test", "");
+        Runtime rt = Runtime.getRuntime();
+        try {
+            rt.exec("mysql -u agni_tester agni_test < AgniTest.sql");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        groupChatDataGuard = new GroupChatDataGuard("agni_test", "agni_tester", "");
     }
 
     @Test

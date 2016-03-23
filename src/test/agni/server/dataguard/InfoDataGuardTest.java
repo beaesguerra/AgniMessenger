@@ -1,6 +1,9 @@
 package test.agni.server.dataguard;
 
 import static org.junit.Assert.*;
+
+import java.io.IOException;
+
 import static org.hamcrest.CoreMatchers.*;
 
 import org.junit.Before;
@@ -14,7 +17,13 @@ public class InfoDataGuardTest {
 
     @Before
     public void setup() {
-        infoDataGuard = new InfoDataGuard("agni_test", "test", "");
+        Runtime rt = Runtime.getRuntime();
+        try {
+            rt.exec("mysql -u agni_tester agni_test < AgniTest.sql");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        infoDataGuard = new InfoDataGuard("agni_test", "agni_tester", "");
     }
 
     @Test
@@ -25,13 +34,13 @@ public class InfoDataGuardTest {
     @Test
     public void currentOnlineTest() {
         assertEquals(infoDataGuard.currentOnline(), 0);
-        
+
         infoDataGuard.incrementUsersOnline();
         assertEquals(infoDataGuard.currentOnline(), 1);
-        
+
         infoDataGuard.incrementUsersOnline();
         assertEquals(infoDataGuard.currentOnline(), 2);
-        
+
         infoDataGuard.decrementUsersOnline();
         infoDataGuard.decrementUsersOnline();
         assertEquals(infoDataGuard.currentOnline(), 0);
