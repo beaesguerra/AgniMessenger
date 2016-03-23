@@ -9,7 +9,7 @@ public class InfoRequestManager {
     private I_FileDataGuard fileDataGuard;
 
     public InfoRequestManager(InfoSender infoSender,
-                              FileDataGuard fileDataGuard) {
+                              I_FileDataGuard fileDataGuard) {
         this.infoSender = infoSender;
         this.fileDataGuard = fileDataGuard;
     }

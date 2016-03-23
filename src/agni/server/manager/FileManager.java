@@ -12,7 +12,7 @@ public class FileManager {
 
     public FileManager(InfoSender infoSender,
                        FileSender fileSender,
-                       FileDataGuard fileDataGuard) {
+                       I_FileDataGuard fileDataGuard) {
         this.infoSender = infoSender;
         this.fileSender = fileSender;
         this.fileDataGuard = fileDataGuard;
