@@ -7,75 +7,87 @@ import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
+import org.jmock.Expectations;
+import org.jmock.Mockery;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import agni.server.receiver.InfoListener;
+import agni.server.receiver.InfoRequestReceiver;
+
 public class InfoRequestReceiverTest {
 	final int port = 99;
 	final int headerBytes = 5;
-	final byte type = 1;
-	final String testString = "Hello World!";
+	final byte type = 3;
 	byte[] testArray = null;	
 	int totalMessageLength; 
 	ByteBuffer testBuffer = null;
 	
 	SocketAddress address = null; 
 	SocketChannel testChannel;
+
+	final Mockery context = new Mockery();
+	InfoListener mockInfoListener;
+	InfoRequestReceiver infoReceiver;
 	
-	String expectedIp = "192.168.1.1";
-	byte[] expectedTestArray = null;
-
-
 	@Before
 	public void setUp() throws Exception {
 		//set up channel
-		address = new InetSocketAddress("192.168.1.1", port);
+		address = new InetSocketAddress("127.0.0.1", port);
 		testChannel = SocketChannel.open(address);
 		
 		//prepare the message
-		testArray = testString.getBytes("us-ascii");
-		totalMessageLength = (headerBytes + testArray.length);
+		byte messageType = 0x03;
+		totalMessageLength = (headerBytes + 1);
 		
 		//populate message buffer
 		testBuffer.putInt(totalMessageLength);
 		testBuffer.putInt(type);
-		testBuffer.put(testArray);
-
-
+		testBuffer.put(messageType);
+		
+		mockInfoListener = context.mock(InfoListener.class);
+		infoReceiver = new InfoRequestReceiver();
+		infoReceiver.register(mockInfoListener);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		testChannel.close();
-		testBuffer.clear();
+
 	}
 
 	@Test
 	public void correctInputTest() {
-		
-	
+		context.checking(new Expectations() {{
+			final String expectedIp = "192.168.1.1";
+			final byte expectedType = 0x03;
+			oneOf(mockInfoListener).infoRequest(expectedIp, expectedType);
+		}});
+		infoReceiver.receiveMessage(testChannel, testBuffer);
+		context.assertIsSatisfied();
 	}
 	
-	@Test
-	public void missingIpChannelTest() {
-		fail("Not yet implemented");
-	}
 	
 	@Test
 	public void nullChannelTest() {
-		fail("Not yet implemented");
+		context.checking(new Expectations() {{
+			final String expectedIp = "192.168.1.1";
+			final byte expectedType = 0x02;
+			oneOf(mockInfoListener).infoRequest(expectedIp, expectedType);
+		}});
+		infoReceiver.receiveMessage(null, testBuffer);
+		context.assertIsSatisfied();
 	}
 	
 	@Test
 	public void nullMessageTest() {
-		fail("Not yet implemented");
+		context.checking(new Expectations() {{
+			final String expectedIp = "192.168.1.1";
+			final byte expectedType = 0x02;
+			oneOf(mockInfoListener).infoRequest(expectedIp, expectedType);
+		}});
+		infoReceiver.receiveMessage(testChannel, null);
+		context.assertIsSatisfied();
 	}
 	
-	@Test
-	public void emptyMessageTest() {
-		fail("Not yet implemented");
-	}
-	
-
 }

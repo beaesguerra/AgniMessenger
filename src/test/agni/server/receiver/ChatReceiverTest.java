@@ -1,6 +1,6 @@
 package test.agni.server.receiver;
 
-
+import agni.server.receiver.ChatReceiver;
 import static org.junit.Assert.*;
 
 import java.net.InetSocketAddress;
@@ -11,6 +11,7 @@ import java.nio.channels.SocketChannel;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 
 public class ChatReceiverTest {
 	final int port = 99;
@@ -26,10 +27,12 @@ public class ChatReceiverTest {
 	
 	String expectedIp = "192.168.1.1";
 	byte[] expectedTestArray = null;
-
+	
+	ChatReceiver receiver;
 
 	@Before
 	public void setUp() throws Exception {
+		receiver = new ChatReceiver();
 		//set up channel
 		address = new InetSocketAddress("192.168.1.1", port);
 		testChannel = SocketChannel.open(address);
@@ -54,7 +57,7 @@ public class ChatReceiverTest {
 
 	@Test
 	public void correctInputTest() {
-		
+		receiver.receiveMessage(testChannel, testBuffer);
 	
 	}
 	
