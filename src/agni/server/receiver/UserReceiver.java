@@ -13,14 +13,14 @@ public class UserReceiver implements MessageParser {
     }
 
     private void notifyUserRequest(String ip, byte type) {
-        for( UserListener  uListener: userListeners )
+        for ( UserListener  uListener : userListeners )
             uListener.infoRequest(ip, type);
     }
 
     public void register(UserListener uListener) {
         userListeners.add(uListener);
     }
-    
+
     /*
      * parse ByteBuffer type byte
      * @requires ByteBuffer Message
@@ -37,13 +37,12 @@ public class UserReceiver implements MessageParser {
         byte parsedMessage = this.parseMessage(message);
 
         try {
-             ip = channel.getRemoteAddress().toString();
+            ip = channel.getRemoteAddress().toString();
         } catch (IOException e) {
-           System.out.println("IOException unable to obtain channel's ip");
+            System.out.println("IOException unable to obtain channel's ip");
             e.printStackTrace();
         }
 
-        notifyUserRequest(ip, parsedMessage);  
+        notifyUserRequest(ip, parsedMessage);
     }
-
 }
