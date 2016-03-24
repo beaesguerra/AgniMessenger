@@ -16,12 +16,15 @@ public class GroupChatDataGuardTest {
 
     @Before
     public void setup() {
-        Runtime rt = Runtime.getRuntime();
+        String dbName = "agni_test";
+        String dbUserName = "agni_tester";
+        String source = "/media/enoch/C47ABD537ABD434A/School/CPSC441/AgniMessenger/AgniTest.sql";
+        String[] commands =  new String[]{"mysql", "--user=" + dbUserName, dbName,"-e", "source " + source};
         try {
-            rt.exec("mysql -u agni_tester agni_test < AgniTest.sql");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+			Runtime.getRuntime().exec(commands);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
         groupChatDataGuard = new GroupChatDataGuard("agni_test", "agni_tester", "");
     }
 
