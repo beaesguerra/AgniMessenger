@@ -11,7 +11,7 @@ public class MessageSender {
 
     }
 
-    public void sendMessage(SocketChannel channel, byte[] message) {
+    public void sendMessage(String ipAddress, byte[] message) {
         // TODO
     }
 }

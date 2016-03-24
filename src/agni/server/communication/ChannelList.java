@@ -1,4 +1,4 @@
-package agni.server;
+package agni.server.communication;
 
 import java.nio.channels.SocketChannel;
 import java.util.HashMap;

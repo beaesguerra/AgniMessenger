@@ -1,13 +1,13 @@
-package agni.server;
+package agni.server.communication;
 
 import java.nio.channels.SocketChannel;
 
-public class IPChannelPair{
+public class IpChannelPair{
 	private final String ipAddress;
 	private final SocketChannel channel; 
 	
-	public IPChannelPair(String ipAddress, SocketChannel channel) {
+	public IpChannelPair(String ipAddress, SocketChannel channel) {
 		this.ipAddress = ipAddress;
 		this.channel = channel; 
-	
+	}
 }
