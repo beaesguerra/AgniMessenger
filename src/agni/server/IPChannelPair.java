@@ -9,6 +9,5 @@ public class IPChannelPair{
 	public IPChannelPair(String ipAddress, SocketChannel channel) {
 		this.ipAddress = ipAddress;
 		this.channel = channel; 
-	}
 	
 }
