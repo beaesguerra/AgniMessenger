@@ -1,10 +1,14 @@
 package agni.server;
 
-public class IPChannelPair<I,C> {
-	private final I ipAddress;
-	private final C channel; 
-	public IPChannelPair(I ip, C channel) {
-		this.ipAddress = ip;
+import java.nio.channels.SocketChannel;
+
+public class IPChannelPair{
+	private final String ipAddress;
+	private final SocketChannel channel; 
+	
+	public IPChannelPair(String ipAddress, SocketChannel channel) {
+		this.ipAddress = ipAddress;
 		this.channel = channel; 
 	}
+	
 }
