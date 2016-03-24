@@ -18,7 +18,7 @@ public class GroupChatDataGuardTest {
     public void setup() {
         String dbName = "agni_test";
         String dbUserName = "agni_tester";
-        String source = "/media/enoch/C47ABD537ABD434A/School/CPSC441/AgniMessenger/AgniTest.sql";
+        String source = "AgniTest.sql";
         String[] commands =  new String[]{"mysql", "--user=" + dbUserName, dbName,"-e", "source " + source};
         try {
 			Runtime.getRuntime().exec(commands);
