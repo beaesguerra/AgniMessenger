@@ -9,13 +9,13 @@ public class InformationReceiver extends MessageParser {
     }
 
     private void notifyInfoReceived(String message) {
-
+    	for(ReceiverListener rListener : super.listeners)
+    		rListener.infoReaction(message);
     }
 
 	@Override
-	public void receiveMessage(byte[] message) {
-		// TODO Auto-generated method stub
-		
+	public void receiveMessage(String src, byte[] message) {
+		notifyInfoReceived(message.toString());
 	}
 
 }

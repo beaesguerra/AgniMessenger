@@ -10,13 +10,14 @@ public class StatusReceiver extends MessageParser {
     }
 
     private void notifyStatusReceived(String user, Status status) {
-
+    	for(ReceiverListener rListener : super.listeners)
+    		rListener.statusReaction(user, status);
     }
 
 	@Override
-	public void receiveMessage(byte[] message) {
-		// TODO Auto-generated method stub
-		
+	public void receiveMessage(String src, byte[] message) {
+		// how do we pass status here?
+//		notifyStatusReceived(src, status);
 	}
 
 
