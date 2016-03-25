@@ -39,11 +39,7 @@ public class InfoSenderTest {
             final byte[] expectedMessage = AgniTestUtilities.hexStringToByteArray(LENGTH_HEX +
             																	  INFO_BYTE_HEX +
             																	  TEST_INFO_MESSAGE_HEX);
-            try {
-                oneOf(messageSender).sendMessage(InetAddress.getByName(TEST_IP), expectedMessage);
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            }
+            oneOf(messageSender).sendMessage(TEST_IP, expectedMessage);
         }});
 
         infoSender.sendInfo(TEST_IP, TEST_INFO_MESSAGE);

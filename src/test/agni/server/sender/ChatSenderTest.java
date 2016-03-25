@@ -45,11 +45,7 @@ public class ChatSenderTest {
                                                                                   TEST_SENDER_NAME_HEX +
                                                                                   TEST_MESSAGE_HEX);
 
-            try {
-                oneOf(messageSender).sendMessage(InetAddress.getByName(TEST_IP), expectedMessage);
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            }
+            oneOf(messageSender).sendMessage(TEST_IP, expectedMessage);
         }});
 
         chatSender.sendChat(TEST_IP, TEST_USER, TEST_MESSAGE);
