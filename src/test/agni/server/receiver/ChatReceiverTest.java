@@ -3,9 +3,7 @@ package test.agni.server.receiver;
 import agni.server.receiver.ChatReceiver;
 import agni.server.receiver.ChatListener;
 
-import java.net.SocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.channels.SocketChannel;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;

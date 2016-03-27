@@ -2,10 +2,7 @@ package test.agni.server.receiver;
 
 import static org.junit.Assert.*;
 
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.channels.SocketChannel;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
