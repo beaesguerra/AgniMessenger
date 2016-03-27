@@ -83,5 +83,5 @@ public class InfoRequestReceiverTest {
 		infoReceiver.receiveMessage(testIp, null);
 		context.assertIsSatisfied();
 	}
-	
 }
+	

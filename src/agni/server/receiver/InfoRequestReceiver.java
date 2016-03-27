@@ -11,14 +11,14 @@ public class InfoRequestReceiver implements MessageParser {
     }
 
     private void notifyInfoRequest(String ip, byte type) {
-        for( InfoListener  iListener: infoListeners )
+        for ( InfoListener  iListener : infoListeners )
             iListener.infoRequest(ip, type);
     }
 
     public void register(InfoListener iListener) {
         infoListeners.add(iListener);
     }
-    
+
     /*
      * parse ByteBuffer into type byte
      * @requires ByteBuffer Message
@@ -32,7 +32,8 @@ public class InfoRequestReceiver implements MessageParser {
     @Override
     public void receiveMessage(String ip, ByteBuffer message) {
         byte parsedMessage = parseMessage(message);
-		notifyInfoRequest(ip, parsedMessage);  
+
+        notifyInfoRequest(ip, parsedMessage);  
     }
 
 }

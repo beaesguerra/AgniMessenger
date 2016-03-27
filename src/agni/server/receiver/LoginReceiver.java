@@ -12,14 +12,14 @@ public class LoginReceiver implements MessageParser {
     }
 
     private void notifyLoginRequest(String ip, String username, String password) {
-        for( LoginListener  lListener: loginListeners )
+        for (LoginListener  lListener : loginListeners)
             lListener.loginRequest (ip, username, password);
     }
 
     public void register(LoginListener lListener) {
         loginListeners.add(lListener);
     }
-    
+
     /*
      * parse ByteBuffer into strings
      * @requires ByteBuffer Message
@@ -29,11 +29,11 @@ public class LoginReceiver implements MessageParser {
         int length = message.remaining();
         byte[] messageArray = new byte[length];
         message.get(messageArray, 5, (length));
-        
+
         String[] parsedMessage = new String[2];
         int usernameLength = messageArray[0];
-        parsedMessage[0] = Arrays.toString(Arrays.copyOfRange(messageArray, 1, (usernameLength+1)));
-        parsedMessage[1] = Arrays.toString(Arrays.copyOfRange(messageArray, (usernameLength+1), messageArray.length ));
+        parsedMessage[0] = Arrays.toString(Arrays.copyOfRange(messageArray, 1, (usernameLength + 1)));
+        parsedMessage[1] = Arrays.toString(Arrays.copyOfRange(messageArray, (usernameLength + 1), messageArray.length ));
 
         return parsedMessage;
     }

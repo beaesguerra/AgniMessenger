@@ -18,7 +18,6 @@ public class ChatReceiverTest {
 	final int headerBytes = 5;
 	final byte type = 1;
 	final String testIp = "192.168.1.1";
-	final String expectedIp = "192.168.1.1";
 	final String testString = "Hello World!";
 	byte[] testArray = null;	
 	int totalMessageLength; 
@@ -30,7 +29,6 @@ public class ChatReceiverTest {
 	
 	@Before
 	public void setUp() throws Exception {
-
 		//prepare the message
 		testArray = testString.getBytes("us-ascii");
 		totalMessageLength = (headerBytes + testArray.length);
@@ -54,7 +52,6 @@ public class ChatReceiverTest {
 
 	@Test
 	public void correctInputTest() {
-
 		context.checking(new Expectations() {{
 			oneOf(mockChatListener).chatRequest("192.168.1.1", testArray);
 		}});
@@ -84,3 +81,4 @@ public class ChatReceiverTest {
 	}
 	
 }
+
