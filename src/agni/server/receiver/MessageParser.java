@@ -5,5 +5,5 @@ import java.nio.channels.SocketChannel;
 
 public interface MessageParser {
 	
-	public void receiveMessage(SocketChannel channel, ByteBuffer message);
+	public void receiveMessage(String ip, ByteBuffer message);
 }

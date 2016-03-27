@@ -1,8 +1,6 @@
 package agni.server.receiver;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.channels.SocketChannel;
 import java.util.Arrays;
 import java.util.Vector;
 
@@ -31,21 +29,13 @@ public class FileReceiver implements MessageParser {
     }
 
     @Override
-    public void receiveMessage(SocketChannel channel, ByteBuffer message) {
-        String ip = null;
+    public void receiveMessage(String ip, ByteBuffer message) {
         byte[] parsedMessage = parseMessage(message);
         
         int filenameLength = parsedMessage[1];
         String EOF = Arrays.toString(Arrays.copyOfRange(parsedMessage, 0, 1));
         String filename = Arrays.toString(Arrays.copyOfRange(parsedMessage, 2, (filenameLength+2)));
         byte[] file = Arrays.copyOfRange(parsedMessage, (filenameLength+2), parsedMessage.length );
-
-        try {
-            ip = channel.getRemoteAddress().toString();
-       } catch (IOException e) {
-          System.out.println("IOException unable to obtain channel's ip");
-           e.printStackTrace();
-       }
 
         notifyFileRequest(ip, EOF, filename, file);	
     }

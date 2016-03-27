@@ -1,8 +1,6 @@
 package agni.server.receiver;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.channels.SocketChannel;
 import java.util.Vector;
 
 public class HeartbeatReceiver implements MessageParser {
@@ -33,17 +31,8 @@ public class HeartbeatReceiver implements MessageParser {
     }
 
     @Override
-    public void receiveMessage(SocketChannel channel, ByteBuffer message) {
-        String ip = null;
+    public void receiveMessage(String ip, ByteBuffer message) {
         byte parsedMessage = this.parseMessage(message);
-
-        try {
-            ip = channel.getRemoteAddress().toString();
-       } catch (IOException e) {
-          System.out.println("IOException unable to obtain channel's ip");
-           e.printStackTrace();
-       }
-
         notifyHeartbeat(ip, parsedMessage);	
     }
 }

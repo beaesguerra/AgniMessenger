@@ -1,8 +1,6 @@
 package agni.server.receiver;
 
-import java.io.*;
 import java.nio.ByteBuffer;
-import java.nio.channels.SocketChannel;
 import java.util.Arrays;
 import java.util.Vector;
 
@@ -42,17 +40,8 @@ public class LoginReceiver implements MessageParser {
 
 
     @Override
-    public void receiveMessage(SocketChannel channel, ByteBuffer message) {  	
-        String ip = null;
+    public void receiveMessage(String ip, ByteBuffer message) {  	
         String[] parsedMessage = this.parseMessage(message);
-
-        try {
-            ip = channel.getRemoteAddress().toString();
-       } catch (IOException e) {
-          System.out.println("IOException unable to obtain channel's ip");
-           e.printStackTrace();
-       }
-
         notifyLoginRequest(ip, parsedMessage[0], parsedMessage[1]);  
     }
 

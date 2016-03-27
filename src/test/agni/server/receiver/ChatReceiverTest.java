@@ -1,85 +1,86 @@
 package test.agni.server.receiver;
 
 import agni.server.receiver.ChatReceiver;
-import static org.junit.Assert.*;
+import agni.server.receiver.ChatListener;
 
-import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
+import org.jmock.Expectations;
+import org.jmock.Mockery;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 
 public class ChatReceiverTest {
-	final int port = 99;
 	final int headerBytes = 5;
 	final byte type = 1;
+	final String testIp = "192.168.1.1";
+	final String expectedIp = "192.168.1.1";
 	final String testString = "Hello World!";
 	byte[] testArray = null;	
 	int totalMessageLength; 
 	ByteBuffer testBuffer = null;
-	
-	SocketAddress address = null; 
-	SocketChannel testChannel;
-	
-	String expectedIp = "192.168.1.1";
-	byte[] expectedTestArray = null;
-	
-	ChatReceiver receiver;
 
+	Mockery context = new Mockery();
+	ChatListener mockChatListener;
+	ChatReceiver chatReceiver;
+	
 	@Before
 	public void setUp() throws Exception {
-		receiver = new ChatReceiver();
-		//set up channel
-		address = new InetSocketAddress("192.168.1.1", port);
-		testChannel = SocketChannel.open(address);
-		
+
 		//prepare the message
 		testArray = testString.getBytes("us-ascii");
 		totalMessageLength = (headerBytes + testArray.length);
+
 		
 		//populate message buffer
+		testBuffer = ByteBuffer.wrap(new byte[100]);
 		testBuffer.putInt(totalMessageLength);
 		testBuffer.putInt(type);
 		testBuffer.put(testArray);
-
-
+		chatReceiver = new ChatReceiver();
+		
+		mockChatListener = context.mock(ChatListener.class);
+		chatReceiver.register(mockChatListener);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		testChannel.close();
-		testBuffer.clear();
+
 	}
 
 	@Test
 	public void correctInputTest() {
-		receiver.receiveMessage(testChannel, testBuffer);
-	
+
+		context.checking(new Expectations() {{
+			oneOf(mockChatListener).chatRequest("192.168.1.1", testArray);
+		}});
+		chatReceiver.receiveMessage(testIp, testBuffer);
+		context.assertIsSatisfied();
 	}
 	
-	@Test
-	public void missingIpChannelTest() {
-		fail("Not yet implemented");
-	}
 	
 	@Test
 	public void nullChannelTest() {
-		fail("Not yet implemented");
+		context.checking(new Expectations() {{
+			final String expectedIp = "192.168.1.1";
+			oneOf(mockChatListener).chatRequest(expectedIp, testArray);
+		}});
+		chatReceiver.receiveMessage(null, testBuffer);
+		context.assertIsSatisfied();
 	}
 	
 	@Test
 	public void nullMessageTest() {
-		fail("Not yet implemented");
+		context.checking(new Expectations() {{
+			final String expectedIp = "192.168.1.1";
+			oneOf(mockChatListener).chatRequest(expectedIp, testArray);
+		}});
+		chatReceiver.receiveMessage(testIp, null);
+		context.assertIsSatisfied();
 	}
 	
-	@Test
-	public void emptyMessageTest() {
-		fail("Not yet implemented");
-	}
-	
-
 }

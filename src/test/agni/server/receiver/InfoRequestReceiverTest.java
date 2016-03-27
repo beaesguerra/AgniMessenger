@@ -17,15 +17,12 @@ import agni.server.receiver.InfoListener;
 import agni.server.receiver.InfoRequestReceiver;
 
 public class InfoRequestReceiverTest {
-	final int port = 99;
+	final String testIp = "192.168.1.1";
 	final int headerBytes = 5;
 	final byte type = 3;
 	byte[] testArray = null;	
 	int totalMessageLength; 
 	ByteBuffer testBuffer = null;
-	
-	SocketAddress address = null; 
-	SocketChannel testChannel;
 
 	final Mockery context = new Mockery();
 	InfoListener mockInfoListener;
@@ -33,9 +30,6 @@ public class InfoRequestReceiverTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		//set up channel
-		address = new InetSocketAddress("127.0.0.1", port);
-		testChannel = SocketChannel.open(address);
 		
 		//prepare the message
 		byte messageType = 0x03;
@@ -63,7 +57,7 @@ public class InfoRequestReceiverTest {
 			final byte expectedType = 0x03;
 			oneOf(mockInfoListener).infoRequest(expectedIp, expectedType);
 		}});
-		infoReceiver.receiveMessage(testChannel, testBuffer);
+		infoReceiver.receiveMessage(testIp, testBuffer);
 		context.assertIsSatisfied();
 	}
 	
@@ -86,7 +80,7 @@ public class InfoRequestReceiverTest {
 			final byte expectedType = 0x02;
 			oneOf(mockInfoListener).infoRequest(expectedIp, expectedType);
 		}});
-		infoReceiver.receiveMessage(testChannel, null);
+		infoReceiver.receiveMessage(testIp, null);
 		context.assertIsSatisfied();
 	}
 	
