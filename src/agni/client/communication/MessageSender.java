@@ -1,12 +1,16 @@
 package agni.client.communication;
 
-public class MessageSender {
-	
-	String ip;
-	int port;
-	
-	public MessageSender(){
-		
-	}
+import java.net.Socket;
 
+public class MessageSender {
+
+    private Socket tcpSocket;
+
+    public MessageSender() {
+
+    }
+
+    public void sendMessage(byte[] message) {
+
+    }
 }

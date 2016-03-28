@@ -1,11 +1,11 @@
 package agni.server.sender;
 
-import agni.server.communication.MessageSender;
+import agni.server.communication.I_MessageSender;
 
 public class HeartbeatSender {
-    private MessageSender messageSender;
+    private I_MessageSender messageSender;
 
-    public HeartbeatSender(MessageSender messageSender) {
+    public HeartbeatSender(I_MessageSender messageSender) {
         this.messageSender = messageSender;
     }
 
