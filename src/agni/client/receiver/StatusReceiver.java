@@ -16,7 +16,7 @@ public class StatusReceiver extends MessageParser {
 
 	@Override
 	public void receiveMessage(String src, byte[] message) {
-		// how do we pass status here?
+		// how do we pass status here?1
 //		notifyStatusReceived(src, status);
 	}
 
