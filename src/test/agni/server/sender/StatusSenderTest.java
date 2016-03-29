@@ -1,17 +1,11 @@
 package test.agni.server.sender;
 
-import static org.junit.Assert.*;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Before;
 import org.junit.Test;
 
 import agni.server.communication.I_MessageSender;
-import agni.server.communication.MessageSender;
 import agni.server.sender.StatusSender;
 import test.AgniTestUtilities;
 
