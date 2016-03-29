@@ -13,15 +13,16 @@ public class FileManager implements FileListener {
 
     public FileManager(InfoSender infoSender,
                        FileSender fileSender,
-                       FileDataGuard fileDataGuard, UserDataGuard userDataGuard) {
+                       FileDataGuard fileDataGuard, 
+                       UserDataGuard userDataGuard) {
         this.infoSender = infoSender;
         this.fileSender = fileSender;
         this.fileDataGuard = fileDataGuard;
     }
 
-	@Override
-	public void chatRequest(String ip, byte type) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void chatRequest(String ip, byte type) {
+        // TODO Auto-generated method stub
+        
+    }
 }

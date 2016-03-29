@@ -14,9 +14,9 @@ public class UserManager implements UserListener{
         this.userDataGuard = userDataGuard;
     }
 
-	@Override
-	public void userRequest(String ip, byte type) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void userRequest(String ip, byte type) {
+        // TODO Auto-generated method stub
+        
+    }
 }

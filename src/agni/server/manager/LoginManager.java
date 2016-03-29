@@ -14,10 +14,10 @@ public class LoginManager implements LoginListener{
         this.userDataGuard = userDataGuard;
     }
 
-	@Override
-	public void loginRequest(String ip, String user, String password) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void loginRequest(String ip, String user, String password) {
+        // TODO Auto-generated method stub
+        
+    }
 
 }

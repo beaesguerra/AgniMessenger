@@ -33,44 +33,49 @@ import agni.server.communication.ChannelList;
 import agni.server.communication.IpChannelPair;
 
 public class AgniServer {
-	
 
-	public static void main(String[] args) {
-		ChannelList channels = new ChannelList(); 
-		MessageSender messageSender = new MessageSender(channels); 
-		
-		InfoSender infoSender = new InfoSender(messageSender); 
-		ChatSender chatSender = new ChatSender(messageSender); 
-		FileSender fileSender = new FileSender(messageSender); 
-		StatusSender statusSender = new StatusSender(messageSender);
-		HeartbeatSender heartbeatSender = new HeartbeatSender(messageSender); 
-		
-		UserDataGuard userDataGuard = new UserDataGuard(); 
-		ChatDataGuard chatDataGuard = new ChatDataGuard(); 
-		FileDataGuard fileDataGuard = new FileDataGuard(); 
-		InfoDataGuard infoDataGuard = new InfoDataGuard(); 
-		
-		LoginReceiver loginReceiver = new LoginReceiver(); 
-		UserReceiver userReceiver = new UserReceiver(); 
-		ChatReceiver chatReceiver = new ChatReceiver();
-		FileReceiver fileReceiver = new FileReceiver();
-		InfoRequestReceiver infoRequestReceiver = new InfoRequestReceiver(); 
-		HeartbeatReceiver heartbeatReceiver = new HeartbeatReceiver(); 
-		
-		MessageReceiver messageReceiver = new MessageReceiver(channels, loginReceiver, userReceiver, chatReceiver, fileReceiver, infoRequestReceiver, heartbeatReceiver); 
-		
-		LoginManager loginManager = new LoginManager(infoSender, userDataGuard); 
-		UserManager userManager = new UserManager(infoSender, userDataGuard); 
-		ChatManager chatManager = new ChatManager(userDataGuard, chatDataGuard, infoSender, chatSender); 
-		FileManager fileManager = new FileManager(infoSender, fileSender, fileDataGuard, userDataGuard);
-		InfoRequestManager infoRequestManager = new InfoRequestManager(infoSender, heartbeatSender, fileDataGuard); 
-		StatusManager statusManager = new StatusManager(statusSender, userDataGuard); 
-		
-		loginReceiver.register(loginManager);
-		userReceiver.register(userManager);
-		chatReceiver.register(chatManager);
-		fileReceiver.register(fileManager);
-		infoRequestReceiver.register(infoRequestManager);
-		heartbeatReceiver.register(statusManager);
-	}
+    public static void main(String[] args) {
+        ChannelList channels = new ChannelList();
+        MessageSender messageSender = new MessageSender(channels);
+
+        InfoSender infoSender = new InfoSender(messageSender);
+        ChatSender chatSender = new ChatSender(messageSender);
+        FileSender fileSender = new FileSender(messageSender);
+        StatusSender statusSender = new StatusSender(messageSender);
+        HeartbeatSender heartbeatSender = new HeartbeatSender(messageSender);
+
+        UserDataGuard userDataGuard = new UserDataGuard();
+        ChatDataGuard chatDataGuard = new ChatDataGuard();
+        FileDataGuard fileDataGuard = new FileDataGuard();
+        InfoDataGuard infoDataGuard = new InfoDataGuard();
+
+        LoginReceiver loginReceiver = new LoginReceiver();
+        UserReceiver userReceiver = new UserReceiver();
+        ChatReceiver chatReceiver = new ChatReceiver();
+        FileReceiver fileReceiver = new FileReceiver();
+        InfoRequestReceiver infoRequestReceiver = new InfoRequestReceiver();
+        HeartbeatReceiver heartbeatReceiver = new HeartbeatReceiver();
+
+        MessageReceiver messageReceiver = new MessageReceiver(channels,
+                                                              loginReceiver,
+                                                              userReceiver,
+                                                              chatReceiver,
+                                                              fileReceiver,
+                                                              infoRequestReceiver,
+                                                              heartbeatReceiver);
+
+        LoginManager loginManager = new LoginManager(infoSender, userDataGuard);
+        UserManager userManager = new UserManager(infoSender, userDataGuard);
+        ChatManager chatManager = new ChatManager(userDataGuard, chatDataGuard, infoSender, chatSender);
+        FileManager fileManager = new FileManager(infoSender, fileSender, fileDataGuard, userDataGuard);
+        InfoRequestManager infoRequestManager = new InfoRequestManager(infoSender, heartbeatSender, fileDataGuard);
+        StatusManager statusManager = new StatusManager(statusSender, userDataGuard);
+
+        loginReceiver.register(loginManager);
+        userReceiver.register(userManager);
+        chatReceiver.register(chatManager);
+        fileReceiver.register(fileManager);
+        infoRequestReceiver.register(infoRequestManager);
+        heartbeatReceiver.register(statusManager);
+    }
 }

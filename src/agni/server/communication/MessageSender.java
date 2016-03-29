@@ -6,10 +6,9 @@ import java.nio.channels.SocketChannel;
 import java.util.Vector;
 
 public class MessageSender implements I_MessageSender {
-    private Socket tcpSocket;
-
+    
     public MessageSender(ChannelList channels) {
-
+        // TODO
     }
 
     public void sendMessage(String ipAddress, byte[] message) {

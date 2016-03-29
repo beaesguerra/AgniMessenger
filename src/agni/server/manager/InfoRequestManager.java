@@ -10,15 +10,16 @@ public class InfoRequestManager implements InfoListener{
     private FileDataGuard fileDataGuard;
 
     public InfoRequestManager(InfoSender infoSender,
-                              HeartbeatSender heartbeatSender, FileDataGuard fileDataGuard) {
+                              HeartbeatSender heartbeatSender, 
+                              FileDataGuard fileDataGuard) {
         this.infoSender = infoSender;
         this.fileDataGuard = fileDataGuard;
     }
 
-	@Override
-	public void infoRequest(String ip, byte type) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void infoRequest(String ip, byte type) {
+        // TODO Auto-generated method stub
+        
+    }
 
 }

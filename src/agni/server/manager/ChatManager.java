@@ -12,7 +12,8 @@ public class ChatManager implements ChatListener{
     private InfoSender infoSender;
     private ChatSender chatSender;
 
-    public ChatManager(UserDataGuard userDataGuard, ChatDataGuard chatDataGuard,
+    public ChatManager(UserDataGuard userDataGuard, 
+                       ChatDataGuard chatDataGuard,
                        InfoSender infoSender,
                        ChatSender chatSender) {
         this.chatDataGuard = chatDataGuard;
@@ -20,9 +21,9 @@ public class ChatManager implements ChatListener{
         this.chatSender = chatSender;
     }
 
-	@Override
-	public void chatRequest(String ip, byte[] message) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void chatRequest(String ip, byte[] message) {
+        // TODO Auto-generated method stub
+        
+    }
 }

@@ -14,9 +14,9 @@ public class StatusManager implements StatusListener{
         this.userDataGuard = userDataGuard;
     }
 
-	@Override
-	public void ReceivedHeartBeat(String ip, byte status) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void ReceivedHeartBeat(String ip, byte status) {
+        // TODO Auto-generated method stub
+        
+    }
 }
