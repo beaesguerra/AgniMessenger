@@ -45,11 +45,7 @@ public class StatusSenderTest {
             final byte[] expectedMessage = AgniTestUtilities.hexStringToByteArray(LENGTH_HEX +
             																	  STATUS_BYTE_HEX +
             																	  TEST_FRIEND_HEX);
-            try {
-                oneOf(messageSender).sendMessage(InetAddress.getByName(TEST_IP), expectedMessage);
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            }
+            oneOf(messageSender).sendMessage(TEST_IP, expectedMessage);
         }});
 
         statusSender.sendStatus(TEST_IP, TEST_STATUS_TYPE, TEST_FRIEND);

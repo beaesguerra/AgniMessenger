@@ -2,6 +2,7 @@ package agni.server.communication;
 
 import java.net.InetAddress;
 import java.net.Socket;
+import java.nio.channels.SocketChannel;
 
 public class MessageSender implements I_MessageSender {
     private Socket tcpSocket;
@@ -10,7 +11,7 @@ public class MessageSender implements I_MessageSender {
 
     }
 
-    public void sendMessage(InetAddress dest_ip, byte[] message) {
+    public void sendMessage(String ipAddress, byte[] message) {
         // TODO
     }
 }
