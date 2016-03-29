@@ -1,11 +1,12 @@
 package agni.server.manager;
 
+import agni.server.dataguard.I_UserDataGuard;
 import agni.server.dataguard.UserDataGuard;
 import agni.server.sender.InfoSender;
 
 public class LoginManager {
     private InfoSender infoSender;
-    private UserDataGuard userDataGuard;
+    private I_UserDataGuard userDataGuard;
 
     public LoginManager(InfoSender infoSender,
                         UserDataGuard userDataGuard) {

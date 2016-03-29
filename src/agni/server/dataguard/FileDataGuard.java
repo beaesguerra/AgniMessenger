@@ -1,21 +1,34 @@
 package agni.server.dataguard;
 
+import java.util.Date;
+
 public class FileDataGuard {
 //  private database;
 
-    public FileDataGuard() {
+    public FileDataGuard(String dbname, String username, String password) {
 
     }
 
-    public void isCached(String user, String file) {
-
+    public Boolean isCached(String filepath) {
+        return null;
     }
 
-    public void cacheFile(String user, String file) {
-
+    public Date fileUploadDateTime(String filepath) {
+        return null;
     }
 
-    public void getFile(String user, String file) {
+    /*
+     * File size in bytes
+     */
+    public long fileSize(String filepath) {
+        return -1;
+    }
+
+    public String fileOwner(String filepath) {
+        return null;
+    }
+
+    public void cacheFile(String filepath, String owner, long filesize) {
 
     }
 }
