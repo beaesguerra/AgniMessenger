@@ -1,9 +1,12 @@
 package agni.client.communication;
 
+import java.awt.TrayIcon.MessageType;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.Arrays;
+
 import agni.client.receiver.*;;
 
 public class MessageReceiver implements Runnable {
@@ -37,13 +40,22 @@ public class MessageReceiver implements Runnable {
 
     @Override
     public void run() {
+    	// Declaring incoming buffer and line to read to
+    	String line = null;
+    	BufferedReader inBuffer = null;
+    	byte[] byteLine = null;
+    	
         // Initialize inputBuffer
     	try {
-			BufferedReader inBuffer =
+			inBuffer =
 			        new BufferedReader(new InputStreamReader(tcpSocket.getInputStream()));
+			line = inBuffer.readLine();
+	    	byteLine = line.getBytes();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+    	// messageType = 5th bit
+    	String messageType = Arrays.toString(Arrays.copyOfRange(byteLine, 4, 5));
     	
     }
 }
