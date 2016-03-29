@@ -29,8 +29,11 @@ import agni.server.sender.HeartbeatSender;
 import agni.server.sender.InfoSender;
 import agni.server.sender.StatusSender;
 
+import agni.server.communication.ChannelList;
+import agni.server.communication.IpChannelPair;
+
 public class AgniServer {
-	static Vector<IPChannelPair<String,SocketChannel>> channels; 
+	static Vector<IpChannelPair> channels; 
 
 	public static void main(String[] args) {
 		MessageSender messageSender = new MessageSender(channels); 
@@ -68,10 +71,5 @@ public class AgniServer {
 		fileReceiver.register(fileManager);
 		infoRequestReceiver.register(infoRequestManager);
 		heartbeatReceiver.register(statusManager);
-		
-		
-		
-
 	}
-
 }

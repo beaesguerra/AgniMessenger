@@ -5,16 +5,14 @@ import java.net.Socket;
 import java.nio.channels.SocketChannel;
 import java.util.Vector;
 
-import agni.server.IPChannelPair;
-
 public class MessageSender implements I_MessageSender {
     private Socket tcpSocket;
 
-    public MessageSender(Vector<IPChannelPair<String, SocketChannel>> channels) {
+    public MessageSender(Vector<IpChannelPair> channels) {
 
     }
 
-    public void sendMessage(InetAddress dest_ip, byte[] message) {
+    public void sendMessage(String ipAddress, byte[] message) {
         // TODO
     }
 }

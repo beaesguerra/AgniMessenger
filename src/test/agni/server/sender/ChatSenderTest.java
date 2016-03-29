@@ -42,19 +42,16 @@ public class ChatSenderTest {
 
     @Test
     public void normalMessage() {
-        final String LENGTH_HEX = "00000024"; // 36 base 10
-        final byte[] expectedMessage = AgniTestUtilities.hexStringToByteArray(LENGTH_HEX +
-                                                                              CHAT_BYTE_HEX +
-                                                                              TEST_SENDER_LENGTH_HEX +
-                                                                              TEST_SENDER_NAME_HEX +
-                                                                              TEST_MESSAGE_HEX);
-        try {
-			context.checking(new Expectations() {{
-			    oneOf(messageSender).sendMessage(InetAddress.getByName(TEST_IP), expectedMessage);
-			}});
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		}
+        context.checking(new Expectations() {{
+            final String LENGTH_HEX = "00000024"; // 36 base 10
+            final byte[] expectedMessage = AgniTestUtilities.hexStringToByteArray(LENGTH_HEX +
+                                                                                  CHAT_BYTE_HEX +
+                                                                                  TEST_SENDER_LENGTH_HEX +
+                                                                                  TEST_SENDER_NAME_HEX +
+                                                                                  TEST_MESSAGE_HEX);
+
+            oneOf(messageSender).sendMessage(TEST_IP, expectedMessage);
+        }});
 
         chatSender.sendChat(TEST_IP, TEST_USER, TEST_MESSAGE);
         context.assertIsSatisfied();

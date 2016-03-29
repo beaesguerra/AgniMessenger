@@ -3,7 +3,6 @@ package agni.server.communication;
 import java.nio.channels.SocketChannel;
 import java.util.Vector;
 
-import agni.server.IPChannelPair;
 import agni.server.receiver.ChatReceiver;
 import agni.server.receiver.FileReceiver;
 import agni.server.receiver.HeartbeatReceiver;
@@ -15,7 +14,7 @@ public class MessageReceiver implements Runnable {
 	
 
 
-	public MessageReceiver(Vector<IPChannelPair<String, SocketChannel>> channels, LoginReceiver loginReceiver,
+	public MessageReceiver(Vector<IpChannelPair> channels, LoginReceiver loginReceiver,
 			UserReceiver userReceiver, ChatReceiver chatReceiver, FileReceiver fileReceiver,
 			InfoRequestReceiver infoRequestReceiver, HeartbeatReceiver heartbeatReceiver) {
 		// TODO Auto-generated constructor stub
