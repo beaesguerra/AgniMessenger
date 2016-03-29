@@ -2,9 +2,7 @@ package agni.client;
 
 import agni.client.communication.*;
 import agni.client.receiver.*;
-
 import java.net.Socket;
-
 import agni.client.action.*;
 import agni.client.view.*;
 
@@ -17,7 +15,7 @@ public class AgniClient {
     public static void main(String[] args) throws Exception {
     	
     	if (args.length != 2) {
-            System.out.println("Usage: TCPClient <Server IP> <Server Port>");
+            System.out.println("Usage: Client <Server IP> <Server Port>");
             System.exit(1);
         }
 
