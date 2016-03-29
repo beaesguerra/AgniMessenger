@@ -21,15 +21,20 @@ public class AgniClient {
 
         // Initialize a client socket connection to the server
         Socket clientSocket = new Socket(args[0], Integer.parseInt(args[1]));
-        
-        MessageSender messageSender = new MessageSender(clientSocket);
-        MessageReceiver messageReceiver = new MessageReceiver(clientSocket);
-
+       
         HeartbeatReceiver heartbeatReceiver = new HeartbeatReceiver();
         InformationReceiver informationReceiver = new InformationReceiver();
         StatusReceiver statusReceiver = new StatusReceiver();
         ChatReceiver chatReceiver = new ChatReceiver();
         FileReceiver fileReceiver = new FileReceiver();
+        
+        MessageSender messageSender = new MessageSender(clientSocket);
+        MessageReceiver messageReceiver = new MessageReceiver(clientSocket,
+        													  heartbeatReceiver,
+        													  informationReceiver,
+        													  statusReceiver,
+        													  chatReceiver,
+        													  fileReceiver);
 
         LoginActionHandler loginActionHandler = new LoginActionHandler(messageSender);
         InfoRequestActionHandler infoRequestActionHandler = new InfoRequestActionHandler(messageSender);
