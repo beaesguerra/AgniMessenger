@@ -14,7 +14,7 @@ public class MessageReceiver implements Runnable {
 	
 
 
-	public MessageReceiver(Vector<IpChannelPair> channels, LoginReceiver loginReceiver,
+	public MessageReceiver(ChannelList channels, LoginReceiver loginReceiver,
 			UserReceiver userReceiver, ChatReceiver chatReceiver, FileReceiver fileReceiver,
 			InfoRequestReceiver infoRequestReceiver, HeartbeatReceiver heartbeatReceiver) {
 		// TODO Auto-generated constructor stub

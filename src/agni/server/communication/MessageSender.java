@@ -8,7 +8,7 @@ import java.util.Vector;
 public class MessageSender implements I_MessageSender {
     private Socket tcpSocket;
 
-    public MessageSender(Vector<IpChannelPair> channels) {
+    public MessageSender(ChannelList channels) {
 
     }
 

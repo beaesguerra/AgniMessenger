@@ -33,9 +33,10 @@ import agni.server.communication.ChannelList;
 import agni.server.communication.IpChannelPair;
 
 public class AgniServer {
-	static Vector<IpChannelPair> channels; 
+	
 
 	public static void main(String[] args) {
+		ChannelList channels = new ChannelList(); 
 		MessageSender messageSender = new MessageSender(channels); 
 		
 		InfoSender infoSender = new InfoSender(messageSender); 
