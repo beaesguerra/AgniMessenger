@@ -1,7 +1,5 @@
 package agni.client.receiver;
 
-import agni.client.view.AgniClientView;
-
 public class InformationReceiver extends MessageParser {
 
     public InformationReceiver() {
