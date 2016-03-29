@@ -15,16 +15,16 @@ public class HeartbeatSender {
         this.messageSender = messageSender;
     }
 
-    public void sendHeartbeat(String dest_ip) {
-    	if(dest_ip == null){
-    		throw new NullPointerException();
-    	} else {
-    		byte[] packedMessage = new byte[NUM_BYTES];
-    		System.arraycopy(intToByteArray(NUM_BYTES), 0, packedMessage, 0, 4); // 4, number of bytes in int
-    		Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
+    public void sendHeartbeat(String destIp) {
+        if (destIp == null) {
+            throw new NullPointerException();
+        } else {
+            byte[] packedMessage = new byte[NUM_BYTES];
+            System.arraycopy(intToByteArray(NUM_BYTES), 0, packedMessage, 0, 4); // 4, number of bytes in int
+            Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
 
-    		messageSender.sendMessage(dest_ip, packedMessage);
-    	}
+            messageSender.sendMessage(destIp, packedMessage);
+        }
     }
 
     public static final byte[] intToByteArray(int value) {
