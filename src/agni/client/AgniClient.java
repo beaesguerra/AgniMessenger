@@ -2,18 +2,30 @@ package agni.client;
 
 import agni.client.communication.*;
 import agni.client.receiver.*;
+
+import java.net.Socket;
+
 import agni.client.action.*;
 import agni.client.view.*;
 
 public class AgniClient {
-
+	
     public AgniClient() {
-
+    	
     }
 
-    public static void main(String[] args) {
-        MessageSender messageSender = new MessageSender();
-        MessageReceiver messageReceiver = new MessageReceiver();
+    public static void main(String[] args) throws Exception {
+    	
+    	if (args.length != 2) {
+            System.out.println("Usage: TCPClient <Server IP> <Server Port>");
+            System.exit(1);
+        }
+
+        // Initialize a client socket connection to the server
+        Socket clientSocket = new Socket(args[0], Integer.parseInt(args[1]));
+        
+        MessageSender messageSender = new MessageSender(clientSocket);
+        MessageReceiver messageReceiver = new MessageReceiver(clientSocket);
 
         HeartbeatReceiver heartbeatReceiver = new HeartbeatReceiver();
         InformationReceiver informationReceiver = new InformationReceiver();
