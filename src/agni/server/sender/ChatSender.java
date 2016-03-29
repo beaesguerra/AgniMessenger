@@ -32,12 +32,7 @@ public class ChatSender {
                            srcNameBytes.length +
                            messageBytes.length;
             byte[] packedMessage = new byte[numBytes];
-            System.out.println("numBytes is " + numBytes);
-            System.out.println("srcNameLength is " + srcNameBytes.length);
-            System.out.println("messageLength is " + messageBytes.length);
 
-            // fill message to send
-            // Arrays.fill(packedMessage, 0, 4, intToByteArray(numBytes));
             System.arraycopy(intToByteArray(numBytes), 0, packedMessage, 0, 4); // 4, number of bytes in int
             Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
             Arrays.fill(packedMessage, 5, 6, (byte)srcNameBytes.length);
