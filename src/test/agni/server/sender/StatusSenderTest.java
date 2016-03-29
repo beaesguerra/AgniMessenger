@@ -44,6 +44,7 @@ public class StatusSenderTest {
         context.checking(new Expectations() {{
             final byte[] expectedMessage = AgniTestUtilities.hexStringToByteArray(LENGTH_HEX +
             																	  STATUS_BYTE_HEX +
+                                                                                  TEST_STATUS_TYPE_HEX +
             																	  TEST_FRIEND_HEX);
             oneOf(messageSender).sendMessage(TEST_IP, expectedMessage);
         }});
