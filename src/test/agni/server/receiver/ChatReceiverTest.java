@@ -58,7 +58,7 @@ public class ChatReceiverTest {
 	}
 	
 	
-	@Test
+	@Test (expected = IndexOutOfBoundsException.class)
 	public void nullChannelTest() {
 		context.checking(new Expectations() {{
 			final String expectedIp = "192.168.1.1";
@@ -68,7 +68,7 @@ public class ChatReceiverTest {
 		context.assertIsSatisfied();
 	}
 	
-	@Test
+	@Test(expected = NullPointerException.class)
 	public void nullMessageTest() {
 		context.checking(new Expectations() {{
 			final String expectedIp = "192.168.1.1";
