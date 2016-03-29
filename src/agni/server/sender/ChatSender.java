@@ -16,8 +16,8 @@ public class ChatSender {
         this.messageSender = messageSender;
     }
 
-    public void sendChat(String dest_ip, String srcName, String message) {
-        if(dest_ip == null || srcName == null || message == null){
+    public void sendChat(String destIp, String srcName, String message) {
+        if (destIp == null || srcName == null || message == null) {
             throw new NullPointerException();
         }
         if (!isAllAscii(srcName) || !isAllAscii(message)) {
@@ -41,7 +41,7 @@ public class ChatSender {
             System.arraycopy(messageBytes, 0,
                              packedMessage, 6 + srcNameBytes.length, messageBytes.length);
 
-            messageSender.sendMessage(dest_ip, packedMessage);
+            messageSender.sendMessage(destIp, packedMessage);
         }
     }
 
