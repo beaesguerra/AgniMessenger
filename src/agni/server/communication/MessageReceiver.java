@@ -2,20 +2,25 @@ package agni.server.communication;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.nio.charset.CharsetDecoder;
 import java.util.Iterator;
 import java.util.Set;
 
 public class MessageReceiver {
-
     private Selector selector = null;
     private ServerSocketChannel channel = null;
-
+    private ChannelList channelList = null;
+    
+    public MessageReceiver(ChannelList cl) {
+    	channelList = cl;
+    }
 /*
  *@requires server port number
  *@promises selector initialized and ready for connection requests
@@ -37,80 +42,129 @@ public class MessageReceiver {
 		}
 
     }
-
+    
+/*
+ * 
+ * 
+ */
+    private void saveIpChannelPair(SocketChannel channel) {
+    	String ip = null;
+    	try {
+			ip = channel.getRemoteAddress().toString();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	channelList.addPair(ip, channel);
+    }
+    
+/*
+ * 
+ * 
+ */
+    private void selectReceiver(String ip, ByteBuffer buffer){
+    	byte type = buffer.get(4);
+    	
+    	switch (type) {
+    	
+    	case 1: type = 0x01;
+    	break;
+    	
+    	case 2: type = 0x02;
+    	break;
+    	
+    	case 3: type = 0x03;
+    	break;
+    	
+    	case 4: type = 0x04;
+    	break;
+    	
+    	case 5: type = 0x05;
+    	break;
+    	
+    	case 6: type = 0x06;
+    	break;
+    	
+    	}
+    	
+    }
+    
 /*
  *
  * 
  * 
  */
-   public void waitForClients() {
-    try {
+    public void waitForClients() {
+	   boolean terminated = false;
+	   ByteBuffer inBuffer = null;
+	   ByteBuffer outBuffer = null;
+       CharsetDecoder decoder = charset.newDecoder();  
+	   int BUFFERSIZE = 32000;
+	   int bytesRecv = 0;
+	   
+	   try {
         //boolean terminated = false;
         while (!terminated) 
         {
-            if (selector.select(500) < 0)
-            {
-                System.out.println("select() failed");
-                System.exit(1);
-            }
-            
-            // Get set of ready sockets
-            Set readyKeys = selector.selectedKeys();
-            Iterator readyItor = readyKeys.iterator();
+				if (selector.select(500) < 0) {
+					System.out.println("select() failed");
+					System.exit(1);
+				}
 
-            // Walk through the ready set
-            while (readyItor.hasNext()) 
-            {
-                // Get key from set
-                SelectionKey key = (SelectionKey)readyItor.next();
+				// Get set of ready sockets
+				Set readyKeys = selector.selectedKeys();
+				Iterator readyItor = readyKeys.iterator();
 
-                // Remove current entry
-                readyItor.remove();
+				// Walk through the ready set
+				while (readyItor.hasNext()) {
+					// Get key from set
+					SelectionKey key = (SelectionKey) readyItor.next();
 
-                // Accept new connections, if any
-                if (key.isAcceptable())
-                {
-                    
-                    SocketChannel cchannel = ((ServerSocketChannel)key.channel()).accept();
-                    cchannel.configureBlocking(false);
-                    System.out.println("Accept conncection from " + cchannel.socket().toString());
-                    
-                    // Register the new connection for read operation
-                    cchannel.register(selector, SelectionKey.OP_READ);
-                } 
-                else 
-                {
-                    SocketChannel cchannel = (SocketChannel)key.channel();
-                    if (key.isReadable())
-                    {
-                        //Socket socket = cchannel.socket();
-           
-                        // Open input and output streams
-                        inBuffer = ByteBuffer.allocateDirect(BUFFERSIZE);
-                        cBuffer = CharBuffer.allocate(BUFFERSIZE);
-                         
-                        // Read from socket
-                        bytesRecv = cchannel.read(inBuffer);
-                        if (bytesRecv <= 0)
-                        {
-                            System.out.println("read() error, or connection closed");
-                            key.cancel();  // deregister the socket
-                            continue;
-                        }
-                        inBuffer.flip();      // make buffer available
-                        decoder.decode(inBuffer, cBuffer, false);
-                        cBuffer.flip();
-                        line = cBuffer.toString();
-                        commandHandler(line,cchannel);
-                   }
-                }
-            } // end of while (readyItor.hasNext()) 
-        } // end of while (!terminated)
-    }
-    catch (IOException e) {
-        System.out.println(e);
-    }
+					// Remove current entry
+					readyItor.remove();
 
-   }
+					// Accept new connections, if any
+					if (key.isAcceptable()) {
+
+						SocketChannel cchannel = ((ServerSocketChannel) key
+								.channel()).accept();
+						cchannel.configureBlocking(false);
+						System.out.println("Accept conncection from "
+								+ cchannel.socket().toString());
+
+						// Register the new connection for read operation
+						cchannel.register(selector, SelectionKey.OP_READ);
+						saveIpChannelPair(cchannel);
+					} else {
+						SocketChannel cchannel = (SocketChannel) key.channel();
+						if (key.isReadable()) {
+							// Socket socket = cchannel.socket();
+
+							// Open input and output streams
+							inBuffer = ByteBuffer.allocateDirect(BUFFERSIZE);
+							outBuffer = ByteBuffer.allocate(BUFFERSIZE);
+
+							// Read from socket
+							bytesRecv = cchannel.read(inBuffer);
+							if (bytesRecv <= 0) {
+								System.out
+										.println("read() error, or connection closed");
+								key.cancel(); // deregister the socket
+								channelList.removeIP(cchannel.getRemoteAddress().toString());
+								continue;
+							}
+							inBuffer.flip(); // make buffer available
+							outBuffer.put(inBuffer);
+							inBuffer.clear();
+							outBuffer.flip(); //TODO not sure if this is right
+							selectReceiver(cchannel.getRemoteAddress().toString(), outBuffer);
+													}
+					}
+				} // end of while (readyItor.hasNext())
+			} // end of while (!terminated)
+		} catch (IOException e) {
+			System.out.println(e);
+		}
+
+	}
 }
-
