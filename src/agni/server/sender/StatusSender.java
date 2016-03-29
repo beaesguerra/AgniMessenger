@@ -1,9 +1,9 @@
 package agni.server.sender;
 
-import agni.server.communication.I_MessageSender;
+import agni.server.communication.MessageSender;
 
 public class StatusSender {
-    private I_MessageSender messageSender;
+    private MessageSender messageSender;
 
     public enum Status {
     	OFFLINE,
@@ -11,7 +11,7 @@ public class StatusSender {
     	AWAY
     }
 
-    public StatusSender(I_MessageSender messageSender) {
+    public StatusSender(MessageSender messageSender) {
         this.messageSender = messageSender;
     }
 
