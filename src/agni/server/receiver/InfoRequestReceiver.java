@@ -25,7 +25,7 @@ public class InfoRequestReceiver implements MessageParser {
      * @promises type as a byte
      */
     private byte parseMessage(ByteBuffer message) {
-        byte parsedMessage = message.get(8);
+        byte parsedMessage = message.get(5);
         return parsedMessage;
     }
 

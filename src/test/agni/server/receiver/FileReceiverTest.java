@@ -15,7 +15,7 @@ import org.junit.Test;
 public class FileReceiverTest {
     final int port = 99;
     final int headerBytes = 5;
-    final byte type = 1;
+    final byte type = 0x01;
     final String testString = "Hello World!";
     byte[] testArray = null;
     int totalMessageLength;
@@ -40,7 +40,7 @@ public class FileReceiverTest {
 
         //populate message buffer
         testBuffer.putInt(totalMessageLength);
-        testBuffer.putInt(type);
+        testBuffer.put(type);
         testBuffer.put(testArray);
     }
 

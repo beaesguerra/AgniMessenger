@@ -14,7 +14,7 @@ import org.junit.Test;
 
 public class ChatReceiverTest {
 	final int headerBytes = 5;
-	final byte type = 1;
+	final byte type = 0x01;
 	final String testIp = "192.168.1.1";
 	final String testString = "Hello World!";
 	byte[] testArray = null;	
@@ -35,7 +35,7 @@ public class ChatReceiverTest {
 		//populate message buffer
 		testBuffer = ByteBuffer.wrap(new byte[100]);
 		testBuffer.putInt(totalMessageLength);
-		testBuffer.putInt(type);
+		testBuffer.put(type);
 		testBuffer.put(testArray);
 
 		chatReceiver = new ChatReceiver();

@@ -16,7 +16,7 @@ import agni.server.receiver.UserReceiver;
 public class UserReceiverTest {
 
 	final int headerBytes = 5;
-	final byte type = 1;
+	final byte type = 0x01;
 	final String testIp = "192.168.1.1";
 	final byte testAction = 0x01;
 	int totalMessageLength; 
@@ -35,7 +35,7 @@ public class UserReceiverTest {
 		//populate message buffer
 		testBuffer = ByteBuffer.wrap(new byte[100]);
 		testBuffer.putInt(totalMessageLength);
-		testBuffer.putInt(type);
+		testBuffer.put(type);
 		testBuffer.put(testAction);
 
 		userReceiver = new UserReceiver();

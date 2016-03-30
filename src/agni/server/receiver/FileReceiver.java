@@ -25,7 +25,7 @@ public class FileReceiver implements MessageParser {
         int length = message.remaining();
         byte[] byteArray = new byte[length];
         message.get(byteArray);
-        byte[] parsedMessage = Arrays.copyOfRange(byteArray,8,length);//buffer seems to add an extra 3 bytes
+        byte[] parsedMessage = Arrays.copyOfRange(byteArray,5,length);//buffer seems to add an extra 3 bytes
         return parsedMessage;
     }
 

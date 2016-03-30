@@ -26,7 +26,7 @@ public class HeartbeatReceiver implements MessageParser {
      * @promises status as byte
      */
     private byte parseMessage(ByteBuffer message) {
-        byte parsedMessage = message.get(8);
+        byte parsedMessage = message.get(5);
         return parsedMessage;
     }
 

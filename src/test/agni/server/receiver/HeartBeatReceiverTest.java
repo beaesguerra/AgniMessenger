@@ -15,7 +15,7 @@ import agni.server.receiver.HeartbeatReceiver;
 
 public class HeartBeatReceiverTest {
 	final int headerBytes = 5;
-	final byte type = 1;
+	final byte type = 0x01;
 	final String testIp = "192.168.1.1";
 	final byte testStatus = 0x01;
 	int totalMessageLength; 
@@ -34,7 +34,7 @@ public class HeartBeatReceiverTest {
 		//populate message buffer
 		testBuffer = ByteBuffer.wrap(new byte[100]);
 		testBuffer.putInt(totalMessageLength);
-		testBuffer.putInt(type);
+		testBuffer.put(type);
 		testBuffer.put(testStatus);
 
 		hbReceiver = new HeartbeatReceiver();

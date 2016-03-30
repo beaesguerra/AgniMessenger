@@ -26,9 +26,11 @@ public class LoginReceiver implements MessageParser {
      * @promises username and password as strings
      */
     private String[] parseMessage(ByteBuffer message) {
+    	message.flip();
         int length = message.remaining();
-        byte[] messageArray = new byte[length];
-        message.get(messageArray, 5, (length));
+        byte[] byteArray = new byte[length];
+        message.get(byteArray);
+        byte[] messageArray = Arrays.copyOfRange(byteArray,5,length);//buffer seems to add an extra 3 bytes
 
         String[] parsedMessage = new String[2];
         int usernameLength = messageArray[0];
@@ -40,7 +42,9 @@ public class LoginReceiver implements MessageParser {
 
 
     @Override
-    public void receiveMessage(String ip, ByteBuffer message) {  	
+    public void receiveMessage(String ip, ByteBuffer message) {  
+    	if(ip==null || message == null)
+    		throw new IllegalArgumentException();
         String[] parsedMessage = this.parseMessage(message);
         notifyLoginRequest(ip, parsedMessage[0], parsedMessage[1]);  
     }
