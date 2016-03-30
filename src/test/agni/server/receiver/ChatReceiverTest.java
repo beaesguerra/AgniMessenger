@@ -33,7 +33,7 @@ public class ChatReceiverTest {
 
 		
 		//populate message buffer
-		testBuffer = ByteBuffer.wrap(new byte[20]);
+		testBuffer = ByteBuffer.wrap(new byte[100]);
 		testBuffer.putInt(totalMessageLength);
 		testBuffer.putInt(type);
 		testBuffer.put(testArray);

@@ -27,14 +27,15 @@ public class HeartbeatReceiver implements MessageParser {
      * @promises status as byte
      */
     private byte parseMessage(ByteBuffer message) {
-        byte parsedMessage = message.get(5);
+        byte parsedMessage = message.get(8);
         return parsedMessage;
     }
 
     @Override
     public void receiveMessage(String ip, ByteBuffer message) {
+    	if(ip==null || message == null)
+    		throw new IllegalArgumentException();
         byte parsedMessage = this.parseMessage(message);
-
         notifyHeartbeat(ip, parsedMessage);	
     }
 }
