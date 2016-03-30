@@ -1,11 +1,12 @@
 package agni.server.sender;
 
+import agni.server.communication.I_MessageSender;
 import agni.server.communication.MessageSender;
 
 public class ChatSender {
-    private MessageSender messageSender;
+    private I_MessageSender messageSender;
 
-    public ChatSender(MessageSender messageSender) {
+    public ChatSender(I_MessageSender messageSender) {
         this.messageSender = messageSender;
     }
 
