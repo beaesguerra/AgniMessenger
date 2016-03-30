@@ -2,7 +2,7 @@ package agni.server.dataguard;
 
 import java.util.Date;
 
-public class FileDataGuard {
+public class FileDataGuard implements I_FileDataGuard{
 //  private database;
 
     public FileDataGuard(String dbname, String username, String password) {
