@@ -13,10 +13,26 @@ import java.nio.charset.CharsetDecoder;
 import java.util.Iterator;
 import java.util.Set;
 
+import agni.server.receiver.ChatReceiver;
+import agni.server.receiver.FileReceiver;
+import agni.server.receiver.HeartbeatReceiver;
+import agni.server.receiver.InfoRequestReceiver;
+import agni.server.receiver.LoginReceiver;
+import agni.server.receiver.UserReceiver;
+
 public class MessageReceiver {
     private Selector selector = null;
     private ServerSocketChannel channel = null;
     private ChannelList channelList = null;
+    
+    ChatReceiver chatReceiver = null;
+    FileReceiver fileReceiver = null;
+    HeartbeatReceiver heartBeatReceiver = null;
+    InfoRequestReceiver infoRequestReceiver = null;
+    LoginReceiver loginReceiver = null;
+    UserReceiver userActionReceiver = null;
+    
+    
     
     public MessageReceiver(ChannelList cl) {
     	channelList = cl;
@@ -67,22 +83,28 @@ public class MessageReceiver {
     	
     	switch (type) {
     	
-    	case 1: type = 0x01;
+    	case 1: type = 0x01;//Heartbeat
+    	heartBeatReceiver.receiverMessage(ip, buffer);
     	break;
     	
-    	case 2: type = 0x02;
+    	case 2: type = 0x02;//Login
+    	loginReceiver.receiverMessage(ip, buffer);
     	break;
     	
-    	case 3: type = 0x03;
+    	case 3: type = 0x03;//information Request
+    	infoRequestReceiver.receiverMessage(ip, buffer);
     	break;
     	
-    	case 4: type = 0x04;
+    	case 4: type = 0x04;//User Action
+    	userActionReceiver.receiverMessage(ip, buffer);
     	break;
     	
-    	case 5: type = 0x05;
+    	case 5: type = 0x05;//chat
+    	chatReceiver.receiverMessage(ip, buffer);
     	break;
     	
-    	case 6: type = 0x06;
+    	case 6: type = 0x06;//File
+    	fileReceiver.receiverMessage(ip, buffer);
     	break;
     	
     	}
