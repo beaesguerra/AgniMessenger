@@ -1,26 +1,20 @@
 package test.agni.server.receiver;
 
-import static org.junit.Assert.*;
-
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.channels.SocketChannel;
-
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import agni.server.receiver.ChatListener;
-import agni.server.receiver.ChatReceiver;
-import agni.server.receiver.InfoListener;
-import agni.server.receiver.InfoRequestReceiver;
+import agni.server.receiver.LoginListener;
+import agni.server.receiver.LoginReceiver;
+
 
 public class LoginReceiverTest {
 	final int headerBytes = 5;
 	final byte usernameLength = 0x07;
+	final byte type = 0x02;
 	final String testIp = "192.168.1.1";
 	final String testString = "JinglesPassw0rd!";
 	byte[] testArray = null;	
@@ -28,8 +22,8 @@ public class LoginReceiverTest {
 	ByteBuffer testBuffer = null;
 
 	Mockery context = new Mockery();
-	ChatListener mockChatListener;
-	ChatReceiver chatReceiver;
+	LoginListener mockLoginListener;
+	LoginReceiver loginReceiver;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -41,13 +35,14 @@ public class LoginReceiverTest {
 		//populate message buffer
 		testBuffer = ByteBuffer.wrap(new byte[100]);
 		testBuffer.putInt(totalMessageLength);
+		testBuffer.put(type);
 		testBuffer.put(usernameLength);
 		testBuffer.put(testArray);
 
-		chatReceiver = new ChatReceiver();
+		loginReceiver = new LoginReceiver();
 		
-		mockChatListener = context.mock(ChatListener.class);
-		chatReceiver.register(mockChatListener);
+		mockLoginListener = context.mock(LoginListener.class);
+		loginReceiver.register(mockLoginListener);
 	}
 
 	@After
@@ -58,9 +53,9 @@ public class LoginReceiverTest {
 	@Test
 	public void correctInputTest() {
 		context.checking(new Expectations() {{
-			oneOf(mockChatListener).chatRequest("192.168.1.1", testArray);
+			oneOf(mockLoginListener).loginRequest("192.168.1.1", "Jingles", "Passw0rd!");
 		}});
-		chatReceiver.receiveMessage(testIp, testBuffer);
+		loginReceiver.receiveMessage(testIp, testBuffer);
 		context.assertIsSatisfied();
 	}
 	
@@ -68,20 +63,18 @@ public class LoginReceiverTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void nullIpTest() {
 		context.checking(new Expectations() {{
-			final String expectedIp = "192.168.1.1";
-			oneOf(mockChatListener).chatRequest(expectedIp, testArray);
+			oneOf(mockLoginListener).loginRequest("192.168.1.1", "Jingles", "Passw0rd!");
 		}});
-		chatReceiver.receiveMessage(null, testBuffer);
+		loginReceiver.receiveMessage(null, testBuffer);
 		context.assertIsSatisfied();
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void nullMessageTest() {
 		context.checking(new Expectations() {{
-			final String expectedIp = "192.168.1.1";
-			oneOf(mockChatListener).chatRequest(expectedIp, testArray);
+			oneOf(mockLoginListener).loginRequest("192.168.1.1", "Jingles", "Passw0rd!");
 		}});
-		chatReceiver.receiveMessage(testIp, null);
+		loginReceiver.receiveMessage(testIp, null);
 		context.assertIsSatisfied();
 	}
 	

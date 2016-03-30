@@ -1,9 +1,6 @@
 package test.agni.server.receiver;
 
-import static org.junit.Assert.*;
-
 import java.nio.ByteBuffer;
-
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.After;

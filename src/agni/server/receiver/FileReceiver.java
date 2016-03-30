@@ -1,5 +1,6 @@
 package agni.server.receiver;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Vector;
@@ -11,9 +12,9 @@ public class FileReceiver implements MessageParser {
         fileListeners = new Vector<FileListener>();
     }
 
-    private void notifyFileRequest(String ip, String EOF, String fileName, byte[] file) {
+    private void notifyFileRequest(String ip, byte EOF, String fileName, byte[] file) {
         for ( FileListener  fListener : fileListeners )
-            fListener.fileRequest(ip, file);
+            fListener.fileRequest(ip, EOF, fileName, file);
     }
 
     public void register(FileListener fListener) {
@@ -31,14 +32,21 @@ public class FileReceiver implements MessageParser {
 
     @Override
     public void receiveMessage(String ip, ByteBuffer message) {
+    	String fileName = null;
+    	if(ip==null || message == null)
+    		throw new IllegalArgumentException();
         byte[] parsedMessage = parseMessage(message);
-
+        byte EOF = parsedMessage[0];
         int filenameLength = parsedMessage[1];
-        String EOF = Arrays.toString(Arrays.copyOfRange(parsedMessage, 0, 1));
-        String filename = Arrays.toString(Arrays.copyOfRange(parsedMessage, 2, (filenameLength + 2)));
+        try {
+        	fileName = new String(Arrays.copyOfRange(parsedMessage, 2, (filenameLength + 2)), "us-ascii");
+		} catch (UnsupportedEncodingException e) {
+			System.out.println("UnsupportedEncodingException while parsing Login info");
+			e.printStackTrace();
+		}
         byte[] file = Arrays.copyOfRange(parsedMessage, (filenameLength + 2), parsedMessage.length );
 
-        notifyFileRequest(ip, EOF, filename, file);	
+        notifyFileRequest(ip, EOF, fileName, file);	
     }
 
 }

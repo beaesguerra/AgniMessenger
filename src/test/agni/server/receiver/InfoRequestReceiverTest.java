@@ -1,9 +1,6 @@
 package test.agni.server.receiver;
 
-import static org.junit.Assert.*;
-
 import java.nio.ByteBuffer;
-
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.After;
@@ -16,7 +13,7 @@ import agni.server.receiver.InfoListener;
 
 public class InfoRequestReceiverTest {
 	final int headerBytes = 5;
-	final byte type = 0x01;
+	final byte type = 0x03;
 	final String testIp = "192.168.1.1";
 	final byte testStatus = 0x01;
 	int totalMessageLength; 

@@ -1,5 +1,6 @@
 package agni.server.receiver;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Vector;
@@ -30,13 +31,17 @@ public class LoginReceiver implements MessageParser {
         int length = message.remaining();
         byte[] byteArray = new byte[length];
         message.get(byteArray);
-        byte[] messageArray = Arrays.copyOfRange(byteArray,5,length);//buffer seems to add an extra 3 bytes
+        byte[] messageArray = Arrays.copyOfRange(byteArray,5,length);
 
         String[] parsedMessage = new String[2];
         int usernameLength = messageArray[0];
-        parsedMessage[0] = Arrays.toString(Arrays.copyOfRange(messageArray, 1, (usernameLength + 1)));
-        parsedMessage[1] = Arrays.toString(Arrays.copyOfRange(messageArray, (usernameLength + 1), messageArray.length ));
-
+        try {
+			parsedMessage[0] = new String(Arrays.copyOfRange(messageArray, 1, (usernameLength + 1)), "us-ascii");
+	        parsedMessage[1] = new String(Arrays.copyOfRange(messageArray, (usernameLength + 1), messageArray.length), "us-ascii");
+		} catch (UnsupportedEncodingException e) {
+			System.out.println("UnsupportedEncodingException while parsing Login info");
+			e.printStackTrace();
+		}
         return parsedMessage;
     }
 
