@@ -2,77 +2,81 @@ package test.agni.server.receiver;
 
 import static org.junit.Assert.*;
 
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.channels.SocketChannel;
 
+import org.jmock.Expectations;
+import org.jmock.Mockery;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import agni.server.receiver.UserListener;
+import agni.server.receiver.UserReceiver;
+
 public class UserReceiverTest {
-    final int port = 99;
-    final int headerBytes = 5;
-    final byte type = 1;
-    final String testString = "Hello World!";
-    byte[] testArray = null;
-    int totalMessageLength;
-    ByteBuffer testBuffer = null;
 
-    SocketAddress address = null;
-    SocketChannel testChannel;
+	final int headerBytes = 5;
+	final byte type = 1;
+	final String testIp = "192.168.1.1";
+	final byte testAction = 0x01;
+	int totalMessageLength; 
+	ByteBuffer testBuffer = null;
 
-    String expectedIp = "192.168.1.1";
-    byte[] expectedTestArray = null;
+	Mockery context = new Mockery();
+	UserListener mockUserListener;
+	UserReceiver userReceiver;
+	
+	@Before
+	public void setUp() throws Exception {
+		//prepare the message
+		totalMessageLength = (headerBytes + 1);
 
+		
+		//populate message buffer
+		testBuffer = ByteBuffer.wrap(new byte[100]);
+		testBuffer.putInt(totalMessageLength);
+		testBuffer.putInt(type);
+		testBuffer.put(testAction);
 
-    @Before
-    public void setUp() throws Exception {
-        //set up channel
-        address = new InetSocketAddress("192.168.1.1", port);
-        testChannel = SocketChannel.open(address);
+		userReceiver = new UserReceiver();
+		
+		mockUserListener = context.mock(UserListener.class);
+		userReceiver.register(mockUserListener);
+	}
 
-        //prepare the message
-        testArray = testString.getBytes("us-ascii");
-        totalMessageLength = (headerBytes + testArray.length);
+	@After
+	public void tearDown() throws Exception {
 
-        //populate message buffer
-        testBuffer.putInt(totalMessageLength);
-        testBuffer.putInt(type);
-        testBuffer.put(testArray);
-    }
+	}
 
-    @After
-    public void tearDown() throws Exception {
-        testChannel.close();
-        testBuffer.clear();
-    }
-
-    @Test
-    public void correctInputTest() {
-        fail("Not yet implemented");
-    }
-
-    @Test
-    public void missingIpChannelTest() {
-        fail("Not yet implemented");
-    }
-
-    @Test
-    public void nullChannelTest() {
-        fail("Not yet implemented");
-    }
-
-    @Test
-    public void nullMessageTest() {
-        fail("Not yet implemented");
-    }
-
-    @Test
-    public void emptyMessageTest() {
-        fail("Not yet implemented");
-    }
-
-
+	@Test
+	public void correctInputTest() {
+		context.checking(new Expectations() {{
+			oneOf(mockUserListener).infoRequest("192.168.1.1", testAction);
+		}});
+		userReceiver.receiveMessage(testIp, testBuffer);
+		context.assertIsSatisfied();
+	}
+	
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void nullIpTest() {
+		context.checking(new Expectations() {{
+			final String expectedIp = "192.168.1.1";
+			oneOf(mockUserListener).infoRequest(expectedIp, testAction);
+		}});
+		userReceiver.receiveMessage(null, testBuffer);
+		context.assertIsSatisfied();
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void nullMessageTest() {
+		context.checking(new Expectations() {{
+			final String expectedIp = "192.168.1.1";
+			oneOf(mockUserListener).infoRequest(expectedIp, testAction);
+		}});
+		userReceiver.receiveMessage(testIp, null);
+		context.assertIsSatisfied();
+	}
+	
 }
