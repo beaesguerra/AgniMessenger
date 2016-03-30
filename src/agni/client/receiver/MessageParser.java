@@ -19,5 +19,5 @@ public abstract class MessageParser {
     		listeners.remove(listener);
     }
     
-    public abstract void receiveMessage(String src, byte[] message);
+    public abstract void receiveMessage(byte[] message);
 }

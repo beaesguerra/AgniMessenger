@@ -37,6 +37,23 @@ public class MessageReceiver implements Runnable {
     	this.chatReceiver = chatReceiver;
     	this.fileReceiver = fileReceiver;
     }
+    
+    public enum MessageTypes {
+    	HEARTBEAT((byte)0x07),
+    	INFO((byte)0x08),
+    	CHAT((byte)0x09),
+    	FILE((byte)0x0A),
+    	STATUS((byte)0x0B);
+    	
+        private final byte bytes;
+        private MessageTypes(byte bytes) {
+            this.bytes = bytes;
+        }
+
+        public byte bytes() {
+            return bytes;
+        }
+    }
 
     @Override
     public void run() {
@@ -54,8 +71,31 @@ public class MessageReceiver implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+    	
+    	// Need to fix this to work with enums directly 
     	// messageType = 5th bit
-    	String messageType = Arrays.toString(Arrays.copyOfRange(byteLine, 4, 5));
+    	switch(byteLine[4]) {
+    		case 0x07:
+    			// Pass to heartbeatReceiver
+    			heartbeatReceiver.receiveMessage(byteLine);
+    			break;
+    		case 0x08:
+    			// Pass to informationReceiver
+    			informationReceiver.receiveMessage(byteLine);
+    			break;
+    		case 0x09:
+    			// Insert action
+    			chatReceiver.receiveMessage(byteLine);
+    			break;
+    		case 0x0A:
+    			// Insert action
+    			fileReceiver.receiveMessage(byteLine);
+    			break;
+    		case 0x0B:
+    			// Insert action
+    			statusReceiver.receiveMessage(byteLine);
+    			break;
+    	}
     	
     }
 }

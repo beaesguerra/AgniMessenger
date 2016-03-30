@@ -14,7 +14,7 @@ public class HeartbeatReceiver extends MessageParser {
     }
 
 	@Override
-	public void receiveMessage(String src, byte[] message) {
+	public void receiveMessage(byte[] message) {
 		notifyHeartbeatReceived();
 	}
 

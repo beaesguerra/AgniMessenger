@@ -18,8 +18,10 @@ public class ChatReceiver extends MessageParser {
     }
 
 	@Override
-	public void receiveMessage(String src, byte[] message) {
-		notifyChatReceived(src, message.toString());
+	public void receiveMessage(byte[] message) {
+		// TODO
+		// need to parse src
+		// notifyChatReceived(message.toString());
 	}
     
     
