@@ -33,10 +33,11 @@ public class ChatReceiverTest {
 
 		
 		//populate message buffer
-		testBuffer = ByteBuffer.wrap(new byte[100]);
+		testBuffer = ByteBuffer.wrap(new byte[20]);
 		testBuffer.putInt(totalMessageLength);
 		testBuffer.putInt(type);
 		testBuffer.put(testArray);
+
 		chatReceiver = new ChatReceiver();
 		
 		mockChatListener = context.mock(ChatListener.class);
@@ -58,8 +59,8 @@ public class ChatReceiverTest {
 	}
 	
 	
-	@Test (expected = IndexOutOfBoundsException.class)
-	public void nullChannelTest() {
+	@Test(expected = IllegalArgumentException.class)
+	public void nullIpTest() {
 		context.checking(new Expectations() {{
 			final String expectedIp = "192.168.1.1";
 			oneOf(mockChatListener).chatRequest(expectedIp, testArray);
@@ -68,7 +69,7 @@ public class ChatReceiverTest {
 		context.assertIsSatisfied();
 	}
 	
-	@Test(expected = NullPointerException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void nullMessageTest() {
 		context.checking(new Expectations() {{
 			final String expectedIp = "192.168.1.1";

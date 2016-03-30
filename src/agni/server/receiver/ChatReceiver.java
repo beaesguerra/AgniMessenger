@@ -1,5 +1,6 @@
 package agni.server.receiver;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.Vector;
 
 public class ChatReceiver implements MessageParser {
@@ -24,14 +25,18 @@ public class ChatReceiver implements MessageParser {
      * @promises chat message as a byte array
      */
     private byte[] parseMessage(ByteBuffer message) {
+    	message.flip();
         int length = message.remaining();
-        byte[] parsedMessage = new byte[length];
-        message.get(parsedMessage, 5, (length));
+        byte[] byteArray = new byte[length];
+        message.get(byteArray);
+        byte[] parsedMessage = Arrays.copyOfRange(byteArray,8,length);//buffer seems to add an extra 3 bytes
         return parsedMessage;
     }
 
     @Override
     public void receiveMessage(String ip, ByteBuffer message) {
+    	if(ip==null || message == null)
+    		throw new IllegalArgumentException();
         byte[] parsedMessage = this.parseMessage(message);
         notifyChatRequest(ip, parsedMessage);	
     }

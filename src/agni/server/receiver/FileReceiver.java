@@ -21,10 +21,11 @@ public class FileReceiver implements MessageParser {
     }
 
     private byte[] parseMessage(ByteBuffer message) {
+    	message.flip();
         int length = message.remaining();
-        byte[] parsedMessage = new byte[length];
-        message.get(parsedMessage, 5, (length));
-
+        byte[] byteArray = new byte[length];
+        message.get(byteArray);
+        byte[] parsedMessage = Arrays.copyOfRange(byteArray,8,length);//buffer seems to add an extra 3 bytes
         return parsedMessage;
     }
 
