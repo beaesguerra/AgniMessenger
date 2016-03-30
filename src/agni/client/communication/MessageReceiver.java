@@ -61,20 +61,20 @@ public class MessageReceiver implements Runnable {
     	String line = null;
     	BufferedReader inBuffer = null;
     	byte[] byteLine = null;
-    	
-        // Initialize inputBuffer
-    	try {
-			inBuffer =
-			        new BufferedReader(new InputStreamReader(tcpSocket.getInputStream()));
-			line = inBuffer.readLine();
-	    	byteLine = line.getBytes();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    	
-    	// Need to fix this to work with enums directly 
-    	// messageType = 5th bit
-    	switch(byteLine[4]) {
+    	while (!line.equals("logout")) {
+    		// Initialize inputBuffer
+    		try {
+    			inBuffer =
+    					new BufferedReader(new InputStreamReader(tcpSocket.getInputStream()));
+    			line = inBuffer.readLine();
+    			byteLine = line.getBytes();
+    		} catch (IOException e) {
+    			e.printStackTrace();
+    		}
+
+    		// Need to fix this to work with enums directly 
+    		// messageType = 5th bit
+    		switch(byteLine[4]) {
     		case 0x07:
     			// Pass to heartbeatReceiver
     			heartbeatReceiver.receiveMessage(byteLine);
@@ -95,7 +95,7 @@ public class MessageReceiver implements Runnable {
     			// Insert action
     			statusReceiver.receiveMessage(byteLine);
     			break;
+    		}
     	}
-    	
     }
 }
