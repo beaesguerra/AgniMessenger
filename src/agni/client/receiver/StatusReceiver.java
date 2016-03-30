@@ -16,7 +16,9 @@ public class StatusReceiver extends MessageParser {
 
 	@Override
 	public void receiveMessage(byte[] message) {
+		// Sender's name is the 6th bit
 		String src = "" + (char) message[5];
+		// Status is the 5th bit
 		switch(message[4]) {
 		case 0x00:
 			notifyStatusReceived(src, Status.OFFLINE);
@@ -29,6 +31,4 @@ public class StatusReceiver extends MessageParser {
 			break;
 		}
 	}
-
-
 }
