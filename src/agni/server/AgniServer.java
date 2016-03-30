@@ -7,7 +7,9 @@ import java.util.Vector;
 import agni.client.action.InfoRequestActionHandler;
 import agni.server.communication.MessageReceiver;
 import agni.server.communication.MessageSender;
-import agni.server.dataguard.ChatDataGuard;
+import agni.server.dataguard.GroupChatDataGuard;
+import agni.server.dataguard.I_FileDataGuard;
+import agni.server.dataguard.I_GroupChatDataGuard;
 import agni.server.dataguard.FileDataGuard;
 import agni.server.dataguard.InfoDataGuard;
 import agni.server.dataguard.UserDataGuard;
@@ -28,7 +30,6 @@ import agni.server.sender.FileSender;
 import agni.server.sender.HeartbeatSender;
 import agni.server.sender.InfoSender;
 import agni.server.sender.StatusSender;
-
 import agni.server.communication.ChannelList;
 import agni.server.communication.IpChannelPair;
 
@@ -44,10 +45,11 @@ public class AgniServer {
         StatusSender statusSender = new StatusSender(messageSender);
         HeartbeatSender heartbeatSender = new HeartbeatSender(messageSender);
 
-        UserDataGuard userDataGuard = new UserDataGuard();
-        ChatDataGuard chatDataGuard = new ChatDataGuard();
-        FileDataGuard fileDataGuard = new FileDataGuard();
-        InfoDataGuard infoDataGuard = new InfoDataGuard();
+        // TODO 
+        UserDataGuard userDataGuard = new UserDataGuard(null, null, null);
+        I_GroupChatDataGuard chatDataGuard = new GroupChatDataGuard(null, null, null);
+        I_FileDataGuard fileDataGuard = new FileDataGuard(null, null, null);
+        InfoDataGuard infoDataGuard = new InfoDataGuard(null, null, null);
 
         LoginReceiver loginReceiver = new LoginReceiver();
         UserReceiver userReceiver = new UserReceiver();

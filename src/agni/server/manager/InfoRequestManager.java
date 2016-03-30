@@ -1,17 +1,19 @@
 package agni.server.manager;
 
-import agni.server.dataguard.FileDataGuard;
+
 import agni.server.receiver.InfoListener;
 import agni.server.sender.HeartbeatSender;
+import agni.server.dataguard.I_FileDataGuard;
 import agni.server.sender.InfoSender;
 
 public class InfoRequestManager implements InfoListener{
     private InfoSender infoSender;
-    private FileDataGuard fileDataGuard;
+    private I_FileDataGuard fileDataGuard;
 
     public InfoRequestManager(InfoSender infoSender,
                               HeartbeatSender heartbeatSender, 
-                              FileDataGuard fileDataGuard) {
+                              I_FileDataGuard fileDataGuard) {
+
         this.infoSender = infoSender;
         this.fileDataGuard = fileDataGuard;
     }
