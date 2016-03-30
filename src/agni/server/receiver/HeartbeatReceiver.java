@@ -8,7 +8,6 @@ public class HeartbeatReceiver implements MessageParser {
     private Vector <StatusListener> statusListeners = null;
 
     public HeartbeatReceiver() {
-
         statusListeners = new Vector<StatusListener>();
     }
 

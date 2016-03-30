@@ -25,14 +25,15 @@ public class InfoRequestReceiver implements MessageParser {
      * @promises type as a byte
      */
     private byte parseMessage(ByteBuffer message) {
-        byte parsedMessage = message.get(5);
+        byte parsedMessage = message.get(8);
         return parsedMessage;
     }
 
     @Override
     public void receiveMessage(String ip, ByteBuffer message) {
+    	if(ip==null || message == null)
+    		throw new IllegalArgumentException();
         byte parsedMessage = parseMessage(message);
-
         notifyInfoRequest(ip, parsedMessage);  
     }
 
