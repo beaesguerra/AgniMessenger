@@ -15,7 +15,8 @@ public class InformationReceiver extends MessageParser {
 
 	@Override
 	public void receiveMessage(byte[] message) {
-		notifyInfoReceived(message.toString());
+		// 5th bit
+		String info = "" + (char) message[4];
+		notifyInfoReceived(info);
 	}
-
 }

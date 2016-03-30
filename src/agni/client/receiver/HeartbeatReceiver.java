@@ -17,7 +17,4 @@ public class HeartbeatReceiver extends MessageParser {
 	public void receiveMessage(byte[] message) {
 		notifyHeartbeatReceived();
 	}
-
-
-
 }

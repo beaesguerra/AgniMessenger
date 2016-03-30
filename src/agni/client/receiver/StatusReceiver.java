@@ -16,8 +16,18 @@ public class StatusReceiver extends MessageParser {
 
 	@Override
 	public void receiveMessage(byte[] message) {
-		// how do we pass status here?1
-//		notifyStatusReceived(src, status);
+		String src = "" + (char) message[5];
+		switch(message[4]) {
+		case 0x00:
+			notifyStatusReceived(src, Status.OFFLINE);
+			break;
+		case 0x01:
+			notifyStatusReceived(src, Status.ONLINE);
+			break;
+		case 0x02:
+			notifyStatusReceived(src, Status.AWAY);
+			break;
+		}
 	}
 
 
