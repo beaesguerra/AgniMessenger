@@ -61,7 +61,7 @@ public class MessageReceiver implements Runnable {
     	String line = null;
     	BufferedReader inBuffer = null;
     	byte[] byteLine = null;
-    	while (!line.equals("logout")) {
+    	while (!line.equals("terminate")) {
     		// Initialize inputBuffer
     		try {
     			inBuffer =
@@ -97,5 +97,12 @@ public class MessageReceiver implements Runnable {
     			break;
     		}
     	}
+    	// After termination functionality
+    	System.out.println("MessageReceiver Terminated");
+    	try {
+			tcpSocket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 }
