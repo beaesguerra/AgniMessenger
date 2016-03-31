@@ -18,7 +18,7 @@ public class ChatReceiver extends MessageParser {
 	public void receiveMessage(byte[] message) {
 		// Sender's name -> 6th bit [5]
 		int senderNameLength = (int) message[5];
-		byte[] parsedMessage = Arrays.copyOfRange(message, 5, message.length);
+		byte[] parsedMessage = Arrays.copyOfRange(message, 6+senderNameLength, message.length);
 		try {
 			String src = new String(Arrays.copyOfRange(message, 6, 6+senderNameLength), "us-ascii");
 			notifyChatReceived(src, new String(parsedMessage, "us-ascii"));
