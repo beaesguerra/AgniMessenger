@@ -92,10 +92,10 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
         outputArea.append(message + " " + "\n");
         String currentText = outputArea.getText();
         int numlines = currentText.length() - currentText.replace("\n", "").length();
-        if(numlines > outputArea.getHeight() - 1){
-            // currentText = outputArea.getText();
-            // numlines = currentText.length() - currentText.replace("\n", "").length();
+        while(numlines > outputArea.getHeight() - 1){
             outputArea.setText(currentText.substring(currentText.indexOf("\n") + 1, currentText.length()));
+            currentText = outputArea.getText();
+            numlines = currentText.length() - currentText.replace("\n", "").length();
         }
     }
 
