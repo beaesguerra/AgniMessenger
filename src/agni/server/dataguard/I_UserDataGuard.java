@@ -19,4 +19,10 @@ public interface I_UserDataGuard {
     public void changeUserCurrentChat(String user, String chatname);
 
     public String userCurrentChat(String user);
+
+	public boolean checkGroup(String groupName);
+
+	public String getUsername(String ip);
+
+	public void addUserToChat(String username, String groupName);
 }

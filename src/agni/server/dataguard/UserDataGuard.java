@@ -44,4 +44,22 @@ public class UserDataGuard implements I_UserDataGuard {
     public String userCurrentChat(String user) {
         return null;
     }
+
+	@Override
+	public boolean checkGroup(String groupName) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String getUsername(String ip) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addUserToChat(String username, String groupName) {
+		// TODO Auto-generated method stub
+		
+	}
 }
