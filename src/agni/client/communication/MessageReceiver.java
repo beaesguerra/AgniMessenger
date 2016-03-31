@@ -1,15 +1,18 @@
 package agni.client.communication;
 
+import java.net.Socket;
+
 public class MessageReceiver implements Runnable {
-	
-	public void MessageReceiver(){
-		
-	}
+    private Socket tcpSocket;
 
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
+    public MessageReceiver() {
 
-	}
+    }
+
+    @Override
+    public void run() {
+        // TODO Auto-generated method stub
+
+    }
 
 }

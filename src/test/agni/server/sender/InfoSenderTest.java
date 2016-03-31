@@ -1,15 +1,11 @@
 package test.agni.server.sender;
 
-import static org.junit.Assert.*;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
 import org.jmock.Expectations;
 import org.jmock.Mockery;
+import org.junit.Before;
 import org.junit.Test;
 
-import agni.server.communication.MessageSender;
+import agni.server.communication.I_MessageSender;
 import agni.server.sender.InfoSender;
 import test.AgniTestUtilities;
 
@@ -20,15 +16,16 @@ public class InfoSenderTest {
 
     // ASCII converted to hex at http://www.asciitohex.com/
     final String TEST_INFO_MESSAGE = "Message from the server!";
-    final String TEST_INFO_MESSAGE_HEX = "0c4d6573736167652066726f6d207468652073657276657221";
+    final String TEST_INFO_MESSAGE_HEX = "4d6573736167652066726f6d207468652073657276657221";
 
-    MessageSender messageSender;
+    I_MessageSender messageSender;
     InfoSender infoSender;
     Mockery context;
 
+    @Before
     public void setup() {
         this.context = new Mockery();
-        this.messageSender = context.mock(MessageSender.class);
+        this.messageSender = context.mock(I_MessageSender.class);
         this.infoSender = new InfoSender(messageSender);
     }
 
@@ -39,14 +36,11 @@ public class InfoSenderTest {
             final byte[] expectedMessage = AgniTestUtilities.hexStringToByteArray(LENGTH_HEX +
             																	  INFO_BYTE_HEX +
             																	  TEST_INFO_MESSAGE_HEX);
-            try {
-                oneOf(messageSender).sendMessage(InetAddress.getByName(TEST_IP), expectedMessage);
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            }
+            oneOf(messageSender).sendMessage(TEST_IP, expectedMessage);
         }});
 
         infoSender.sendInfo(TEST_IP, TEST_INFO_MESSAGE);
+        context.assertIsSatisfied();
     }
 
     @Test(expected=NullPointerException.class)

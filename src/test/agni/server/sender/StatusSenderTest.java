@@ -1,15 +1,11 @@
 package test.agni.server.sender;
 
-import static org.junit.Assert.*;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
 import org.jmock.Expectations;
 import org.jmock.Mockery;
+import org.junit.Before;
 import org.junit.Test;
 
-import agni.server.communication.MessageSender;
+import agni.server.communication.I_MessageSender;
 import agni.server.sender.StatusSender;
 import test.AgniTestUtilities;
 
@@ -25,13 +21,14 @@ public class StatusSenderTest {
     final String TEST_FRIEND = "friend";
     final String TEST_FRIEND_HEX = "667269656e64";
 
-    MessageSender messageSender;
+    I_MessageSender messageSender;
     StatusSender statusSender;
     Mockery context;
 
+    @Before
     public void setup() {
         this.context = new Mockery();
-        this.messageSender = context.mock(MessageSender.class);
+        this.messageSender = context.mock(I_MessageSender.class);
         this.statusSender = new StatusSender(messageSender);
     }
 
@@ -41,15 +38,13 @@ public class StatusSenderTest {
         context.checking(new Expectations() {{
             final byte[] expectedMessage = AgniTestUtilities.hexStringToByteArray(LENGTH_HEX +
             																	  STATUS_BYTE_HEX +
+                                                                                  TEST_STATUS_TYPE_HEX +
             																	  TEST_FRIEND_HEX);
-            try {
-                oneOf(messageSender).sendMessage(InetAddress.getByName(TEST_IP), expectedMessage);
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            }
+            oneOf(messageSender).sendMessage(TEST_IP, expectedMessage);
         }});
 
         statusSender.sendStatus(TEST_IP, TEST_STATUS_TYPE, TEST_FRIEND);
+        context.assertIsSatisfied();
     }   
     
     @Test(expected=NullPointerException.class) 
