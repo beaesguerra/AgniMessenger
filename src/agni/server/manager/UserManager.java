@@ -47,7 +47,13 @@ public class UserManager implements UserListener{
         	infoSender.sendInfo(ip, "friends:" + friendList);
         }
         else if (type == 0x03){		// check friend status ; message = friend to check 
-        	
+        	String friend = message;
+        	if (userDataGuard.isOnline(friend)) {
+        		infoSender.sendInfo(ip, friend + " online");
+        	}
+        	else {
+        		infoSender.sendInfo(ip, friend + " offline");
+        	}
         }
         else if (type == 0x04){		// add friend 
         	String friend = message;
@@ -68,6 +74,8 @@ public class UserManager implements UserListener{
         	
         }
         else if (type == 0x05){		// logout 
+        	userDataGuard.logoutUser(username);
+        	infoSender.sendInfo(ip, "logged out");
         	
         }
         
