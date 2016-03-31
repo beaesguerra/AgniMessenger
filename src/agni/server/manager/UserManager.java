@@ -18,10 +18,10 @@ public class UserManager implements UserListener{
     @Override
     public void userRequest(String ip, byte type, String message) {
         // TODO Auto-generated method stub
+    	String username = userDataGuard.getUsername(ip); 
         if(type == 0x00) { 			// join chat; message = group to join
-        	String username = userDataGuard.getUsername(ip); 
         	String groupName = message; 
-        	if (userDataGuard.checkGroup(groupName)) {
+        	if (userDataGuard.groupExists(groupName)) {
         		userDataGuard.addUserToChat(username,groupName); 
         		infoSender.sendInfo(ip, "success: joining " + groupName);
         	}
@@ -30,9 +30,8 @@ public class UserManager implements UserListener{
         	}
         }
         else if (type == 0x01){ 	// leave chat 
-        	String username = userDataGuard.getUsername(ip); 
         	String groupName = message; 
-        	if (userDataGuard.checkGroup(groupName)) {
+        	if (userDataGuard.groupExists(groupName)) {
         		userDataGuard.removeUserFromChat(username,groupName); 
         		infoSender.sendInfo(ip, "success: leaving " + groupName);
         	}
@@ -42,14 +41,30 @@ public class UserManager implements UserListener{
         	
         }
         else if (type == 0x02){ 	// see friends list 
-        	String username = userDataGuard.getUsername(ip); 
         	String friendList = userDataGuard.getFriendList(username); 
-        	infoSender.sendInfo(ip, friendList);
+        	// TODO get status of each friend
+        	//String statusList = userDataGuard.getStatusList(username); 
+        	infoSender.sendInfo(ip, "friends:" + friendList);
         }
-        else if (type == 0x03){		// check friend status 
+        else if (type == 0x03){		// check friend status ; message = friend to check 
         	
         }
         else if (type == 0x04){		// add friend 
+        	String friend = message;
+        	if (userDataGuard.userExists(message)) {
+        		
+        		String friendList = userDataGuard.getFriendList(username); 
+        		if(friendList.contains(friend)) {
+        			infoSender.sendInfo(ip, friend + " already added");
+        		}
+        		else {
+        			userDataGuard.addFriend(username, friend);
+        			infoSender.sendInfo(ip, friend + " added");
+        		}
+        	}
+        	else {
+        		infoSender.sendInfo(ip,  friend + " doesn't exist");
+        	}
         	
         }
         else if (type == 0x05){		// logout 

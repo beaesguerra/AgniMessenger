@@ -46,7 +46,7 @@ public class UserDataGuard implements I_UserDataGuard {
     }
 
 	@Override
-	public boolean checkGroup(String groupName) {
+	public boolean groupExists(String groupName) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -73,5 +73,17 @@ public class UserDataGuard implements I_UserDataGuard {
 	public String getFriendList(String username) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean userExists(String message) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void addFriend(String username, String friend) {
+		// TODO Auto-generated method stub
+		
 	}
 }

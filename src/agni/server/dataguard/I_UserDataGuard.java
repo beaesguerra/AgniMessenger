@@ -20,7 +20,7 @@ public interface I_UserDataGuard {
 
     public String userCurrentChat(String user);
 
-	public boolean checkGroup(String groupName);
+	public boolean groupExists(String groupName);
 
 	public String getUsername(String ip);
 
@@ -29,4 +29,8 @@ public interface I_UserDataGuard {
 	public void removeUserFromChat(String username, String groupName);
 
 	public String getFriendList(String username);
+
+	public boolean userExists(String message);
+
+	public void addFriend(String username, String friend);
 }
