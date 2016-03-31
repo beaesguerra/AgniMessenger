@@ -70,22 +70,27 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
     }
 
     private void handleInput(String input) {
+        if (input.charAt(0) == '/') {
+            handleCommand(input.substring(1, input.length()));
+        }
         appendToOutputArea("User : " + input);
     }
 
     private void handleCommand(String input) {
-
+        appendToOutputArea("UserCommand(" + input + ")");
+        if (input.equals("exit")) {
+            System.gc();
+            System.exit(0);
+        }
     }
 
     public void appendToOutputArea(String message) {
         outputArea.append(message + "\n");
     }
-    
+
     public void actionPerformed(ActionEvent event) {
         String actionCommand = event.getActionCommand();
         if (actionCommand.equals("Exit")) {
-            System.gc();
-            System.exit(0);
         }
     }
 
@@ -120,12 +125,12 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
 
     @Override
     public void keyReleased(KeyEvent key) {
-        
+
     }
 
     @Override
     public void keyTyped(KeyEvent key) {
-        if(key.getKeyCode() == KeyEvent.VK_ENTER){
+        if (key.getKeyCode() == KeyEvent.VK_ENTER) {
             handleInput(inputLine.getText());
             inputLine.setText("");
         }
