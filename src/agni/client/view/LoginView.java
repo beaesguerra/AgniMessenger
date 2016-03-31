@@ -6,6 +6,7 @@ import charva.awt.BorderLayout;
 import charva.awt.Color;
 import charva.awt.Container;
 import charva.awt.event.ActionEvent;
+import charva.awt.event.ActionListener;
 import charvax.swing.BoxLayout;
 import charvax.swing.JFrame;
 import charvax.swing.JLabel;
@@ -13,12 +14,14 @@ import charvax.swing.JMenu;
 import charvax.swing.JMenuBar;
 import charvax.swing.JMenuItem;
 import charvax.swing.JPanel;
+import charvax.swing.JTextField;
 
-public class LoginView extends JFrame implements AgniClientView {
+public class LoginView extends JFrame implements AgniClientView, ActionListener {
 
     private LoginActionHandler loginActionHandler;
     private InfoRequestActionHandler infoRequestActionHandler;
     private HeartbeatActionHandler heartbeatActionHandler;
+    private JTextField inputLine;
 
     public LoginView(LoginActionHandler loginActionHandler,
                      InfoRequestActionHandler infoRequestActionHandler,
@@ -27,17 +30,17 @@ public class LoginView extends JFrame implements AgniClientView {
         this.loginActionHandler = loginActionHandler;
         this.infoRequestActionHandler = infoRequestActionHandler;
         this.heartbeatActionHandler = heartbeatActionHandler;
+        inputLine = new JTextField();
         setupUi();
     }
 
     private void setupUi() {
-        setForeground(Color.green);
-        setBackground(Color.black);
         Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
         JMenuBar menubar = new JMenuBar();
-        JMenu jMenuFile = new JMenu("File");
+        JMenu jMenuFile = new JMenu("Agni");
         JMenuItem jMenuItemFileExit = new JMenuItem("Exit", 'x');
+        jMenuItemFileExit.addActionListener((ActionListener) this);
         jMenuFile.add(jMenuItemFileExit);
 
         menubar.add(jMenuFile);
@@ -47,7 +50,7 @@ public class LoginView extends JFrame implements AgniClientView {
         JPanel labelPanel = new JPanel();
         labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
         labelPanel.add(new JLabel("INPUT BOX:"));
-        labelPanel.add(new JLabel("test"));
+        labelPanel.add(inputLine);
         contentPane.add(labelPanel, BorderLayout.SOUTH);
         setLocation(0, 0);
         setSize(80, 24);
@@ -95,6 +98,7 @@ public class LoginView extends JFrame implements AgniClientView {
     @Override
     public NextState displayUi() {
         show();
+        inputLine.requestFocus();
         return null;
     }
 
