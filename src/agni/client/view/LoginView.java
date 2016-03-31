@@ -2,8 +2,18 @@ package agni.client.view;
 
 import agni.client.action.*;
 import agni.server.sender.StatusSender.Status;
+import charva.awt.BorderLayout;
+import charva.awt.Color;
+import charva.awt.Container;
+import charvax.swing.BoxLayout;
+import charvax.swing.JFrame;
+import charvax.swing.JLabel;
+import charvax.swing.JMenu;
+import charvax.swing.JMenuBar;
+import charvax.swing.JMenuItem;
+import charvax.swing.JPanel;
 
-public class LoginView implements AgniClientView {
+public class LoginView extends JFrame implements AgniClientView {
 
     private LoginActionHandler loginActionHandler;
     private InfoRequestActionHandler infoRequestActionHandler;
@@ -16,6 +26,11 @@ public class LoginView implements AgniClientView {
         this.loginActionHandler = loginActionHandler;
         this.infoRequestActionHandler = infoRequestActionHandler;
         this.heartbeatActionHandler = heartbeatActionHandler;
+        
+        setupUi();
+    }
+
+    private void setupUi() {
     }
 
     @Override
@@ -49,10 +64,31 @@ public class LoginView implements AgniClientView {
     }
 
     @Override
-    public NextState run() {
-        return null;
-        // TODO Auto-generated method stub
+    public NextState displayUi() {
+        setForeground(Color.green);
+        setBackground(Color.black);
+        Container contentPane = getContentPane();
+        contentPane.setLayout(new BorderLayout());
+        JMenuBar menubar = new JMenuBar();
+        JMenu jMenuFile = new JMenu("File");
+        JMenuItem jMenuItemFileExit = new JMenuItem("Exit", 'x');
+        jMenuFile.add(jMenuItemFileExit);
 
+        menubar.add(jMenuFile);
+
+        setJMenuBar(menubar);
+
+        JPanel labelPanel = new JPanel();
+        labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
+        labelPanel.add(new JLabel("INPUT BOX:"));
+        labelPanel.add(new JLabel("test"));
+        contentPane.add(labelPanel, BorderLayout.SOUTH);
+        setLocation(0, 0);
+        setSize(80, 24);
+        validate();
+        System.out.println("HERE WE GOO");
+        show();
+        return null;
     }
 
 }

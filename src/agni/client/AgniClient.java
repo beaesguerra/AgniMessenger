@@ -15,30 +15,10 @@ import charvax.swing.JMenuBar;
 import charvax.swing.JMenuItem;
 import charvax.swing.JPanel;
 
-public class AgniClient extends JFrame{
+public class AgniClient {
 
     public AgniClient() {
-        setForeground(Color.green);
-        setBackground(Color.black);
-        Container contentPane = getContentPane();
-        contentPane.setLayout(new BorderLayout());
-        JMenuBar menubar = new JMenuBar();
-        JMenu jMenuFile = new JMenu("File");
-        JMenuItem jMenuItemFileExit = new JMenuItem("Exit", 'x');
-        jMenuFile.add(jMenuItemFileExit);
-
-        menubar.add(jMenuFile);
-
-        setJMenuBar(menubar);
-
-        JPanel labelPanel = new JPanel();
-        labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
-        labelPanel.add(new JLabel("INPUT BOX:"));
-        labelPanel.add(new JLabel("test"));
-        contentPane.add(labelPanel, BorderLayout.SOUTH);
-        setLocation(0, 0);
-        setSize(80, 24);
-        validate();    }
+    }
 
     public static void main(String[] args) {
         MessageSender messageSender = new MessageSender();
@@ -68,9 +48,8 @@ public class AgniClient extends JFrame{
                                          chatActionHandler,
                                          fileActionHandler,
                                          heartbeatActionHandler);
-        AgniClient testwin = new AgniClient();
-        testwin.show();
 
+        System.out.println("HERE WE GOO");
+        loginView.displayUi();
     }
-
 }
