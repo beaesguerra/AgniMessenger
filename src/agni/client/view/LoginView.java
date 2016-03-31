@@ -63,7 +63,7 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
         setJMenuBar(menubar);
 
         contentPane.add(outputArea, BorderLayout.NORTH);
-        contentPane.add(new JLabel("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
+        contentPane.add(new JLabel("============================================================================="));
         contentPane.add(inputLine, BorderLayout.SOUTH);
         setLocation(0, 0);
         setSize(WIDTH, HEIGHT);
@@ -87,9 +87,16 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
 
     public void appendToOutputArea(String message) {
         for (int i = WIDTH - 2; i < message.length(); i += WIDTH-2) {
-            message = message.substring(0, i) + "\n" + message.substring(i, message.length()); 
+            message = message.substring(0, i) + "\n" + message.substring(i, message.length());
         }
-        outputArea.append(message + "\n");
+        outputArea.append(message + " " + "\n");
+        String currentText = outputArea.getText();
+        int numlines = currentText.length() - currentText.replace("\n", "").length();
+        if(numlines > outputArea.getHeight() - 1){
+            // currentText = outputArea.getText();
+            // numlines = currentText.length() - currentText.replace("\n", "").length();
+            outputArea.setText(currentText.substring(currentText.indexOf("\n") + 1, currentText.length()));
+        }
     }
 
     public void actionPerformed(ActionEvent event) {
@@ -140,8 +147,10 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
     @Override
     public void keyTyped(KeyEvent key) {
         if (key.getKeyCode() == KeyEvent.VK_ENTER) {
-            handleInput(inputLine.getText());
-            inputLine.setText("");
+            if(!inputLine.getText().equals("")){
+                handleInput(inputLine.getText());
+                inputLine.setText("");
+            }
         }
     }
 
@@ -156,7 +165,6 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
         show();
         inputLine.requestFocus();
         appendToOutputArea("Welcome to Agni!");
-        appendToOutputArea("ThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongString");
         return null;
     }
 }
