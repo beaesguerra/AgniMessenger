@@ -25,7 +25,7 @@ public class StatusReceiver extends MessageParser {
 		// Sender's name is the 6th bit
 		String src;
 		try {
-			src = new String(Arrays.copyOfRange(message, 5, 5+senderNameLength), "us-ascii");
+			src = new String(Arrays.copyOfRange(message, 5, 5 + senderNameLength), "us-ascii");
 			// Status is the 5th bit
 			switch(message[4]) {
 			case 0x00:
