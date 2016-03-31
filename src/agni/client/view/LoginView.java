@@ -43,6 +43,7 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
         this.heartbeatActionHandler = heartbeatActionHandler;
         inputLine = new JTextField("", WIDTH - 2);
         inputLine.addKeyListener(this);
+        inputLine.addActionListener(this);
         outputArea = new JTextArea("", HEIGHT - 5, WIDTH - 2);
         outputArea.setEditable(false);
         setupUi();
@@ -78,7 +79,7 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
 
     private void handleCommand(String input) {
         appendToOutputArea("UserCommand(" + input + ")");
-        if (input.equals("exit")) {
+        if (input.equals("q") || input.equals("quit")) {
             System.gc();
             System.exit(0);
         }
@@ -91,6 +92,9 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
     public void actionPerformed(ActionEvent event) {
         String actionCommand = event.getActionCommand();
         if (actionCommand.equals("Exit")) {
+            System.gc();
+            System.exit(0);
+
         }
     }
 
@@ -120,16 +124,24 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
 
     @Override
     public void keyPressed(KeyEvent key) {
-
+        if(inputLine.getText().length() >= WIDTH-3){
+            inputLine.setText(inputLine.getText().substring(0, WIDTH-4));
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent key) {
-
+        // if(inputLine.getText().length() >= WIDTH-2){
+        //     inputLine.setText(inputLine.getText().substring(0, WIDTH-4));
+        // }
     }
 
     @Override
     public void keyTyped(KeyEvent key) {
+        // if(inputLine.getText().length() >= WIDTH-2){
+        //     inputLine.setText(inputLine.getText().substring(0, WIDTH-4));
+        // }
+
         if (key.getKeyCode() == KeyEvent.VK_ENTER) {
             handleInput(inputLine.getText());
             inputLine.setText("");
