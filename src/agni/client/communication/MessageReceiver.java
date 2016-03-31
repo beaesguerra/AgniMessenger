@@ -1,11 +1,9 @@
 package agni.client.communication;
 
-import java.awt.TrayIcon.MessageType;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-import java.util.Arrays;
 
 import agni.client.receiver.*;;
 
