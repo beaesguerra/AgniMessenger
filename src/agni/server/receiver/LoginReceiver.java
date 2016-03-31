@@ -27,7 +27,7 @@ public class LoginReceiver implements MessageParser {
      * @promises username and password as strings
      */
     private String[] parseMessage(ByteBuffer message) {
-    	message.flip();
+        message.flip();
         int length = message.remaining();
         byte[] byteArray = new byte[length];
         message.get(byteArray);
@@ -36,20 +36,20 @@ public class LoginReceiver implements MessageParser {
         String[] parsedMessage = new String[2];
         int usernameLength = messageArray[0];
         try {
-			parsedMessage[0] = new String(Arrays.copyOfRange(messageArray, 1, (usernameLength + 1)), "us-ascii");
-	        parsedMessage[1] = new String(Arrays.copyOfRange(messageArray, (usernameLength + 1), messageArray.length), "us-ascii");
-		} catch (UnsupportedEncodingException e) {
-			System.out.println("UnsupportedEncodingException while parsing Login info");
-			e.printStackTrace();
-		}
+            parsedMessage[0] = new String(Arrays.copyOfRange(messageArray, 1, (usernameLength + 1)), "us-ascii");
+            parsedMessage[1] = new String(Arrays.copyOfRange(messageArray, (usernameLength + 1), messageArray.length), "us-ascii");
+        } catch (UnsupportedEncodingException e) {
+            System.out.println("UnsupportedEncodingException while parsing Login info");
+            e.printStackTrace();
+        }
         return parsedMessage;
     }
 
 
     @Override
     public void receiveMessage(String ip, ByteBuffer message) {  
-    	if(ip==null || message == null)
-    		throw new IllegalArgumentException();
+        if(ip==null || message == null)
+            throw new IllegalArgumentException();
         String[] parsedMessage = this.parseMessage(message);
         notifyLoginRequest(ip, parsedMessage[0], parsedMessage[1]);  
     }

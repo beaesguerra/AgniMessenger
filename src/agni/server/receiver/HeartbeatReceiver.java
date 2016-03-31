@@ -32,9 +32,9 @@ public class HeartbeatReceiver implements MessageParser {
 
     @Override
     public void receiveMessage(String ip, ByteBuffer message) {
-    	if(ip==null || message == null)
-    		throw new IllegalArgumentException();
+        if(ip==null || message == null)
+            throw new IllegalArgumentException();
         byte parsedMessage = this.parseMessage(message);
-        notifyHeartbeat(ip, parsedMessage);	
+        notifyHeartbeat(ip, parsedMessage); 
     }
 }

@@ -1,0 +1,91 @@
+2016-03-30 20:43:43,642 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=File ev:FocusEvent: source=[JMenu: text=File] id=FOCUS_GAINED temp=false opposite=[NULL]
+2016-03-30 20:43:43,647 DEBUG (EventQueue.java:141) - Coalescing 2 SyncEvents on queue
+2016-03-30 20:43:45,283 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=File ev:FocusEvent: source=[JMenu: text=File] id=FOCUS_LOST temp=false opposite=[JMenu: text=Layouts]
+2016-03-30 20:43:45,284 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Layouts ev:FocusEvent: source=[JMenu: text=Layouts] id=FOCUS_GAINED temp=false opposite=[JMenu: text=File]
+2016-03-30 20:43:45,287 DEBUG (EventQueue.java:143) - 1 SyncEvent
+2016-03-30 20:43:45,699 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Layouts ev:FocusEvent: source=[JMenu: text=Layouts] id=FOCUS_LOST temp=false opposite=[JMenu: text=Containers]
+2016-03-30 20:43:45,700 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Containers ev:FocusEvent: source=[JMenu: text=Containers] id=FOCUS_GAINED temp=false opposite=[JMenu: text=Layouts]
+2016-03-30 20:43:45,702 DEBUG (EventQueue.java:143) - 1 SyncEvent
+2016-03-30 20:43:46,187 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Containers ev:FocusEvent: source=[JMenu: text=Containers] id=FOCUS_LOST temp=false opposite=[JMenu: text=Widgets]
+2016-03-30 20:43:46,188 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Widgets ev:FocusEvent: source=[JMenu: text=Widgets] id=FOCUS_GAINED temp=false opposite=[JMenu: text=Containers]
+2016-03-30 20:43:46,190 DEBUG (EventQueue.java:143) - 1 SyncEvent
+2016-03-30 20:43:46,491 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Widgets ev:FocusEvent: source=[JMenu: text=Widgets] id=FOCUS_LOST temp=false opposite=[JMenu: text=Events]
+2016-03-30 20:43:46,491 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Events ev:FocusEvent: source=[JMenu: text=Events] id=FOCUS_GAINED temp=false opposite=[JMenu: text=Widgets]
+2016-03-30 20:43:46,493 DEBUG (EventQueue.java:143) - 1 SyncEvent
+2016-03-30 20:43:47,019 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Events ev:FocusEvent: source=[JMenu: text=Events] id=FOCUS_LOST temp=false opposite=[JMenu: text=Widgets]
+2016-03-30 20:43:47,020 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Widgets ev:FocusEvent: source=[JMenu: text=Widgets] id=FOCUS_GAINED temp=false opposite=[JMenu: text=Events]
+2016-03-30 20:43:47,022 DEBUG (EventQueue.java:143) - 1 SyncEvent
+2016-03-30 20:43:47,507 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Widgets ev:FocusEvent: source=[JMenu: text=Widgets] id=FOCUS_LOST temp=false opposite=[JMenu: text=Containers]
+2016-03-30 20:43:47,508 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Containers ev:FocusEvent: source=[JMenu: text=Containers] id=FOCUS_GAINED temp=false opposite=[JMenu: text=Widgets]
+2016-03-30 20:43:47,510 DEBUG (EventQueue.java:143) - 1 SyncEvent
+2016-03-30 20:43:47,779 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Containers ev:FocusEvent: source=[JMenu: text=Containers] id=FOCUS_LOST temp=false opposite=[JMenu: text=Layouts]
+2016-03-30 20:43:47,780 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Layouts ev:FocusEvent: source=[JMenu: text=Layouts] id=FOCUS_GAINED temp=false opposite=[JMenu: text=Containers]
+2016-03-30 20:43:47,783 DEBUG (EventQueue.java:143) - 1 SyncEvent
+2016-03-30 20:43:47,971 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Layouts ev:FocusEvent: source=[JMenu: text=Layouts] id=FOCUS_LOST temp=false opposite=[JMenu: text=File]
+2016-03-30 20:43:47,971 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=File ev:FocusEvent: source=[JMenu: text=File] id=FOCUS_GAINED temp=false opposite=[JMenu: text=Layouts]
+2016-03-30 20:43:47,973 DEBUG (EventQueue.java:143) - 1 SyncEvent
+2016-03-30 20:43:48,811 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=File ev:FocusEvent: source=[JMenu: text=File] id=FOCUS_LOST temp=false opposite=[JMenu: text=Threads]
+2016-03-30 20:43:48,811 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Threads ev:FocusEvent: source=[JMenu: text=Threads] id=FOCUS_GAINED temp=false opposite=[JMenu: text=File]
+2016-03-30 20:43:48,813 DEBUG (EventQueue.java:143) - 1 SyncEvent
+2016-03-30 20:43:49,446 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Threads ev:FocusEvent: source=[JMenu: text=Threads] id=FOCUS_LOST temp=true opposite=[JMenuItem: text=JProgressBar]
+2016-03-30 20:43:49,446 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=JProgressBar ev:FocusEvent: source=[JMenuItem: text=JProgressBar] id=FOCUS_GAINED temp=true opposite=[JMenu: text=Threads]
+2016-03-30 20:43:49,447 DEBUG (EventQueue.java:141) - Coalescing 2 SyncEvents on queue
+2016-03-30 20:43:50,196 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=JProgressBar ev:FocusEvent: source=[JMenuItem: text=JProgressBar] id=FOCUS_LOST temp=true opposite=[JMenu: text=Events]
+2016-03-30 20:43:50,197 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Events ev:FocusEvent: source=[JMenu: text=Events] id=FOCUS_GAINED temp=true opposite=[JMenuItem: text=JProgressBar]
+2016-03-30 20:43:50,300 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Events ev:FocusEvent: source=[JMenu: text=Events] id=FOCUS_LOST temp=true opposite=[JMenuItem: text=KeyEvents]
+2016-03-30 20:43:50,301 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=KeyEvents ev:FocusEvent: source=[JMenuItem: text=KeyEvents] id=FOCUS_GAINED temp=true opposite=[JMenu: text=Events]
+2016-03-30 20:43:50,302 DEBUG (EventQueue.java:141) - Coalescing 3 SyncEvents on queue
+2016-03-30 20:43:51,332 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=KeyEvents ev:FocusEvent: source=[JMenuItem: text=KeyEvents] id=FOCUS_LOST temp=true opposite=[JMenu: text=Widgets]
+2016-03-30 20:43:51,333 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Widgets ev:FocusEvent: source=[JMenu: text=Widgets] id=FOCUS_GAINED temp=true opposite=[JMenuItem: text=KeyEvents]
+2016-03-30 20:43:51,440 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Widgets ev:FocusEvent: source=[JMenu: text=Widgets] id=FOCUS_LOST temp=true opposite=[JMenuItem: text=Text components]
+2016-03-30 20:43:51,441 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=Text components ev:FocusEvent: source=[JMenuItem: text=Text components] id=FOCUS_GAINED temp=true opposite=[JMenu: text=Widgets]
+2016-03-30 20:43:51,442 DEBUG (EventQueue.java:141) - Coalescing 3 SyncEvents on queue
+2016-03-30 20:43:51,980 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=Text components ev:FocusEvent: source=[JMenuItem: text=Text components] id=FOCUS_LOST temp=false opposite=[JMenuItem: text=Selection components]
+2016-03-30 20:43:51,980 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=Selection components ev:FocusEvent: source=[JMenuItem: text=Selection components] id=FOCUS_GAINED temp=false opposite=[JMenuItem: text=Text components]
+2016-03-30 20:43:51,981 DEBUG (EventQueue.java:143) - 1 SyncEvent
+2016-03-30 20:43:52,347 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=Selection components ev:FocusEvent: source=[JMenuItem: text=Selection components] id=FOCUS_LOST temp=false opposite=[JMenuItem: text=Buttons]
+2016-03-30 20:43:52,348 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=Buttons ev:FocusEvent: source=[JMenuItem: text=Buttons] id=FOCUS_GAINED temp=false opposite=[JMenuItem: text=Selection components]
+2016-03-30 20:43:52,348 DEBUG (EventQueue.java:143) - 1 SyncEvent
+2016-03-30 20:43:52,523 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=Buttons ev:FocusEvent: source=[JMenuItem: text=Buttons] id=FOCUS_LOST temp=false opposite=[JMenuItem: text=JTable]
+2016-03-30 20:43:52,524 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=JTable ev:FocusEvent: source=[JMenuItem: text=JTable] id=FOCUS_GAINED temp=false opposite=[JMenuItem: text=Buttons]
+2016-03-30 20:43:52,524 DEBUG (EventQueue.java:143) - 1 SyncEvent
+2016-03-30 20:43:52,787 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=JTable ev:FocusEvent: source=[JMenuItem: text=JTable] id=FOCUS_LOST temp=false opposite=[JMenuItem: text=Buttons]
+2016-03-30 20:43:52,788 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=Buttons ev:FocusEvent: source=[JMenuItem: text=Buttons] id=FOCUS_GAINED temp=false opposite=[JMenuItem: text=JTable]
+2016-03-30 20:43:52,789 DEBUG (EventQueue.java:143) - 1 SyncEvent
+2016-03-30 20:43:52,963 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=Buttons ev:FocusEvent: source=[JMenuItem: text=Buttons] id=FOCUS_LOST temp=false opposite=[JMenuItem: text=Selection components]
+2016-03-30 20:43:52,964 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=Selection components ev:FocusEvent: source=[JMenuItem: text=Selection components] id=FOCUS_GAINED temp=false opposite=[JMenuItem: text=Buttons]
+2016-03-30 20:43:52,965 DEBUG (EventQueue.java:143) - 1 SyncEvent
+2016-03-30 20:43:53,107 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=Selection components ev:FocusEvent: source=[JMenuItem: text=Selection components] id=FOCUS_LOST temp=false opposite=[JMenuItem: text=Text components]
+2016-03-30 20:43:53,108 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=Text components ev:FocusEvent: source=[JMenuItem: text=Text components] id=FOCUS_GAINED temp=false opposite=[JMenuItem: text=Selection components]
+2016-03-30 20:43:53,109 DEBUG (EventQueue.java:143) - 1 SyncEvent
+2016-03-30 20:43:53,260 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=Text components ev:FocusEvent: source=[JMenuItem: text=Text components] id=FOCUS_LOST temp=false opposite=[JMenuItem: text=JTable]
+2016-03-30 20:43:53,260 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=JTable ev:FocusEvent: source=[JMenuItem: text=JTable] id=FOCUS_GAINED temp=false opposite=[JMenuItem: text=Text components]
+2016-03-30 20:43:53,261 DEBUG (EventQueue.java:143) - 1 SyncEvent
+2016-03-30 20:43:53,772 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=JTable ev:FocusEvent: source=[JMenuItem: text=JTable] id=FOCUS_LOST temp=true opposite=[JMenu: text=Containers]
+2016-03-30 20:43:53,773 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Containers ev:FocusEvent: source=[JMenu: text=Containers] id=FOCUS_GAINED temp=true opposite=[JMenuItem: text=JTable]
+2016-03-30 20:43:53,880 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Containers ev:FocusEvent: source=[JMenu: text=Containers] id=FOCUS_LOST temp=true opposite=[JMenuItem: text=JTabbedPane]
+2016-03-30 20:43:53,880 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=JTabbedPane ev:FocusEvent: source=[JMenuItem: text=JTabbedPane] id=FOCUS_GAINED temp=true opposite=[JMenu: text=Containers]
+2016-03-30 20:43:53,881 DEBUG (EventQueue.java:141) - Coalescing 3 SyncEvents on queue
+2016-03-30 20:43:54,092 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=JTabbedPane ev:FocusEvent: source=[JMenuItem: text=JTabbedPane] id=FOCUS_LOST temp=true opposite=[JMenu: text=Layouts]
+2016-03-30 20:43:54,093 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Layouts ev:FocusEvent: source=[JMenu: text=Layouts] id=FOCUS_GAINED temp=true opposite=[JMenuItem: text=JTabbedPane]
+2016-03-30 20:43:54,199 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=Layouts ev:FocusEvent: source=[JMenu: text=Layouts] id=FOCUS_LOST temp=true opposite=[JMenuItem: text=Null Layout]
+2016-03-30 20:43:54,199 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=Null Layout ev:FocusEvent: source=[JMenuItem: text=Null Layout] id=FOCUS_GAINED temp=true opposite=[JMenu: text=Layouts]
+2016-03-30 20:43:54,200 DEBUG (EventQueue.java:141) - Coalescing 3 SyncEvents on queue
+2016-03-30 20:43:54,442 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=Null Layout ev:FocusEvent: source=[JMenuItem: text=Null Layout] id=FOCUS_LOST temp=true opposite=[JMenu: text=File]
+2016-03-30 20:43:54,443 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=File ev:FocusEvent: source=[JMenu: text=File] id=FOCUS_GAINED temp=true opposite=[JMenuItem: text=Null Layout]
+2016-03-30 20:43:54,548 DEBUG (Component.java:338) - processFocusEvent:JMenu: text=File ev:FocusEvent: source=[JMenu: text=File] id=FOCUS_LOST temp=true opposite=[JMenuItem: text=JFileChooser]
+2016-03-30 20:43:54,549 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=JFileChooser ev:FocusEvent: source=[JMenuItem: text=JFileChooser] id=FOCUS_GAINED temp=true opposite=[JMenu: text=File]
+2016-03-30 20:43:54,549 DEBUG (EventQueue.java:141) - Coalescing 3 SyncEvents on queue
+2016-03-30 20:43:55,036 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=JFileChooser ev:FocusEvent: source=[JMenuItem: text=JFileChooser] id=FOCUS_LOST temp=false opposite=[JMenuItem: text=custom FileChooser]
+2016-03-30 20:43:55,036 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=custom FileChooser ev:FocusEvent: source=[JMenuItem: text=custom FileChooser] id=FOCUS_GAINED temp=false opposite=[JMenuItem: text=JFileChooser]
+2016-03-30 20:43:55,037 DEBUG (EventQueue.java:143) - 1 SyncEvent
+2016-03-30 20:43:55,220 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=custom FileChooser ev:FocusEvent: source=[JMenuItem: text=custom FileChooser] id=FOCUS_LOST temp=false opposite=[JMenuItem: text=Exit]
+2016-03-30 20:43:55,220 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=Exit ev:FocusEvent: source=[JMenuItem: text=Exit] id=FOCUS_GAINED temp=false opposite=[JMenuItem: text=custom FileChooser]
+2016-03-30 20:43:55,221 DEBUG (EventQueue.java:143) - 1 SyncEvent
+2016-03-30 20:43:55,380 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=Exit ev:FocusEvent: source=[JMenuItem: text=Exit] id=FOCUS_LOST temp=false opposite=[JMenuItem: text=JFileChooser]
+2016-03-30 20:43:55,380 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=JFileChooser ev:FocusEvent: source=[JMenuItem: text=JFileChooser] id=FOCUS_GAINED temp=false opposite=[JMenuItem: text=Exit]
+2016-03-30 20:43:55,381 DEBUG (EventQueue.java:143) - 1 SyncEvent
+2016-03-30 20:43:55,995 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=JFileChooser ev:FocusEvent: source=[JMenuItem: text=JFileChooser] id=FOCUS_LOST temp=false opposite=[JMenuItem: text=Exit]
+2016-03-30 20:43:55,996 DEBUG (Component.java:338) - processFocusEvent:JMenuItem: text=Exit ev:FocusEvent: source=[JMenuItem: text=Exit] id=FOCUS_GAINED temp=false opposite=[JMenuItem: text=JFileChooser]
+2016-03-30 20:43:55,997 DEBUG (EventQueue.java:143) - 1 SyncEvent
+2016-03-30 20:43:58,650 DEBUG (EventQueue.java:143) - 1 SyncEvent

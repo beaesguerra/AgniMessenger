@@ -12,69 +12,69 @@ import agni.server.receiver.InfoListener;
 
 
 public class InfoRequestReceiverTest {
-	final int headerBytes = 5;
-	final byte type = 0x03;
-	final String testIp = "192.168.1.1";
-	final byte testStatus = 0x01;
-	int totalMessageLength; 
-	ByteBuffer testBuffer = null;
+    final int headerBytes = 5;
+    final byte type = 0x03;
+    final String testIp = "192.168.1.1";
+    final byte testStatus = 0x01;
+    int totalMessageLength; 
+    ByteBuffer testBuffer = null;
 
-	Mockery context = new Mockery();
-	InfoListener mockInfoListener;
-	InfoRequestReceiver infoReceiver;
-	
-	@Before
-	public void setUp() throws Exception {
-		//prepare the message
-		totalMessageLength = (headerBytes + 1);
+    Mockery context = new Mockery();
+    InfoListener mockInfoListener;
+    InfoRequestReceiver infoReceiver;
+    
+    @Before
+    public void setUp() throws Exception {
+        //prepare the message
+        totalMessageLength = (headerBytes + 1);
 
-		
-		//populate message buffer
-		testBuffer = ByteBuffer.wrap(new byte[100]);
-		testBuffer.putInt(totalMessageLength);
-		testBuffer.put(type);
-		testBuffer.put(testStatus);
+        
+        //populate message buffer
+        testBuffer = ByteBuffer.wrap(new byte[100]);
+        testBuffer.putInt(totalMessageLength);
+        testBuffer.put(type);
+        testBuffer.put(testStatus);
 
-		infoReceiver = new InfoRequestReceiver();
-		
-		mockInfoListener = context.mock(InfoListener.class);
-		infoReceiver.register(mockInfoListener);
-	}
+        infoReceiver = new InfoRequestReceiver();
+        
+        mockInfoListener = context.mock(InfoListener.class);
+        infoReceiver.register(mockInfoListener);
+    }
 
-	@After
-	public void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
 
-	}
+    }
 
-	@Test
-	public void correctInputTest() {
-		context.checking(new Expectations() {{
-			oneOf(mockInfoListener).infoRequest("192.168.1.1", testStatus);
-		}});
-		infoReceiver.receiveMessage(testIp, testBuffer);
-		context.assertIsSatisfied();
-	}
-	
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void nullIpTest() {
-		context.checking(new Expectations() {{
-			final String expectedIp = "192.168.1.1";
-			oneOf(mockInfoListener).infoRequest(expectedIp, testStatus);
-		}});
-		infoReceiver.receiveMessage(null, testBuffer);
-		context.assertIsSatisfied();
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void nullMessageTest() {
-		context.checking(new Expectations() {{
-			final String expectedIp = "192.168.1.1";
-			oneOf(mockInfoListener).infoRequest(expectedIp, testStatus);
-		}});
-		infoReceiver.receiveMessage(testIp, null);
-		context.assertIsSatisfied();
-	}
-	
+    @Test
+    public void correctInputTest() {
+        context.checking(new Expectations() {{
+            oneOf(mockInfoListener).infoRequest("192.168.1.1", testStatus);
+        }});
+        infoReceiver.receiveMessage(testIp, testBuffer);
+        context.assertIsSatisfied();
+    }
+    
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void nullIpTest() {
+        context.checking(new Expectations() {{
+            final String expectedIp = "192.168.1.1";
+            oneOf(mockInfoListener).infoRequest(expectedIp, testStatus);
+        }});
+        infoReceiver.receiveMessage(null, testBuffer);
+        context.assertIsSatisfied();
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void nullMessageTest() {
+        context.checking(new Expectations() {{
+            final String expectedIp = "192.168.1.1";
+            oneOf(mockInfoListener).infoRequest(expectedIp, testStatus);
+        }});
+        infoReceiver.receiveMessage(testIp, null);
+        context.assertIsSatisfied();
+    }
+    
 }
 

@@ -31,8 +31,8 @@ public class InfoRequestReceiver implements MessageParser {
 
     @Override
     public void receiveMessage(String ip, ByteBuffer message) {
-    	if(ip==null || message == null)
-    		throw new IllegalArgumentException();
+        if(ip==null || message == null)
+            throw new IllegalArgumentException();
         byte parsedMessage = parseMessage(message);
         notifyInfoRequest(ip, parsedMessage);  
     }

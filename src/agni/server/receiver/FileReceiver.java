@@ -22,7 +22,7 @@ public class FileReceiver implements MessageParser {
     }
 
     private byte[] parseMessage(ByteBuffer message) {
-    	message.flip();
+        message.flip();
         int length = message.remaining();
         byte[] byteArray = new byte[length];
         message.get(byteArray);
@@ -32,21 +32,21 @@ public class FileReceiver implements MessageParser {
 
     @Override
     public void receiveMessage(String ip, ByteBuffer message) {
-    	String fileName = null;
-    	if(ip==null || message == null)
-    		throw new IllegalArgumentException();
+        String fileName = null;
+        if(ip==null || message == null)
+            throw new IllegalArgumentException();
         byte[] parsedMessage = parseMessage(message);
         byte EOF = parsedMessage[0];
         int filenameLength = parsedMessage[1];
         try {
-        	fileName = new String(Arrays.copyOfRange(parsedMessage, 2, (filenameLength + 2)), "us-ascii");
-		} catch (UnsupportedEncodingException e) {
-			System.out.println("UnsupportedEncodingException while parsing Login info");
-			e.printStackTrace();
-		}
+            fileName = new String(Arrays.copyOfRange(parsedMessage, 2, (filenameLength + 2)), "us-ascii");
+        } catch (UnsupportedEncodingException e) {
+            System.out.println("UnsupportedEncodingException while parsing Login info");
+            e.printStackTrace();
+        }
         byte[] file = Arrays.copyOfRange(parsedMessage, (filenameLength + 2), parsedMessage.length );
 
-        notifyFileRequest(ip, EOF, fileName, file);	
+        notifyFileRequest(ip, EOF, fileName, file); 
     }
 
 }
