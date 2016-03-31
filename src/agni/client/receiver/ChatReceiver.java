@@ -16,6 +16,8 @@ public class ChatReceiver extends MessageParser {
     
 	@Override
 	public void receiveMessage(byte[] message) {
+		if(message == null)
+			throw new NullPointerException("receiveMessage got a null message");
 		// Sender's name -> 6th bit [5]
 		int senderNameLength = (int) message[5];
 		byte[] parsedMessage = Arrays.copyOfRange(message, 6+senderNameLength, message.length);
