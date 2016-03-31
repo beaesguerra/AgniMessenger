@@ -1,5 +1,6 @@
 package agni.client.view;
 
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -17,7 +18,9 @@ import charvax.swing.JMenu;
 import charvax.swing.JMenuBar;
 import charvax.swing.JMenuItem;
 import charvax.swing.JPanel;
+import charvax.swing.JTextArea;
 import charvax.swing.JTextField;
+import charvax.swing.SwingConstants;
 
 public class LoginView extends JFrame implements AgniClientView, ActionListener {
 
@@ -25,7 +28,9 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener 
     private InfoRequestActionHandler infoRequestActionHandler;
     private HeartbeatActionHandler heartbeatActionHandler;
     private JTextField inputLine;
-    private JLabel outputArea;
+    private JTextArea outputArea;
+    private final int WIDTH = 80;
+    private final int HEIGHT = 24;
 
     public LoginView(LoginActionHandler loginActionHandler,
                      InfoRequestActionHandler infoRequestActionHandler,
@@ -34,8 +39,9 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener 
         this.loginActionHandler = loginActionHandler;
         this.infoRequestActionHandler = infoRequestActionHandler;
         this.heartbeatActionHandler = heartbeatActionHandler;
-        inputLine = new JTextField();
-        outputArea = new JLabel("Test!");
+        inputLine = new JTextField("", WIDTH - 2);
+        outputArea = new JTextArea("Welcome to Agni!", HEIGHT - 5, WIDTH - 2);
+        outputArea.setEditable(false);
         setupUi();
     }
 
@@ -52,13 +58,11 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener 
 
         setJMenuBar(menubar);
 
-        // JPanel labelPanel = new JPanel();
-        // labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.X_AXIS));
-        // labelPanel.add(inputLine);
         contentPane.add(outputArea, BorderLayout.NORTH);
+        contentPane.add(new JLabel("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
         contentPane.add(inputLine, BorderLayout.SOUTH);
         setLocation(0, 0);
-        setSize(80, 24);
+        setSize(WIDTH, HEIGHT);
         validate();
     }
 
