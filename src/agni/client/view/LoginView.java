@@ -5,6 +5,7 @@ import agni.server.sender.StatusSender.Status;
 import charva.awt.BorderLayout;
 import charva.awt.Color;
 import charva.awt.Container;
+import charva.awt.event.ActionEvent;
 import charvax.swing.BoxLayout;
 import charvax.swing.JFrame;
 import charvax.swing.JLabel;
@@ -26,7 +27,6 @@ public class LoginView extends JFrame implements AgniClientView {
         this.loginActionHandler = loginActionHandler;
         this.infoRequestActionHandler = infoRequestActionHandler;
         this.heartbeatActionHandler = heartbeatActionHandler;
-        
         setupUi();
     }
 
@@ -52,6 +52,14 @@ public class LoginView extends JFrame implements AgniClientView {
         setLocation(0, 0);
         setSize(80, 24);
         validate();
+    }
+
+    public void actionPerformed(ActionEvent event) {
+        String actionCommand = event.getActionCommand();
+        if (actionCommand.equals("Exit")) {
+            System.gc(); 
+            System.exit(0);
+        }
     }
 
     @Override
