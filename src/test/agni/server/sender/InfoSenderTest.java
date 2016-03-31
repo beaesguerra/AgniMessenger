@@ -16,7 +16,7 @@ public class InfoSenderTest {
 
     // ASCII converted to hex at http://www.asciitohex.com/
     final String TEST_INFO_MESSAGE = "Message from the server!";
-    final String TEST_INFO_MESSAGE_HEX = "0c4d6573736167652066726f6d207468652073657276657221";
+    final String TEST_INFO_MESSAGE_HEX = "4d6573736167652066726f6d207468652073657276657221";
 
     I_MessageSender messageSender;
     InfoSender infoSender;
