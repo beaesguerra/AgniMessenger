@@ -44,4 +44,9 @@ public class UserDataGuard implements I_UserDataGuard {
     public String userCurrentChat(String user) {
         return null;
     }
+
+	@Override
+	public String getPassword(String user) {
+		return null;
+	}
 }

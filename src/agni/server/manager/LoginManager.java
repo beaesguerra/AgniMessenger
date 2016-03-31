@@ -17,13 +17,10 @@ public class LoginManager implements LoginListener{
 
     @Override
     public void loginRequest(String ip, String user, String password) {
-        // TODO Auto-generated method stub
-    	
-    	// check database 
-    	if (userDataGuard.authenticate(user,password)) 
-    		infoSender.sendInfo(ip, "1");
+    	if (password == userDataGuard.getPassword(user)) 
+    		infoSender.sendInfo(ip, "approved");
     	else
-    		infoSender.sendInfo(ip, "0");
+    		infoSender.sendInfo(ip, "declined");
     }
 
 }

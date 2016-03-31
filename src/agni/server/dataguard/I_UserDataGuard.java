@@ -19,4 +19,6 @@ public interface I_UserDataGuard {
     public void changeUserCurrentChat(String user, String chatname);
 
     public String userCurrentChat(String user);
+
+	public String getPassword(String user);
 }
