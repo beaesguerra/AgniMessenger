@@ -25,4 +25,6 @@ public interface I_UserDataGuard {
 	public String getUsername(String ip);
 
 	public void addUserToChat(String username, String groupName);
+
+	public void removeUserFromChat(String username, String groupName);
 }

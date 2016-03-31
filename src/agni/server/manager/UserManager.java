@@ -26,11 +26,19 @@ public class UserManager implements UserListener{
         		infoSender.sendInfo(ip, "success: joining " + groupName);
         	}
         	else {
-        		infoSender.sendInfo(ip, "failed: joining " + groupName);
+        		infoSender.sendInfo(ip, "failed: " + groupName + " doesn't exist");
         	}
         }
         else if (type == 0x01){ 	// leave chat 
-        	
+        	String username = userDataGuard.getUsername(ip); 
+        	String groupName = message; 
+        	if (userDataGuard.checkGroup(groupName)) {
+        		userDataGuard.removeUserFromChat(username,groupName); 
+        		infoSender.sendInfo(ip, "success: leaving " + groupName);
+        	}
+        	else {
+        		infoSender.sendInfo(ip, "failed: " + groupName + " doesn't exist");
+        	}
         	
         }
         else if (type == 0x02){ 	// see friends list 
