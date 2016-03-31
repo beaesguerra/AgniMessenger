@@ -19,11 +19,6 @@ public class LoginManager implements LoginListener{
     public void loginRequest(String ip, String user, String password) {
         // TODO Auto-generated method stub
     	
-    	// check database 
-    	if (userDataGuard.authenticate(user,password)) 
-    		infoSender.sendInfo(ip, "1");
-    	else
-    		infoSender.sendInfo(ip, "0");
     }
 
 }
