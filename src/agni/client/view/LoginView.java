@@ -40,7 +40,7 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener 
         this.infoRequestActionHandler = infoRequestActionHandler;
         this.heartbeatActionHandler = heartbeatActionHandler;
         inputLine = new JTextField("", WIDTH - 2);
-        outputArea = new JTextArea("Welcome to Agni!", HEIGHT - 5, WIDTH - 2);
+        outputArea = new JTextArea("", HEIGHT - 5, WIDTH - 2);
         outputArea.setEditable(false);
         setupUi();
     }
@@ -66,6 +66,10 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener 
         validate();
     }
 
+    public void appendToOutputArea(String message) {
+    	outputArea.append(message + "\n");
+	}
+    
     public void actionPerformed(ActionEvent event) {
         String actionCommand = event.getActionCommand();
         if (actionCommand.equals("Exit")) {
@@ -108,6 +112,9 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener 
     public NextState displayUi() {
         show();
         inputLine.requestFocus();
+        appendToOutputArea("Welcome to Agni!");
+        appendToOutputArea("SampleDude : Hey nice to meet you!");
+        appendToOutputArea("SomeDude : Multiple lines? \n yea?");
         return null;
     }
 
