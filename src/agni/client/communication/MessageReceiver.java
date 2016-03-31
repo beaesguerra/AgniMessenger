@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 import agni.client.receiver.*;;
 
@@ -58,34 +59,34 @@ public class MessageReceiver implements Runnable {
     	// Declaring incoming buffer and line to read to
     	String line = null;
     	BufferedReader inBuffer = null;
-    	byte[] byteLine = null;
+    	byte[] lineBytes = null;
     	while (!line.equals("terminate")) {
     		// Initialize inputBuffer
     		try {
     			inBuffer =
     					new BufferedReader(new InputStreamReader(tcpSocket.getInputStream()));
     			line = inBuffer.readLine();
-    			byteLine = line.getBytes();
+    			lineBytes = line.getBytes(StandardCharsets.US_ASCII);
     		} catch (IOException e) {
     			e.printStackTrace();
     		}
 
-    		byte messageType = byteLine[4];
+    		byte messageType = lineBytes[4];
 			if (messageType == MessageTypes.HEARTBEAT.bytes()) {
 				// Pass to heartbeatReceiver
-    			heartbeatReceiver.receiveMessage(byteLine);
+    			heartbeatReceiver.receiveMessage(lineBytes);
 			} else if (messageType == MessageTypes.INFO.bytes()) {
 				// Pass to informationReceiver
-    			informationReceiver.receiveMessage(byteLine);
+    			informationReceiver.receiveMessage(lineBytes);
 			} else if (messageType == MessageTypes.CHAT.bytes()) {
 				// Pass to chatReceiver
-    			chatReceiver.receiveMessage(byteLine);
+    			chatReceiver.receiveMessage(lineBytes);
 			} else if (messageType == MessageTypes.FILE.bytes()) {
 				// Pass to fileReceiver
-    			fileReceiver.receiveMessage(byteLine);
+    			fileReceiver.receiveMessage(lineBytes);
 			} else if (messageType == MessageTypes.STATUS.bytes()) {
 				// Pass to statusReceiver
-    			statusReceiver.receiveMessage(byteLine);
+    			statusReceiver.receiveMessage(lineBytes);
 			}
     	}
     	// After termination functionality
