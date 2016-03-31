@@ -21,6 +21,8 @@ public class FileReceiver extends MessageParser {
     
 	@Override
 	public void receiveMessage(byte[] message) {
+		if(message == null)
+			throw new IllegalArgumentException("receiveMessage got a null message");
 		// Sender's name -> 6th bit [5]
 		String src = "" + (char) message[5];
 //		FileOutputStream stream = new FileOutputStream(path);

@@ -17,7 +17,7 @@ public class ChatReceiver extends MessageParser {
 	@Override
 	public void receiveMessage(byte[] message) {
 		if(message == null)
-			throw new NullPointerException("receiveMessage got a null message");
+			throw new IllegalArgumentException("receiveMessage got a null message");
 		// Sender's name length -> 5th bit [4]
 		int senderNameLength = (int) message[4];
 		// Message starts -> 7th bit [6]

@@ -13,6 +13,8 @@ public class InformationReceiver extends MessageParser {
 
 	@Override
 	public void receiveMessage(byte[] message) {
+		if(message == null)
+			throw new IllegalArgumentException("receiveMessage got a null message");
 		// Info is the 5th bit
 		String info = "" + (char) message[4];
 		notifyInfoReceived(info);
