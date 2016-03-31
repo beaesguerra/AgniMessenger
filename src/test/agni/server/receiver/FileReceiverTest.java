@@ -64,7 +64,7 @@ public class FileReceiverTest {
     }
     
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void nullIpTest() {
         context.checking(new Expectations() {{
             oneOf(mochFileListener).fileRequest("192.168.1.1", EOF, testFileName, testFileArray);
@@ -73,7 +73,7 @@ public class FileReceiverTest {
         context.assertIsSatisfied();
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void nullMessageTest() {
         context.checking(new Expectations() {{
             oneOf(mochFileListener).fileRequest("192.168.1.1", EOF, testFileName, testFileArray);

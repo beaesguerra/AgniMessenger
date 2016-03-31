@@ -59,7 +59,7 @@ public class ChatReceiverTest {
     }
     
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void nullIpTest() {
         context.checking(new Expectations() {{
             final String expectedIp = "192.168.1.1";
@@ -69,7 +69,7 @@ public class ChatReceiverTest {
         context.assertIsSatisfied();
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void nullMessageTest() {
         context.checking(new Expectations() {{
             final String expectedIp = "192.168.1.1";

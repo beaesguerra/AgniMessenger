@@ -50,7 +50,7 @@ public class LoginReceiver implements MessageParser {
     @Override
     public void receiveMessage(String ip, ByteBuffer message) {  
         if(ip==null || message == null)
-            throw new IllegalArgumentException();
+            throw new NullPointerException();
         String[] parsedMessage = this.parseMessage(message);
         notifyLoginRequest(ip, parsedMessage[0], parsedMessage[1]);  
     }

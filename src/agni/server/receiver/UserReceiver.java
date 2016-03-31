@@ -40,7 +40,7 @@ public class UserReceiver implements MessageParser {
     public void receiveMessage(String ip, ByteBuffer message) {
     	String userMessage = null;
         if(ip==null || message == null)
-            throw new IllegalArgumentException();
+            throw new NullPointerException();
         byte[] parsedMessage = this.parseMessage(message);
         byte type = parsedMessage[0];
 		try {

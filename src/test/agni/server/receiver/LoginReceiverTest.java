@@ -60,7 +60,7 @@ public class LoginReceiverTest {
     }
     
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void nullIpTest() {
         context.checking(new Expectations() {{
             oneOf(mockLoginListener).loginRequest("192.168.1.1", "Jingles", "Passw0rd!");
@@ -69,7 +69,7 @@ public class LoginReceiverTest {
         context.assertIsSatisfied();
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void nullMessageTest() {
         context.checking(new Expectations() {{
             oneOf(mockLoginListener).loginRequest("192.168.1.1", "Jingles", "Passw0rd!");

@@ -35,7 +35,7 @@ public class FileReceiver implements MessageParser {
     public void receiveMessage(String ip, ByteBuffer message) {
         String fileName = null;
         if(ip==null || message == null)
-            throw new IllegalArgumentException();
+            throw new NullPointerException();
         byte[] parsedMessage = parseMessage(message);
         byte EOF = parsedMessage[0];
         int filenameLength = parsedMessage[1];
