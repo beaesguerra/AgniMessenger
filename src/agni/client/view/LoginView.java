@@ -11,6 +11,8 @@ import charva.awt.Color;
 import charva.awt.Container;
 import charva.awt.event.ActionEvent;
 import charva.awt.event.ActionListener;
+import charva.awt.event.KeyEvent;
+import charva.awt.event.KeyListener;
 import charvax.swing.BoxLayout;
 import charvax.swing.JFrame;
 import charvax.swing.JLabel;
@@ -22,7 +24,7 @@ import charvax.swing.JTextArea;
 import charvax.swing.JTextField;
 import charvax.swing.SwingConstants;
 
-public class LoginView extends JFrame implements AgniClientView, ActionListener {
+public class LoginView extends JFrame implements AgniClientView, ActionListener, KeyListener {
 
     private LoginActionHandler loginActionHandler;
     private InfoRequestActionHandler infoRequestActionHandler;
@@ -40,6 +42,7 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener 
         this.infoRequestActionHandler = infoRequestActionHandler;
         this.heartbeatActionHandler = heartbeatActionHandler;
         inputLine = new JTextField("", WIDTH - 2);
+        inputLine.addKeyListener(this);
         outputArea = new JTextArea("", HEIGHT - 5, WIDTH - 2);
         outputArea.setEditable(false);
         setupUi();
@@ -66,9 +69,17 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener 
         validate();
     }
 
+    private void handleInput(String input) {
+        appendToOutputArea("User : " + input);
+    }
+
+    private void handleCommand(String input) {
+
+    }
+
     public void appendToOutputArea(String message) {
-    	outputArea.append(message + "\n");
-	}
+        outputArea.append(message + "\n");
+    }
     
     public void actionPerformed(ActionEvent event) {
         String actionCommand = event.getActionCommand();
@@ -103,6 +114,24 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener 
     }
 
     @Override
+    public void keyPressed(KeyEvent key) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent key) {
+        
+    }
+
+    @Override
+    public void keyTyped(KeyEvent key) {
+        if(key.getKeyCode() == KeyEvent.VK_ENTER){
+            handleInput(inputLine.getText());
+            inputLine.setText("");
+        }
+    }
+
+    @Override
     public boolean fileReaction(String filename, String fromUser, int size) {
         // TODO Auto-generated method stub
         return false;
@@ -113,9 +142,6 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener 
         show();
         inputLine.requestFocus();
         appendToOutputArea("Welcome to Agni!");
-        appendToOutputArea("SampleDude : Hey nice to meet you!");
-        appendToOutputArea("SomeDude : Multiple lines? \n yea?");
         return null;
     }
-
 }
