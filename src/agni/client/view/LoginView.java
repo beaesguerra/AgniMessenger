@@ -1,5 +1,8 @@
 package agni.client.view;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import agni.client.action.*;
 import agni.server.sender.StatusSender.Status;
 import charva.awt.BorderLayout;
@@ -22,6 +25,7 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener 
     private InfoRequestActionHandler infoRequestActionHandler;
     private HeartbeatActionHandler heartbeatActionHandler;
     private JTextField inputLine;
+    private JLabel outputArea;
 
     public LoginView(LoginActionHandler loginActionHandler,
                      InfoRequestActionHandler infoRequestActionHandler,
@@ -31,6 +35,7 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener 
         this.infoRequestActionHandler = infoRequestActionHandler;
         this.heartbeatActionHandler = heartbeatActionHandler;
         inputLine = new JTextField();
+        outputArea = new JLabel("Test!");
         setupUi();
     }
 
@@ -39,7 +44,7 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener 
         contentPane.setLayout(new BorderLayout());
         JMenuBar menubar = new JMenuBar();
         JMenu jMenuFile = new JMenu("Agni");
-        JMenuItem jMenuItemFileExit = new JMenuItem("Exit", 'x');
+        JMenuItem jMenuItemFileExit = new JMenuItem("Exit");
         jMenuItemFileExit.addActionListener((ActionListener) this);
         jMenuFile.add(jMenuItemFileExit);
 
@@ -47,11 +52,11 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener 
 
         setJMenuBar(menubar);
 
-        JPanel labelPanel = new JPanel();
-        labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
-        labelPanel.add(new JLabel("INPUT BOX:"));
-        labelPanel.add(inputLine);
-        contentPane.add(labelPanel, BorderLayout.SOUTH);
+        // JPanel labelPanel = new JPanel();
+        // labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.X_AXIS));
+        // labelPanel.add(inputLine);
+        contentPane.add(outputArea, BorderLayout.NORTH);
+        contentPane.add(inputLine, BorderLayout.SOUTH);
         setLocation(0, 0);
         setSize(80, 24);
         validate();
@@ -60,7 +65,7 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener 
     public void actionPerformed(ActionEvent event) {
         String actionCommand = event.getActionCommand();
         if (actionCommand.equals("Exit")) {
-            System.gc(); 
+            System.gc();
             System.exit(0);
         }
     }
