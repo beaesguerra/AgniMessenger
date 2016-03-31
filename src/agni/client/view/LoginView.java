@@ -86,6 +86,9 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
     }
 
     public void appendToOutputArea(String message) {
+        for (int i = WIDTH - 2; i < message.length(); i += WIDTH-2) {
+            message = message.substring(0, i) + "\n" + message.substring(i, message.length()); 
+        }
         outputArea.append(message + "\n");
     }
 
@@ -124,24 +127,18 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
 
     @Override
     public void keyPressed(KeyEvent key) {
-        if(inputLine.getText().length() >= WIDTH-3){
-            inputLine.setText(inputLine.getText().substring(0, WIDTH-4));
+        if (inputLine.getText().length() >= WIDTH - 3) {
+            inputLine.setText(inputLine.getText().substring(0, WIDTH - 4));
         }
     }
 
     @Override
     public void keyReleased(KeyEvent key) {
-        // if(inputLine.getText().length() >= WIDTH-2){
-        //     inputLine.setText(inputLine.getText().substring(0, WIDTH-4));
-        // }
+
     }
 
     @Override
     public void keyTyped(KeyEvent key) {
-        // if(inputLine.getText().length() >= WIDTH-2){
-        //     inputLine.setText(inputLine.getText().substring(0, WIDTH-4));
-        // }
-
         if (key.getKeyCode() == KeyEvent.VK_ENTER) {
             handleInput(inputLine.getText());
             inputLine.setText("");
@@ -159,6 +156,7 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
         show();
         inputLine.requestFocus();
         appendToOutputArea("Welcome to Agni!");
+        appendToOutputArea("ThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongStringThisIsAReallyLongString");
         return null;
     }
 }
