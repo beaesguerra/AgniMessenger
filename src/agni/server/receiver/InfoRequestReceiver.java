@@ -11,8 +11,9 @@ public class InfoRequestReceiver implements MessageParser {
     }
 
     private void notifyInfoRequest(String ip, byte type) {
-        for ( InfoListener  iListener : infoListeners )
+        for( InfoListener  iListener : infoListeners ) {
             iListener.infoRequest(ip, type);
+        }
     }
 
     public void register(InfoListener iListener) {

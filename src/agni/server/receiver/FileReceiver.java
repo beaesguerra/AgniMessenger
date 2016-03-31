@@ -13,8 +13,9 @@ public class FileReceiver implements MessageParser {
     }
 
     private void notifyFileRequest(String ip, byte EOF, String fileName, byte[] file) {
-        for ( FileListener  fListener : fileListeners )
+        for ( FileListener  fListener : fileListeners ) {
             fListener.fileRequest(ip, EOF, fileName, file);
+        }
     }
 
     public void register(FileListener fListener) {

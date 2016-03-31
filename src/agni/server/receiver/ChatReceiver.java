@@ -11,8 +11,9 @@ public class ChatReceiver implements MessageParser {
     }
 
     private void notifyChatRequest(String ip, byte[] message) {
-        for ( ChatListener  cListener : chatListeners )
+        for ( ChatListener  cListener : chatListeners ) {
             cListener.chatRequest(ip, message);
+        }
     }
 
     public void register(ChatListener cListener) {

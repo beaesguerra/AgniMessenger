@@ -1,6 +1,8 @@
 package agni.server.receiver;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.Vector;
 
 public class UserReceiver implements MessageParser {
@@ -10,9 +12,10 @@ public class UserReceiver implements MessageParser {
         userListeners = new Vector<UserListener>();
     }
 
-    private void notifyUserRequest(String ip, byte type) {
-        for ( UserListener  uListener : userListeners )
-            uListener.infoRequest(ip, type);
+    private void notifyUserRequest(String ip, byte type, String message) {
+        for ( UserListener  uListener : userListeners ) {
+            uListener.infoRequest(ip, type, message);
+        }
     }
 
     public void register(UserListener uListener) {
@@ -24,16 +27,29 @@ public class UserReceiver implements MessageParser {
      * @requires ByteBuffer Message
      * @promises user request type as a byte
      */
-    private byte parseMessage(ByteBuffer message) {
-        byte parsedMessage = message.get(5);
+    private byte[] parseMessage(ByteBuffer message) {
+        message.flip();
+        int length = message.remaining();
+        byte[] byteArray = new byte[length];
+        message.get(byteArray);
+        byte[] parsedMessage = Arrays.copyOfRange(byteArray,5,length);
         return parsedMessage;
     }
 
     @Override
     public void receiveMessage(String ip, ByteBuffer message) {
+    	String userMessage = null;
         if(ip==null || message == null)
             throw new IllegalArgumentException();
-        byte parsedMessage = this.parseMessage(message);
-        notifyUserRequest(ip, parsedMessage);  
+        byte[] parsedMessage = this.parseMessage(message);
+        byte type = parsedMessage[0];
+		try {
+			userMessage = new String(Arrays.copyOfRange(parsedMessage,1,parsedMessage.length), "us-ascii");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        notifyUserRequest(ip, type, userMessage);  
     }
 }

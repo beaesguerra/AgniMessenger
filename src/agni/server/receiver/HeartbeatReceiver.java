@@ -12,8 +12,9 @@ public class HeartbeatReceiver implements MessageParser {
     }
 
     private void notifyHeartbeat(String ip, byte status) {
-        for ( StatusListener  sListener : statusListeners )
+        for ( StatusListener  sListener : statusListeners ) {
             sListener.ReceivedHeartBeat(ip, status);
+        }
     }
 
     public void register(StatusListener sListener) {

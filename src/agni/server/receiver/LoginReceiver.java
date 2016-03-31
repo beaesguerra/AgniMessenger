@@ -13,8 +13,9 @@ public class LoginReceiver implements MessageParser {
     }
 
     private void notifyLoginRequest(String ip, String username, String password) {
-        for (LoginListener  lListener : loginListeners)
+        for(LoginListener  lListener : loginListeners) {
             lListener.loginRequest (ip, username, password);
+        }
     }
 
     public void register(LoginListener lListener) {

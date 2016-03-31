@@ -16,6 +16,8 @@ public class UserReceiverTest {
     final byte type = 0x01;
     final String testIp = "192.168.1.1";
     final byte testAction = 0x01;
+    final String testMessage = "Hello World!";
+    byte[] testArray = null;
     int totalMessageLength; 
     ByteBuffer testBuffer = null;
 
@@ -26,7 +28,8 @@ public class UserReceiverTest {
     @Before
     public void setUp() throws Exception {
         //prepare the message
-        totalMessageLength = (headerBytes + 1);
+        testArray = testMessage.getBytes("us-ascii");
+        totalMessageLength = (headerBytes + 1 + testArray.length);
 
         
         //populate message buffer
@@ -34,6 +37,7 @@ public class UserReceiverTest {
         testBuffer.putInt(totalMessageLength);
         testBuffer.put(type);
         testBuffer.put(testAction);
+        testBuffer.put(testArray);
 
         userReceiver = new UserReceiver();
         
@@ -49,7 +53,7 @@ public class UserReceiverTest {
     @Test
     public void correctInputTest() {
         context.checking(new Expectations() {{
-            oneOf(mockUserListener).infoRequest("192.168.1.1", testAction);
+            oneOf(mockUserListener).infoRequest("192.168.1.1", testAction, testMessage);
         }});
         userReceiver.receiveMessage(testIp, testBuffer);
         context.assertIsSatisfied();
@@ -59,8 +63,7 @@ public class UserReceiverTest {
     @Test(expected = IllegalArgumentException.class)
     public void nullIpTest() {
         context.checking(new Expectations() {{
-            final String expectedIp = "192.168.1.1";
-            oneOf(mockUserListener).infoRequest(expectedIp, testAction);
+            oneOf(mockUserListener).infoRequest("192.168.1.1", testAction, testMessage);
         }});
         userReceiver.receiveMessage(null, testBuffer);
         context.assertIsSatisfied();
@@ -69,8 +72,7 @@ public class UserReceiverTest {
     @Test(expected = IllegalArgumentException.class)
     public void nullMessageTest() {
         context.checking(new Expectations() {{
-            final String expectedIp = "192.168.1.1";
-            oneOf(mockUserListener).infoRequest(expectedIp, testAction);
+            oneOf(mockUserListener).infoRequest("192.168.1.1", testAction, testMessage);
         }});
         userReceiver.receiveMessage(testIp, null);
         context.assertIsSatisfied();
