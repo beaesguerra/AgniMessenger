@@ -1,6 +1,5 @@
 package agni.client.receiver;
 
-import agni.client.view.AgniClientView;
 import agni.server.sender.StatusSender.Status;
 
 public class StatusReceiver extends MessageParser {

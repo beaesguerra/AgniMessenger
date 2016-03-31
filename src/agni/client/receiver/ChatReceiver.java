@@ -1,17 +1,12 @@
 package agni.client.receiver;
 
-import java.nio.charset.StandardCharsets;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
-import java.util.Vector;
-
-import agni.client.view.AgniClientView;
 
 public class ChatReceiver extends MessageParser {
-	// Not sure if we use this or the array in MessageParser
-//	private Vector <AgniClientView> views = null; 
 	
     public ChatReceiver() {
-//    	views = new Vector<AgniClientView>();
+    	
     }
 
     private void notifyChatReceived(String src, String message) {
@@ -23,6 +18,11 @@ public class ChatReceiver extends MessageParser {
 	public void receiveMessage(byte[] message) {
 		// Sender's name -> 6th bit [5]
 		String src = "" + (char) message[5];
-		notifyChatReceived(src, message.toString());
+		byte[] parsedMessage = Arrays.copyOfRange(message, 5, message.length);
+		try {
+			notifyChatReceived(src, new String(parsedMessage, "us-ascii"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 }

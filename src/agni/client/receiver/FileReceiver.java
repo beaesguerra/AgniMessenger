@@ -1,6 +1,7 @@
 package agni.client.receiver;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Vector;
 import agni.client.view.AgniClientView;
 
@@ -20,6 +21,14 @@ public class FileReceiver extends MessageParser {
     
 	@Override
 	public void receiveMessage(byte[] message) {
+		// Sender's name -> 6th bit [5]
+		String src = "" + (char) message[5];
+//		FileOutputStream stream = new FileOutputStream(path);
+//		try {
+//		    stream.write(message);
+//		} finally {
+//		    stream.close();
+//		}
 //		notifyFileReceived(src, file);
 	}
 
