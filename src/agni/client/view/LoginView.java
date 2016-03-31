@@ -31,6 +31,27 @@ public class LoginView extends JFrame implements AgniClientView {
     }
 
     private void setupUi() {
+        setForeground(Color.green);
+        setBackground(Color.black);
+        Container contentPane = getContentPane();
+        contentPane.setLayout(new BorderLayout());
+        JMenuBar menubar = new JMenuBar();
+        JMenu jMenuFile = new JMenu("File");
+        JMenuItem jMenuItemFileExit = new JMenuItem("Exit", 'x');
+        jMenuFile.add(jMenuItemFileExit);
+
+        menubar.add(jMenuFile);
+
+        setJMenuBar(menubar);
+
+        JPanel labelPanel = new JPanel();
+        labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
+        labelPanel.add(new JLabel("INPUT BOX:"));
+        labelPanel.add(new JLabel("test"));
+        contentPane.add(labelPanel, BorderLayout.SOUTH);
+        setLocation(0, 0);
+        setSize(80, 24);
+        validate();
     }
 
     @Override
@@ -65,28 +86,6 @@ public class LoginView extends JFrame implements AgniClientView {
 
     @Override
     public NextState displayUi() {
-        setForeground(Color.green);
-        setBackground(Color.black);
-        Container contentPane = getContentPane();
-        contentPane.setLayout(new BorderLayout());
-        JMenuBar menubar = new JMenuBar();
-        JMenu jMenuFile = new JMenu("File");
-        JMenuItem jMenuItemFileExit = new JMenuItem("Exit", 'x');
-        jMenuFile.add(jMenuItemFileExit);
-
-        menubar.add(jMenuFile);
-
-        setJMenuBar(menubar);
-
-        JPanel labelPanel = new JPanel();
-        labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
-        labelPanel.add(new JLabel("INPUT BOX:"));
-        labelPanel.add(new JLabel("test"));
-        contentPane.add(labelPanel, BorderLayout.SOUTH);
-        setLocation(0, 0);
-        setSize(80, 24);
-        validate();
-        System.out.println("HERE WE GOO");
         show();
         return null;
     }

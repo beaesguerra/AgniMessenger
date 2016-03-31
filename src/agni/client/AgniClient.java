@@ -49,7 +49,6 @@ public class AgniClient {
                                          fileActionHandler,
                                          heartbeatActionHandler);
 
-        System.out.println("HERE WE GOO");
         loginView.displayUi();
     }
 }
