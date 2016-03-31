@@ -27,4 +27,6 @@ public interface I_UserDataGuard {
 	public void addUserToChat(String username, String groupName);
 
 	public void removeUserFromChat(String username, String groupName);
+
+	public String getFriendList(String username);
 }

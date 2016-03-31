@@ -68,4 +68,10 @@ public class UserDataGuard implements I_UserDataGuard {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public String getFriendList(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

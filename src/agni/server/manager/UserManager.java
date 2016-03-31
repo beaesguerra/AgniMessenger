@@ -42,7 +42,9 @@ public class UserManager implements UserListener{
         	
         }
         else if (type == 0x02){ 	// see friends list 
-        	
+        	String username = userDataGuard.getUsername(ip); 
+        	String friendList = userDataGuard.getFriendList(username); 
+        	infoSender.sendInfo(ip, friendList);
         }
         else if (type == 0x03){		// check friend status 
         	
