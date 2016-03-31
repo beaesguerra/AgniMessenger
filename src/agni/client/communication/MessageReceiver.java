@@ -50,7 +50,7 @@ public class MessageReceiver implements Runnable {
             this.bytes = bytes;
         }
 
-        public byte bytes() {
+        final public byte bytes() {
             return bytes;
         }
     }
@@ -72,30 +72,23 @@ public class MessageReceiver implements Runnable {
     			e.printStackTrace();
     		}
 
-    		// Need to fix this to work with enums directly 
-    		// messageType = 5th bit
-    		switch(byteLine[4]) {
-    		case 0x07:
-    			// Pass to heartbeatReceiver
+    		byte messageType = byteLine[4];
+			if (messageType == MessageTypes.HEARTBEAT.bytes()) {
+				// Pass to heartbeatReceiver
     			heartbeatReceiver.receiveMessage(byteLine);
-    			break;
-    		case 0x08:
-    			// Pass to informationReceiver
+			} else if (messageType == MessageTypes.INFO.bytes()) {
+				// Pass to informationReceiver
     			informationReceiver.receiveMessage(byteLine);
-    			break;
-    		case 0x09:
-    			// Insert action
+			} else if (messageType == MessageTypes.CHAT.bytes()) {
+				// Pass to chatReceiver
     			chatReceiver.receiveMessage(byteLine);
-    			break;
-    		case 0x0A:
-    			// Insert action
+			} else if (messageType == MessageTypes.FILE.bytes()) {
+				// Pass to fileReceiver
     			fileReceiver.receiveMessage(byteLine);
-    			break;
-    		case 0x0B:
-    			// Insert action
+			} else if (messageType == MessageTypes.STATUS.bytes()) {
+				// Pass to statusReceiver
     			statusReceiver.receiveMessage(byteLine);
-    			break;
-    		}
+			}
     	}
     	// After termination functionality
     	System.out.println("MessageReceiver Terminated");
