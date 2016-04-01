@@ -32,7 +32,5 @@ public interface I_UserDataGuard {
 
 	public void addFriend(String username, String friend);
 
-	public void logoutUser(String username);
-
 	public boolean isOnline(String friend);
 }

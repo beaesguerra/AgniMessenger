@@ -82,12 +82,6 @@ public class UserDataGuard implements I_UserDataGuard {
 	}
 
 	@Override
-	public void logoutUser(String username) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public boolean isOnline(String friend) {
 		// TODO Auto-generated method stub
 		return false;

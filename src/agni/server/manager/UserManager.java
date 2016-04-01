@@ -103,7 +103,7 @@ public class UserManager implements UserListener{
         	
         }
         else if (type == 0x05){		// logout 
-        	userDataGuard.logoutUser(username);
+        	userDataGuard.changeUserCurrentIp(username, null);
         	infoSender.sendInfo(ip, "logged out");
         }
     }
