@@ -1,10 +1,23 @@
 package agni.client;
 
-import agni.client.communication.*;
-import agni.client.receiver.*;
+import java.io.IOException;
 import java.net.Socket;
-import agni.client.action.*;
-import agni.client.view.*;
+import agni.client.action.ChatActionHandler;
+import agni.client.action.FileActionHandler;
+import agni.client.action.HeartbeatActionHandler;
+import agni.client.action.InfoRequestActionHandler;
+import agni.client.action.LoginActionHandler;
+import agni.client.action.UserActionHandler;
+import agni.client.communication.MessageReceiver;
+import agni.client.communication.MessageSender;
+import agni.client.receiver.ChatReceiver;
+import agni.client.receiver.FileReceiver;
+import agni.client.receiver.HeartbeatReceiver;
+import agni.client.receiver.InformationReceiver;
+import agni.client.receiver.StatusReceiver;
+import agni.client.view.ChatView;
+import agni.client.view.IdleView;
+import agni.client.view.LoginView;
 
 public class AgniClient {
 	
@@ -35,7 +48,6 @@ public class AgniClient {
         													  statusReceiver,
         													  chatReceiver,
         													  fileReceiver);
-
         LoginActionHandler loginActionHandler = new LoginActionHandler(messageSender);
         InfoRequestActionHandler infoRequestActionHandler = new InfoRequestActionHandler(messageSender);
         HeartbeatActionHandler heartbeatActionHandler = new HeartbeatActionHandler(messageSender);
@@ -54,7 +66,13 @@ public class AgniClient {
                                          chatActionHandler,
                                          fileActionHandler,
                                          heartbeatActionHandler);
-
+        // We need to run messageReceiver somewhere here
+        // messageReceiver.run();
+    	// After termination functionality
+    	try {
+    		clientSocket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
-
 }

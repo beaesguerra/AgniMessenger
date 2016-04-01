@@ -6,10 +6,14 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
-import agni.client.receiver.*;;
+import agni.client.receiver.ChatReceiver;
+import agni.client.receiver.FileReceiver;
+import agni.client.receiver.HeartbeatReceiver;
+import agni.client.receiver.InformationReceiver;
+import agni.client.receiver.StatusReceiver;
 
 public class MessageReceiver implements Runnable {
-    private Socket tcpSocket;
+    private Socket socket;
     private HeartbeatReceiver heartbeatReceiver;
     private InformationReceiver informationReceiver;
     private StatusReceiver statusReceiver;
@@ -29,7 +33,7 @@ public class MessageReceiver implements Runnable {
     					   StatusReceiver statusReceiver,
     					   ChatReceiver chatReceiver,
     					   FileReceiver fileReceiver) {
-    	this.tcpSocket = clientSocket;
+    	this.socket = clientSocket;
     	this.heartbeatReceiver = heartbeatReceiver;
     	this.informationReceiver = informationReceiver;
     	this.statusReceiver = statusReceiver;
@@ -60,15 +64,15 @@ public class MessageReceiver implements Runnable {
     	String line = null;
     	BufferedReader inBuffer = null;
     	byte[] lineBytes = null;
-    	while (!line.equals("terminate")) {
+    	for (;;) {
     		// Initialize inputBuffer
     		try {
     			inBuffer =
-    					new BufferedReader(new InputStreamReader(tcpSocket.getInputStream()));
+    					new BufferedReader(new InputStreamReader(socket.getInputStream()));
     			line = inBuffer.readLine();
     			lineBytes = line.getBytes(StandardCharsets.US_ASCII);
     		} catch (IOException e) {
-    			e.printStackTrace();
+    			System.exit(1);
     		}
 
     		byte messageType = lineBytes[4];
@@ -87,14 +91,9 @@ public class MessageReceiver implements Runnable {
 			} else if (messageType == MessageTypes.STATUS.bytes()) {
 				// Pass to statusReceiver
     			statusReceiver.receiveMessage(lineBytes);
+			} else {
+				assert(false);
 			}
     	}
-    	// After termination functionality
-    	System.out.println("MessageReceiver Terminated");
-    	try {
-			tcpSocket.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
     }
 }

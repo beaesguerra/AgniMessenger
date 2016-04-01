@@ -9,11 +9,10 @@ import agni.client.receiver.InformationReceiver;
 import agni.client.receiver.StatusReceiver;
 
 public class MessageSender {
-
     private Socket tcpSocket;
 
     public MessageSender(Socket clientSocket) {
-    	this.tcpSocket = clientSocket;
+    	
     }
 
     public void sendMessage(byte[] message) {

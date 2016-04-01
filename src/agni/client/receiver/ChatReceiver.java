@@ -9,27 +9,28 @@ public class ChatReceiver extends MessageParser {
     	
     }
 
-    private void notifyChatReceived(String src, String message) {
-    	for(ReceiverListener rListener : super.listeners)
-    		rListener.chatReaction(src, message);
+    private void notifyChatReceived(String sender, String message) {
+    	for(ReceiverListener rListener : super.listeners) {
+    		rListener.chatReaction(sender, message);
+    	}
     }
     
 	@Override
 	public void receiveMessage(byte[] message) {
 		if(message == null)
-			throw new IllegalArgumentException("receiveMessage got a null message");
-		// Sender's name length -> 5th bit [4]
-		int senderNameLength = (int) message[4];
-		// Message starts -> 7th bit [6]
-		byte[] parsedMessage = Arrays.copyOfRange(message,
-												  6 + senderNameLength,
-												  message.length);
+			throw new NullPointerException("receiveMessage got a null message");
+		// Sender's name length -> 5th bit
+		int senderNameLength = (int) message[5];
 		try {
-			// Sender's name starts -> 6th bit [5]
-			String src = new String(Arrays.copyOfRange(message, 5,
-													   5 + senderNameLength),
+			// Sender's name starts -> 6th bit
+			String sender = new String(Arrays.copyOfRange(message, 6,
+													   6 + senderNameLength),
 													   "us-ascii");
-			notifyChatReceived(src, new String(parsedMessage, "us-ascii"));
+			// Message starts -> 7th bit
+			String parsedMessage = new String(Arrays.copyOfRange(message,
+													  7 + senderNameLength,
+													  message.length), "us-ascii");
+			notifyChatReceived(sender, parsedMessage);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
