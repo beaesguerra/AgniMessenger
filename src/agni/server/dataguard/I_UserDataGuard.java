@@ -30,7 +30,5 @@ public interface I_UserDataGuard {
 
 	public boolean userExists(String message);
 
-	public void addFriend(String username, String friend);
-
 	public boolean isOnline(String friend);
 }
