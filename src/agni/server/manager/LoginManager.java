@@ -18,7 +18,7 @@ public class LoginManager implements LoginListener{
     @Override
     public void loginRequest(String ip, String user, String password) {
         // TODO Auto-generated method stub
-    	
+        
     }
 
 }
