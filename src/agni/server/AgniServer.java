@@ -36,6 +36,7 @@ import agni.server.communication.IpChannelPair;
 public class AgniServer {
 
     public static void main(String[] args) {
+
         ChannelList channels = new ChannelList();
         MessageSender messageSender = new MessageSender(channels);
 

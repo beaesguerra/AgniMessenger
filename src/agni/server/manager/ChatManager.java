@@ -13,7 +13,7 @@ public class ChatManager implements ChatListener{
     private ChatSender chatSender;
 
     public ChatManager(UserDataGuard userDataGuard, 
-    				I_GroupChatDataGuard groupChatDataGuard,
+                    I_GroupChatDataGuard groupChatDataGuard,
                        InfoSender infoSender,
                        ChatSender chatSender) {
         this.groupChatDataGuard = groupChatDataGuard;
@@ -22,7 +22,7 @@ public class ChatManager implements ChatListener{
     }
 
     @Override
-    public void chatRequest(String ip, byte[] message) {
+    public void chatRequest(String ip, String message) {
         // TODO Auto-generated method stub
         
     }
