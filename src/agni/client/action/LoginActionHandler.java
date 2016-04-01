@@ -1,6 +1,7 @@
 package agni.client.action;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 import agni.client.communication.MessageSender;
 
@@ -21,16 +22,42 @@ public class LoginActionHandler {
      * @param passoed - the password corresponding to the username of the client
      * */
     public void requestLogin(String username, String password) {
-    	if(username == null || password == null)
+    	if(username == null || password == null) {
     		throw new NullPointerException("requestLogin received a null username/password");
-    	byte[] usernameBytes = username.getBytes(StandardCharsets.US_ASCII);
-    	byte[] passwordBytes = password.getBytes(StandardCharsets.US_ASCII);
-    	int numBytes = HEADER_LENGTH_SIZE +
-    	               MESSAGE_TYPE_SIZE +
-    	               USERNAME_LENGTH_SIZE +
-    	               usernameBytes.length +
-    	               passwordBytes.length;
+    	}
+    	if(!isAllAscii(username) || !isAllAscii(password)) {
+    		throw new IllegalArgumentException("requestLogin received non-Ascii username/passord");
+    	} else {
+    		byte[] usernameBytes = username.getBytes(StandardCharsets.US_ASCII);
+        	byte[] passwordBytes = password.getBytes(StandardCharsets.US_ASCII);
+        	int numBytes = HEADER_LENGTH_SIZE +
+        	               MESSAGE_TYPE_SIZE +
+        	               USERNAME_LENGTH_SIZE +
+        	               usernameBytes.length +
+        	               passwordBytes.length;
+        	byte[] packedMessage = new byte[numBytes];
+        	System.arraycopy(intToByteArray(numBytes), 0, packedMessage, 0, 4);
+        	Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
+        	Arrays.fill(packedMessage, 5, 6, (byte) usernameBytes.length);
+        	System.arraycopy(usernameBytes, 0, packedMessage,
+        			         6, (6 + usernameBytes.length));
+        	System.arraycopy(passwordBytes, 0, packedMessage,
+        			         8, (passwordBytes.length));
+        	messageSender.sendMessage(packedMessage);
+    	}
     	
+    }
+    
+    private static boolean isAllAscii(String input) {
+        boolean isAscii = true;
+        for (int i = 0; i < input.length(); i++) {
+            int c = input.charAt(i);
+            if (c > 0x7F) {
+                isAscii = false;
+                break;
+            }
+        }
+        return isAscii;
     }
     
     public static final byte[] intToByteArray(int value) {
