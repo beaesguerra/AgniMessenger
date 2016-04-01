@@ -46,7 +46,7 @@ public class UserManager implements UserListener{
     public void userRequest(String ip, byte type, String argument) {
         // TODO Auto-generated method stub
     	String username = userDataGuard.getUsername(ip);
-    	if(type == 0x00) { 			// join chat; argument = group to join
+    	if(type == UserRequestType.JOIN_CHAT.bytes()) { 			// join chat; argument = group to join
         	String groupName = argument; 
         	if (userDataGuard.groupExists(groupName)) {
         		if (!userDataGuard.userCurrentChat(username).equals(null)) {
@@ -59,7 +59,7 @@ public class UserManager implements UserListener{
         		infoSender.sendInfo(ip, "failed: " + groupName + " doesn't exist");
         	}
         }
-        else if (type == 0x01){ 	// leave chat 
+        else if (type == UserRequestType.LEAVE_CHAT.bytes()){ 	// leave chat 
         	String groupName = userDataGuard.userCurrentChat(username); 
         	if (!userDataGuard.userCurrentChat(username).equals(null)) {
         		userDataGuard.removeUserFromChat(username,groupName); 
@@ -70,7 +70,7 @@ public class UserManager implements UserListener{
         	}
         	
         }
-        else if (type == 0x02){ 	// see friends list 
+        else if (type == UserRequestType.FRIENDS_LIST.bytes()){ 	// see friends list 
         	String [] friendList = userDataGuard.getFriends(username); 
         	String friends = "";
         	for (int i = 0; i < friendList.length; i++) {
@@ -84,7 +84,7 @@ public class UserManager implements UserListener{
         	}
         	infoSender.sendInfo(ip, "friends:" + friends);
         }
-        else if (type == 0x03){		// check friend status ; argument = friend to check 
+        else if (type == UserRequestType.FRIEND_STATUS.bytes()){		// check friend status ; argument = friend to check 
         	String friend = argument;
         	if (userDataGuard.isOnline(friend)) {
         		infoSender.sendInfo(ip, friend + " online");
@@ -93,7 +93,7 @@ public class UserManager implements UserListener{
         		infoSender.sendInfo(ip, friend + " offline");
         	}
         }
-        else if (type == 0x04){		// add friend 
+        else if (type == UserRequestType.ADD_FRIEND.bytes()){		// add friend 
         	String friend = argument;
         	if (userDataGuard.userExists(argument)) {
         		
@@ -117,7 +117,7 @@ public class UserManager implements UserListener{
         	}
         	
         }
-        else if (type == 0x05){		// logout 
+        else if (type == UserRequestType.LOGOUT.bytes()){		// logout 
         	userDataGuard.changeUserCurrentIp(username, null);
         	infoSender.sendInfo(ip, "logged out");
         }
