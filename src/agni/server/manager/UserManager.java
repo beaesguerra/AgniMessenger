@@ -77,10 +77,10 @@ public class UserManager implements UserListener{
             for (int i = 0; i < friendList.length; i++) {
                 friends.concat(friendList[i] + " " );
                 if(userDataGuard.isOnline(friendList[i])) {
-                    friends.concat("online" + " \n" );
+                    friends.concat("online \n" );
                 }
                 else {
-                    friends.concat("offline" + " \n" );
+                    friends.concat("offline \n" );
                 }
             }
             infoSender.sendInfo(ip, "friends:\n" + friends);
