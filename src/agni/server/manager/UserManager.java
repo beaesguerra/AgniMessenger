@@ -83,7 +83,7 @@ public class UserManager implements UserListener{
                     friends.concat("offline" + " \n" );
                 }
             }
-            infoSender.sendInfo(ip, "friends:" + friends);
+            infoSender.sendInfo(ip, "friends:\n" + friends);
         }
         else if (type == UserRequestType.FRIEND_STATUS.bytes()){        // check friend status ; argument = friend to check 
             String friend = argument;
