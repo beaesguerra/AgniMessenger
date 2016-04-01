@@ -16,8 +16,6 @@ public interface I_GroupChatDataGuard {
     public void addMessage(String message, String sender, String groupname);
 
     public String[] users(String groupChatName);
-
-    public void addUser(String user, String groupChatName);
     
     public void changeUserCurrentChat(String user, String chatname);
 
