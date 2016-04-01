@@ -87,11 +87,16 @@ public class UserManager implements UserListener{
         }
         else if (type == UserRequestType.FRIEND_STATUS.bytes()){        // check friend status ; argument = friend to check 
             String friend = argument;
-            if (userDataGuard.isOnline(friend)) {
-                infoSender.sendInfo(ip, friend + " online");
+            if(userDataGuard.userExists(friend)) {
+	            if (userDataGuard.isOnline(friend)) {
+	                infoSender.sendInfo(ip, friend + " online");
+	            }
+	            else {
+	                infoSender.sendInfo(ip, friend + " offline");
+	            }
             }
             else {
-                infoSender.sendInfo(ip, friend + " offline");
+            	infoSender.sendInfo(ip, friend + " does not exist");
             }
         }
         else if (type == UserRequestType.ADD_FRIEND.bytes()){       // add friend 
