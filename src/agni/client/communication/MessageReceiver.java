@@ -28,26 +28,26 @@ public class MessageReceiver implements Runnable {
      * */
     
     public MessageReceiver(Socket clientSocket,
-    					   HeartbeatReceiver heartbeatReceiver,
-    					   InformationReceiver informationReceiver,
-    					   StatusReceiver statusReceiver,
-    					   ChatReceiver chatReceiver,
-    					   FileReceiver fileReceiver) {
-    	this.socket = clientSocket;
-    	this.heartbeatReceiver = heartbeatReceiver;
-    	this.informationReceiver = informationReceiver;
-    	this.statusReceiver = statusReceiver;
-    	this.chatReceiver = chatReceiver;
-    	this.fileReceiver = fileReceiver;
+                           HeartbeatReceiver heartbeatReceiver,
+                           InformationReceiver informationReceiver,
+                           StatusReceiver statusReceiver,
+                           ChatReceiver chatReceiver,
+                           FileReceiver fileReceiver) {
+        this.socket = clientSocket;
+        this.heartbeatReceiver = heartbeatReceiver;
+        this.informationReceiver = informationReceiver;
+        this.statusReceiver = statusReceiver;
+        this.chatReceiver = chatReceiver;
+        this.fileReceiver = fileReceiver;
     }
     
     public enum MessageTypes {
-    	HEARTBEAT((byte)0x07),
-    	INFO((byte)0x08),
-    	CHAT((byte)0x09),
-    	FILE((byte)0x0A),
-    	STATUS((byte)0x0B);
-    	
+        HEARTBEAT((byte)0x07),
+        INFO((byte)0x08),
+        CHAT((byte)0x09),
+        FILE((byte)0x0A),
+        STATUS((byte)0x0B);
+        
         private final byte bytes;
         private MessageTypes(byte bytes) {
             this.bytes = bytes;
@@ -60,40 +60,40 @@ public class MessageReceiver implements Runnable {
 
     @Override
     public void run() {
-    	// Declaring incoming buffer and line to read to
-    	String line = null;
-    	BufferedReader inBuffer = null;
-    	byte[] lineBytes = null;
-    	for (;;) {
-    		// Initialize inputBuffer
-    		try {
-    			inBuffer =
-    					new BufferedReader(new InputStreamReader(socket.getInputStream()));
-    			line = inBuffer.readLine();
-    			lineBytes = line.getBytes(StandardCharsets.US_ASCII);
-    		} catch (IOException e) {
-    			System.exit(1);
-    		}
+        // Declaring incoming buffer and line to read to
+        String line = null;
+        BufferedReader inBuffer = null;
+        byte[] lineBytes = null;
+        for (;;) {
+            // Initialize inputBuffer
+            try {
+                inBuffer =
+                        new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                line = inBuffer.readLine();
+                lineBytes = line.getBytes(StandardCharsets.US_ASCII);
+            } catch (IOException e) {
+                System.exit(1);
+            }
 
-    		byte messageType = lineBytes[4];
-			if (messageType == MessageTypes.HEARTBEAT.bytes()) {
-				// Pass to heartbeatReceiver
-    			heartbeatReceiver.receiveMessage(lineBytes);
-			} else if (messageType == MessageTypes.INFO.bytes()) {
-				// Pass to informationReceiver
-    			informationReceiver.receiveMessage(lineBytes);
-			} else if (messageType == MessageTypes.CHAT.bytes()) {
-				// Pass to chatReceiver
-    			chatReceiver.receiveMessage(lineBytes);
-			} else if (messageType == MessageTypes.FILE.bytes()) {
-				// Pass to fileReceiver
-    			fileReceiver.receiveMessage(lineBytes);
-			} else if (messageType == MessageTypes.STATUS.bytes()) {
-				// Pass to statusReceiver
-    			statusReceiver.receiveMessage(lineBytes);
-			} else {
-				assert(false);
-			}
-    	}
+            byte messageType = lineBytes[4];
+            if (messageType == MessageTypes.HEARTBEAT.bytes()) {
+                // Pass to heartbeatReceiver
+                heartbeatReceiver.receiveMessage(lineBytes);
+            } else if (messageType == MessageTypes.INFO.bytes()) {
+                // Pass to informationReceiver
+                informationReceiver.receiveMessage(lineBytes);
+            } else if (messageType == MessageTypes.CHAT.bytes()) {
+                // Pass to chatReceiver
+                chatReceiver.receiveMessage(lineBytes);
+            } else if (messageType == MessageTypes.FILE.bytes()) {
+                // Pass to fileReceiver
+                fileReceiver.receiveMessage(lineBytes);
+            } else if (messageType == MessageTypes.STATUS.bytes()) {
+                // Pass to statusReceiver
+                statusReceiver.receiveMessage(lineBytes);
+            } else {
+                assert(false);
+            }
+        }
     }
 }

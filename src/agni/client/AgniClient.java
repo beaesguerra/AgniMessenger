@@ -20,14 +20,14 @@ import agni.client.view.IdleView;
 import agni.client.view.LoginView;
 
 public class AgniClient {
-	
+    
     public AgniClient() {
-    	
+        
     }
 
     public static void main(String[] args) throws Exception {
-    	
-    	if (args.length != 2) {
+        
+        if (args.length != 2) {
             System.out.println("Usage: Client <Server IP> <Server Port>");
             System.exit(1);
         }
@@ -43,11 +43,11 @@ public class AgniClient {
         
         MessageSender messageSender = new MessageSender(clientSocket);
         MessageReceiver messageReceiver = new MessageReceiver(clientSocket,
-        													  heartbeatReceiver,
-        													  informationReceiver,
-        													  statusReceiver,
-        													  chatReceiver,
-        													  fileReceiver);
+                                                              heartbeatReceiver,
+                                                              informationReceiver,
+                                                              statusReceiver,
+                                                              chatReceiver,
+                                                              fileReceiver);
         LoginActionHandler loginActionHandler = new LoginActionHandler(messageSender);
         InfoRequestActionHandler infoRequestActionHandler = new InfoRequestActionHandler(messageSender);
         HeartbeatActionHandler heartbeatActionHandler = new HeartbeatActionHandler(messageSender);
@@ -68,11 +68,11 @@ public class AgniClient {
                                          heartbeatActionHandler);
         // We need to run messageReceiver somewhere here
         // messageReceiver.run();
-    	// After termination functionality
-    	try {
-    		clientSocket.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        // After termination functionality
+        try {
+            clientSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
