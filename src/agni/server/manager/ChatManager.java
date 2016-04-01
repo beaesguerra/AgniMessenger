@@ -21,9 +21,9 @@ public class ChatManager implements ChatListener{
         this.chatSender = chatSender;
     }
 
-    @Override
-    public void chatRequest(String ip, byte[] message) {
-        // TODO Auto-generated method stub
-        
-    }
+	@Override
+	public void chatRequest(String ip, String message) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -52,7 +52,7 @@ public class ChatReceiverTest {
     @Test
     public void correctInputTest() {
         context.checking(new Expectations() {{
-            oneOf(mockChatListener).chatRequest("192.168.1.1", testArray);
+            oneOf(mockChatListener).chatRequest("192.168.1.1", testString);
         }});
         chatReceiver.receiveMessage(testIp, testBuffer);
         context.assertIsSatisfied();
@@ -63,7 +63,7 @@ public class ChatReceiverTest {
     public void nullIpTest() {
         context.checking(new Expectations() {{
             final String expectedIp = "192.168.1.1";
-            oneOf(mockChatListener).chatRequest(expectedIp, testArray);
+            oneOf(mockChatListener).chatRequest(expectedIp, testString);
         }});
         chatReceiver.receiveMessage(null, testBuffer);
         context.assertIsSatisfied();
@@ -73,7 +73,7 @@ public class ChatReceiverTest {
     public void nullMessageTest() {
         context.checking(new Expectations() {{
             final String expectedIp = "192.168.1.1";
-            oneOf(mockChatListener).chatRequest(expectedIp, testArray);
+            oneOf(mockChatListener).chatRequest(expectedIp, testString);
         }});
         chatReceiver.receiveMessage(testIp, null);
         context.assertIsSatisfied();

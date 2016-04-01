@@ -1,4 +1,5 @@
 package agni.server.receiver;
+import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Vector;
@@ -10,7 +11,7 @@ public class ChatReceiver implements MessageParser {
         chatListeners = new Vector<ChatListener>();
     }
 
-    private void notifyChatRequest(String ip, byte[] message) {
+    private void notifyChatRequest(String ip, String message) {
         for ( ChatListener  cListener : chatListeners ) {
             cListener.chatRequest(ip, message);
         }
@@ -38,8 +39,15 @@ public class ChatReceiver implements MessageParser {
     public void receiveMessage(String ip, ByteBuffer message) {
         if(ip==null || message == null)
             throw new NullPointerException();
-        byte[] parsedMessage = this.parseMessage(message);
-        notifyChatRequest(ip, parsedMessage);   
+        byte[] parsedArray = this.parseMessage(message);
+        String parsedMessage;
+		try {
+			parsedMessage = new String(parsedArray, "us-ascii");
+	        notifyChatRequest(ip, parsedMessage); 
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
     }
 
 }
