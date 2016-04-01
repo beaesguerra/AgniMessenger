@@ -9,45 +9,48 @@ import agni.server.dataguard.UserDataGuard;
 import agni.server.receiver.UserListener;
 import agni.server.sender.InfoSender;
 
-public class UserManager implements UserListener{
-    private InfoSender infoSender;
-    private I_UserDataGuard userDataGuard;
-    private I_GroupChatDataGuard groupChatDataGuard; 
+public class UserManager implements UserListener {
+	private InfoSender infoSender;
+	private I_UserDataGuard userDataGuard;
+	private I_GroupChatDataGuard groupChatDataGuard;
 
-    public enum UserRequestType {
-        JOIN_CHAT((byte)0x00),
-        LEAVE_CHAT((byte)0x01),
-        FRIENDS_LIST((byte)0x02),
-        FRIEND_STATUS((byte)0x03),
-        ADD_FRIEND((byte)0x04),
-        LOGOUT((byte)0x05);
+	public enum UserRequestType {
+		JOIN_CHAT((byte) 0x00), 
+		LEAVE_CHAT((byte) 0x01), 
+		FRIENDS_LIST((byte) 0x02), 
+		FRIEND_STATUS((byte) 0x03), 
+		ADD_FRIEND((byte) 0x04), 
+		LOGOUT((byte) 0x05), 
+		CREATE_CHAT((byte) 0x06), 
+		REMOVE_CHAT((byte) 0x07);
 
-        private final byte bytes;
-        private UserRequestType(byte bytes) {
-            this.bytes = bytes;
-        }
+		private final byte bytes;
 
-        public final byte bytes() {
-            return bytes;
-        }
-    }
-    public UserManager(InfoSender infoSender,
-                       UserDataGuard userDataGuard, GroupChatDataGuard groupChatDataGuard ) {
-        this.infoSender = infoSender;
-        this.userDataGuard = userDataGuard;
-        this.groupChatDataGuard = groupChatDataGuard; 
-    }
-    private boolean friendHasAccepted(String username, String friend) {
-        String [] friendList = userDataGuard.getFriends(friend); 
-        if(Arrays.asList(friendList).contains(username)) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    
-    @Override
+		private UserRequestType(byte bytes) {
+			this.bytes = bytes;
+		}
+
+		public final byte bytes() {
+			return bytes;
+		}
+	}
+
+	public UserManager(InfoSender infoSender, UserDataGuard userDataGuard, GroupChatDataGuard groupChatDataGuard) {
+		this.infoSender = infoSender;
+		this.userDataGuard = userDataGuard;
+		this.groupChatDataGuard = groupChatDataGuard;
+	}
+
+	private boolean friendHasAccepted(String username, String friend) {
+		String[] friendList = userDataGuard.getFriends(friend);
+		if (Arrays.asList(friendList).contains(username)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
     public void userRequest(String ip, byte type, String argument) {
         // TODO Auto-generated method stub
         String username = userDataGuard.getUsername(ip);
@@ -130,6 +133,24 @@ public class UserManager implements UserListener{
         else if (type == UserRequestType.LOGOUT.bytes()){       // logout 
             userDataGuard.changeUserCurrentIp(username, null);
             infoSender.sendInfo(ip, "logged out");
+        }
+        else if (type == UserRequestType.CREATE_CHAT.bytes()){       // create chat 
+        	String groupName = argument; 
+        	if (!groupChatDataGuard.chatExists(groupName)){ 
+        		groupChatDataGuard.createGroupChat(username, groupName); 	//create chat
+        		if(!groupChatDataGuard.userCurrentChat(username).equals(null)) {
+        			groupChatDataGuard.removeUserFromChat(username, groupChatDataGuard.userCurrentChat(user));
+        		}
+        		groupChatDataGuard.addUserToChat(username, groupName);
+        		infoSender.sendInfo(ip, "creating chatroom " + groupName);	
+        	}
+        	else {
+        		infoSender.sendInfo(ip, "chatroom already exists ");
+        	}
+        }
+        else if (type == UserRequestType.REMOVE_CHAT.bytes()){       // remove chat 
+           String groupName = argument;
+           
         }
     }
 
