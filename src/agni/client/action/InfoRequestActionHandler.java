@@ -1,5 +1,7 @@
 package agni.client.action;
 
+import java.util.Arrays;
+
 import agni.client.communication.MessageSender;
 
 public class InfoRequestActionHandler {
@@ -44,7 +46,9 @@ public class InfoRequestActionHandler {
     				   MESSAGE_TYPE_SIZE;
     	byte[] packedMessage = new byte[numBytes];
     	System.arraycopy(intToByteArray(numBytes), 0, packedMessage, 0, 4);
-    	
+    	Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
+    	System.arraycopy(intToByteArray(infoType), 0, packedMessage, 5, 1); // not sure if the length can be 1
+    	messageSender.sendMessage(packedMessage);
     }
     
     public static final byte[] intToByteArray(int value) {
