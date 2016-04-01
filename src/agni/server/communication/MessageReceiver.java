@@ -3,10 +3,13 @@ package agni.server.communication;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
+import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -128,19 +131,17 @@ public class MessageReceiver {
      * @promises register new client and add new ip/channel pair to list
      */  
     public void registerNewClient(SelectionKey key) {
-        SocketChannel cchannel = null;
+        SocketChannel currentChannel = null;
         try {
-            cchannel = ((ServerSocketChannel) key
-                    .channel()).accept();
-            cchannel.configureBlocking(false);
-            System.out.println("Accept conncection from "
-                    + cchannel.socket().toString());
-            cchannel.register(selector, SelectionKey.OP_READ);  
+            currentChannel = ((ServerSocketChannel) key.channel()).accept();
+            currentChannel.configureBlocking(false);
+            System.out.println("Accept conncection from " + currentChannel.socket().toString());
+            currentChannel.register(selector, SelectionKey.OP_READ);  
         } catch (IOException e2) {
             // TODO Auto-generated catch block
             e2.printStackTrace();
         }
-        saveIpChannelPair(cchannel);
+        saveIpChannelPair(currentChannel);
     }
     
 /*
@@ -150,17 +151,18 @@ public class MessageReceiver {
  * @promises to service ready channels by calling selectReceiver or registerNewClient
  */
     public void waitForClients() {
-       boolean terminated = false;
-       ByteBuffer inBuffer = null;
-       ByteBuffer outBuffer = null;
-       int BUFFERSIZE = 32000;
-       int bytesRecv = 0;
+        final int errorCheck = 500; 
+        boolean terminated = false;
+        ByteBuffer inBuffer = null;
+        ByteBuffer outBuffer = null;
+        int BUFFERSIZE = 32000;
+        int bytesRecv = 0;
        
-       try {
+        try {
         //boolean terminated = false;
         while (!terminated) 
         {
-                if (selector.select(500) < 0) {
+                if (selector.select(errorCheck) < 0) {
                     System.out.println("select() failed");
                     System.exit(1);
                 }
@@ -180,26 +182,23 @@ public class MessageReceiver {
                     if (key.isAcceptable()) {
                         registerNewClient(key);
                     } else {
-                        SocketChannel cchannel = (SocketChannel) key.channel();
+                        SocketChannel currentChannel = (SocketChannel) key.channel();
                         if (key.isReadable()) {
                             // Open input and output streams
                             inBuffer = ByteBuffer.allocateDirect(BUFFERSIZE);
                             outBuffer = ByteBuffer.allocate(BUFFERSIZE);
 
                             // Read from socket
-                            bytesRecv = cchannel.read(inBuffer);
+                            bytesRecv = currentChannel.read(inBuffer);
                             if (bytesRecv <= 0) {
-                                System.out
-                                        .println("read() error, or connection closed");
+                                System.out.println("read() error, or connection closed");
                                 key.cancel(); // deregister the socket
-                                channelList.removeIP(cchannel.getRemoteAddress().toString());
-                                continue;
+                                channelList.removeIP(currentChannel.getRemoteAddress().toString());
                             }
                             inBuffer.flip(); // make buffer available
                             outBuffer.put(inBuffer);
                             inBuffer.clear();
-                            //outBuffer.flip(); //TODO if it doesn't work try this
-                            selectReceiver(cchannel.getRemoteAddress().toString(), outBuffer);
+                            selectReceiver(currentChannel.getRemoteAddress().toString(), outBuffer);
                                                     }
                     }
                 } // end of while (readyItor.hasNext())
