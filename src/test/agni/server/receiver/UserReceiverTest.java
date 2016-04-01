@@ -53,7 +53,7 @@ public class UserReceiverTest {
     @Test
     public void correctInputTest() {
         context.checking(new Expectations() {{
-            oneOf(mockUserListener).infoRequest("192.168.1.1", testAction, testMessage);
+            oneOf(mockUserListener).userRequest("192.168.1.1", testAction, testMessage);
         }});
         userReceiver.receiveMessage(testIp, testBuffer);
         context.assertIsSatisfied();
@@ -63,7 +63,7 @@ public class UserReceiverTest {
     @Test(expected = NullPointerException.class)
     public void nullIpTest() {
         context.checking(new Expectations() {{
-            oneOf(mockUserListener).infoRequest("192.168.1.1", testAction, testMessage);
+            oneOf(mockUserListener).userRequest("192.168.1.1", testAction, testMessage);
         }});
         userReceiver.receiveMessage(null, testBuffer);
         context.assertIsSatisfied();
@@ -72,7 +72,7 @@ public class UserReceiverTest {
     @Test(expected = NullPointerException.class)
     public void nullMessageTest() {
         context.checking(new Expectations() {{
-            oneOf(mockUserListener).infoRequest("192.168.1.1", testAction, testMessage);
+            oneOf(mockUserListener).userRequest("192.168.1.1", testAction, testMessage);
         }});
         userReceiver.receiveMessage(testIp, null);
         context.assertIsSatisfied();

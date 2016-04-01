@@ -14,7 +14,7 @@ public class UserReceiver implements MessageParser {
 
     private void notifyUserRequest(String ip, byte type, String message) {
         for ( UserListener  uListener : userListeners ) {
-            uListener.infoRequest(ip, type, message);
+            uListener.userRequest(ip, type, message);
         }
     }
 
