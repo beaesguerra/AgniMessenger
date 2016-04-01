@@ -8,7 +8,7 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
     }
 
     public String[] allGroupChats() {
-    	return null;
+        return null;
     }
 
     public void createGroupChat(String owner, String groupChatName) {
@@ -17,7 +17,7 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
 
     /* Throw IllegalArgumentException if groupChat does not exist */
     public void deleteGroupChat(String groupChatName) {
-    	
+        
     }
 
     public String owner(String groupChatName) {
@@ -36,39 +36,39 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
         return null;
     }
 
-	@Override
-	public void changeUserCurrentChat(String user, String chatname) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void changeUserCurrentChat(String user, String chatname) {
+        // TODO Auto-generated method stub
+        
+    }
 
-	@Override
-	public String userCurrentChat(String user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public String userCurrentChat(String user) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public void addUserToChat(String username, String groupChatName) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void addUserToChat(String username, String groupChatName) {
+        // TODO Auto-generated method stub
+        
+    }
 
-	@Override
-	public void removeUserFromChat(String username, String groupName) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void removeUserFromChat(String username, String groupName) {
+        // TODO Auto-generated method stub
+        
+    }
 
-	@Override
-	public void addUser(String user, String groupChatName) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void addUser(String user, String groupChatName) {
+        // TODO Auto-generated method stub
+        
+    }
 
-	@Override
-	public boolean chatExists(String groupName) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean chatExists(String groupName) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }
