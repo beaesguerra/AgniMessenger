@@ -58,18 +58,6 @@ public class UserDataGuard implements I_UserDataGuard {
 	}
 
 	@Override
-	public void addUserToChat(String username, String groupName) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeUserFromChat(String username, String groupName) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public boolean userExists(String message) {
 		// TODO Auto-generated method stub
 		return false;

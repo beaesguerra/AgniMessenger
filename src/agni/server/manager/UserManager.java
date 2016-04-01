@@ -2,6 +2,8 @@ package agni.server.manager;
 
 import java.util.Arrays;
 
+import agni.server.dataguard.GroupChatDataGuard;
+import agni.server.dataguard.I_GroupChatDataGuard;
 import agni.server.dataguard.I_UserDataGuard;
 import agni.server.dataguard.UserDataGuard;
 import agni.server.receiver.UserListener;
@@ -10,6 +12,7 @@ import agni.server.sender.InfoSender;
 public class UserManager implements UserListener{
     private InfoSender infoSender;
     private I_UserDataGuard userDataGuard;
+    private I_GroupChatDataGuard groupChatDataGuard; 
 
     public enum UserRequestType {
         JOIN_CHAT((byte)0x00),
@@ -29,9 +32,10 @@ public class UserManager implements UserListener{
         }
     }
     public UserManager(InfoSender infoSender,
-                       UserDataGuard userDataGuard) {
+                       UserDataGuard userDataGuard, GroupChatDataGuard groupChatDataGuard ) {
         this.infoSender = infoSender;
         this.userDataGuard = userDataGuard;
+        this.groupChatDataGuard = groupChatDataGuard; 
     }
     private boolean friendHasAccepted(String username, String friend) {
         String [] friendList = userDataGuard.getFriends(friend); 
@@ -50,10 +54,10 @@ public class UserManager implements UserListener{
         if(type == UserRequestType.JOIN_CHAT.bytes()) {             // join chat; argument = group to join
             String groupName = argument; 
             if (userDataGuard.groupExists(groupName)) {
-                if (!userDataGuard.userCurrentChat(username).equals(null)) {
-                    userDataGuard.removeUserFromChat(username, userDataGuard.userCurrentChat(username));
+                if (!groupChatDataGuard.userCurrentChat(username).equals(null)) {
+                	groupChatDataGuard.removeUserFromChat(username, groupChatDataGuard.userCurrentChat(username));
                 }
-                userDataGuard.addUserToChat(username,groupName); 
+                groupChatDataGuard.addUserToChat(username,groupName); 
                 infoSender.sendInfo(ip, "success: joining " + groupName);
             }
             else {
@@ -61,9 +65,9 @@ public class UserManager implements UserListener{
             }
         }
         else if (type == UserRequestType.LEAVE_CHAT.bytes()){   // leave chat 
-            String groupName = userDataGuard.userCurrentChat(username); 
-            if (!userDataGuard.userCurrentChat(username).equals(null)) {
-                userDataGuard.removeUserFromChat(username,groupName); 
+            String groupName = groupChatDataGuard.userCurrentChat(username); 
+            if (!groupChatDataGuard.userCurrentChat(username).equals(null)) {
+            	groupChatDataGuard.removeUserFromChat(username,groupName); 
                 infoSender.sendInfo(ip, "success: leaving " + groupName);
             }
             else {

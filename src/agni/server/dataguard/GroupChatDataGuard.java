@@ -36,7 +36,33 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
         return null;
     }
 
-    public void addUser(String user, String groupChatName) {
+	@Override
+	public void changeUserCurrentChat(String user, String chatname) {
+		// TODO Auto-generated method stub
+		
+	}
 
-    }
+	@Override
+	public String userCurrentChat(String user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addUserToChat(String username, String groupChatName) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeUserFromChat(String username, String groupName) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addUser(String user, String groupChatName) {
+		// TODO Auto-generated method stub
+		
+	}
 }

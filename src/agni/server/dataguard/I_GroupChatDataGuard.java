@@ -18,5 +18,14 @@ public interface I_GroupChatDataGuard {
     public String[] users(String groupChatName);
 
     public void addUser(String user, String groupChatName);
+    
+    public void changeUserCurrentChat(String user, String chatname);
+
+    public String userCurrentChat(String user);
+    
+    public void addUserToChat(String username, String groupName);
+
+    public void removeUserFromChat(String username, String groupName);
+
 
 }
