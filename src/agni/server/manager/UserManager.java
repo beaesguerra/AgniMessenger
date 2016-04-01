@@ -33,8 +33,8 @@ public class UserManager implements UserListener{
         	}
         }
         else if (type == 0x01){ 	// leave chat 
-        	String groupName = message; 
-        	if (userDataGuard.groupExists(groupName)) {
+        	String groupName = userDataGuard.userCurrentChat(username); 
+        	if (!userDataGuard.userCurrentChat(username).equals(null)) {
         		userDataGuard.removeUserFromChat(username,groupName); 
         		infoSender.sendInfo(ip, "success: leaving " + groupName);
         	}
