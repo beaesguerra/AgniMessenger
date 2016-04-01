@@ -65,8 +65,6 @@ public class UserManager implements UserListener{
         			friends.concat("offline" + " \n" );
         		}
         	}
-        	// TODO get status of each friend
-        	//String statusList = userDataGuard.getStatusList(username); 
         	infoSender.sendInfo(ip, "friends:" + friends);
         }
         else if (type == 0x03){		// check friend status ; message = friend to check 
