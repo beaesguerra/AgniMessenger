@@ -20,9 +20,9 @@ import agni.client.view.IdleView;
 import agni.client.view.LoginView;
 
 public class AgniClient {
-    
+
     public AgniClient() {
-        
+
     }
 
     public static void main(String[] args) throws Exception {
