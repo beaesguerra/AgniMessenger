@@ -6,5 +6,5 @@ public interface AgniClientView extends ReceiverListener {
     public enum NextState {
         LoginView, IdleView, ChatView;
     }
-    public NextState run();
+    public NextState displayUi();
 }

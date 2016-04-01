@@ -4,11 +4,20 @@ import agni.client.communication.*;
 import agni.client.receiver.*;
 import agni.client.action.*;
 import agni.client.view.*;
+import charva.awt.BorderLayout;
+import charva.awt.Color;
+import charva.awt.Container;
+import charvax.swing.BoxLayout;
+import charvax.swing.JFrame;
+import charvax.swing.JLabel;
+import charvax.swing.JMenu;
+import charvax.swing.JMenuBar;
+import charvax.swing.JMenuItem;
+import charvax.swing.JPanel;
 
 public class AgniClient {
 
     public AgniClient() {
-
     }
 
     public static void main(String[] args) {
@@ -40,6 +49,6 @@ public class AgniClient {
                                          fileActionHandler,
                                          heartbeatActionHandler);
 
+        loginView.displayUi();
     }
-
 }
