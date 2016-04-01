@@ -53,7 +53,7 @@ public class UserManager implements UserListener{
         String username = userDataGuard.getUsername(ip);
         if(type == UserRequestType.JOIN_CHAT.bytes()) {             // join chat; argument = group to join
             String groupName = argument; 
-            if (userDataGuard.groupExists(groupName)) {
+            if (groupChatDataGuard.chatExists(groupName)) {
                 if (!groupChatDataGuard.userCurrentChat(username).equals(null)) {
                 	groupChatDataGuard.removeUserFromChat(username, groupChatDataGuard.userCurrentChat(username));
                 }

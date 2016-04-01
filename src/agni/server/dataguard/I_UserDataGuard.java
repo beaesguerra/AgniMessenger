@@ -16,8 +16,6 @@ public interface I_UserDataGuard {
 
     public String userCurrentIp(String user);
 
-    public boolean groupExists(String groupName);
-
     public String getUsername(String ip);
 
     public boolean userExists(String message);

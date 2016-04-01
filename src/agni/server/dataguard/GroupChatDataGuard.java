@@ -65,4 +65,10 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public boolean chatExists(String groupName) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

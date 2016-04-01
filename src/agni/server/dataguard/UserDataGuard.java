@@ -46,12 +46,6 @@ public class UserDataGuard implements I_UserDataGuard {
     }
 
 	@Override
-	public boolean groupExists(String groupName) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public String getUsername(String ip) {
 		// TODO Auto-generated method stub
 		return null;
