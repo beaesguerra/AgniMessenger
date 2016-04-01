@@ -16,22 +16,22 @@ public class UserActionHandler {
     }
 
     public void requestUserAction(byte userActionType) {
-    	/*
-		- byte representing the type of user action
-		- Join Chat(0x00)
-		- Leave Chat(0x01)
-		- See friends list(0x02)
-		- Check friend status(0x03)
-		- Add friend(0x04)
-		- Logout(0x05)
-    	 */
-    	int numBytes = HEADER_LENGTH_SIZE +
-    				   MESSAGE_TYPE_SIZE + 1;
-    	byte[] packedMessage = new byte[numBytes];
-    	System.arraycopy(intToByteArray(numBytes), 0, packedMessage, 0, numBytes);
-    	Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
-    	System.arraycopy(userActionType, 0, packedMessage, 5, USER_ACTION_TYPE_LENGTH);
-    	messageSender.sendMessage(packedMessage);
+        /*
+        - byte representing the type of user action
+        - Join Chat(0x00)
+        - Leave Chat(0x01)
+        - See friends list(0x02)
+        - Check friend status(0x03)
+        - Add friend(0x04)
+        - Logout(0x05)
+         */
+        int numBytes = HEADER_LENGTH_SIZE +
+                       MESSAGE_TYPE_SIZE + 1;
+        byte[] packedMessage = new byte[numBytes];
+        System.arraycopy(intToByteArray(numBytes), 0, packedMessage, 0, numBytes);
+        Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
+        System.arraycopy(userActionType, 0, packedMessage, 5, USER_ACTION_TYPE_LENGTH);
+        messageSender.sendMessage(packedMessage);
     }
     
     public static final byte[] intToByteArray(int value) {
