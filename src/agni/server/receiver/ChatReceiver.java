@@ -41,13 +41,13 @@ public class ChatReceiver implements MessageParser {
             throw new NullPointerException();
         byte[] parsedArray = this.parseMessage(message);
         String parsedMessage;
-		try {
-			parsedMessage = new String(parsedArray, "us-ascii");
-	        notifyChatRequest(ip, parsedMessage); 
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}  
+        try {
+            parsedMessage = new String(parsedArray, "us-ascii");
+            notifyChatRequest(ip, parsedMessage); 
+        } catch (UnsupportedEncodingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }  
     }
 
 }

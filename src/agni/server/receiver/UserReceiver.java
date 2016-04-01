@@ -38,17 +38,17 @@ public class UserReceiver implements MessageParser {
 
     @Override
     public void receiveMessage(String ip, ByteBuffer message) {
-    	String userMessage = null;
+        String userMessage = null;
         if(ip==null || message == null)
             throw new NullPointerException();
         byte[] parsedMessage = this.parseMessage(message);
         byte type = parsedMessage[0];
-		try {
-			userMessage = new String(Arrays.copyOfRange(parsedMessage,1,parsedMessage.length), "us-ascii");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        try {
+            userMessage = new String(Arrays.copyOfRange(parsedMessage,1,parsedMessage.length), "us-ascii");
+        } catch (UnsupportedEncodingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         
         notifyUserRequest(ip, type, userMessage);  
     }

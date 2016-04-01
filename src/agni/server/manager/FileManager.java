@@ -22,9 +22,9 @@ public class FileManager implements FileListener {
     }
 
 
-	@Override
-	public void fileRequest(String ip, byte EOF, String fileName, byte[] file) {
-		// TODO Auto-generated method stub
-		
-	}
+  @Override
+  public void fileRequest(String ip, byte EOF, String fileName, byte[] file) {
+    // TODO Auto-generated method stub
+    
+  }
 }
