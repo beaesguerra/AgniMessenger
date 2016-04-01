@@ -14,4 +14,8 @@ public class LoginReceiver implements MessageParser {
     public void register(LoginListener loginListener) {
 
     }
+    
+    private void notifyNewUserRequest() {
+    	
+    }
 }
