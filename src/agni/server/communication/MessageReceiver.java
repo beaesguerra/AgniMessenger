@@ -40,14 +40,14 @@ public class MessageReceiver {
             FileReceiver fileReceiver,
             InfoRequestReceiver infoRequestReceiver, 
             HeartbeatReceiver heartbeatReceiver) {
-    	
+        
         this.loginReceiver = loginReceiver;
         this.userReceiver = userReceiver;
         this.chatReceiver = chatReceiver;
         this.fileReceiver = fileReceiver;
         this.infoRequestReceiver = infoRequestReceiver; 
         this.heartBeatReceiver = heartbeatReceiver;
-    	this.channelList = channels;
+        this.channelList = channels;
     }
     
     public enum MessageTypes {
@@ -73,47 +73,44 @@ public class MessageReceiver {
  */
     public void initializeConnection(String port) {
         try {
-			ServerSocketChannel.open();
-	        channel.configureBlocking(false);
-	        InetSocketAddress isa = new InetSocketAddress (Integer.parseInt(port));
-	        channel.socket().bind(isa);
+            ServerSocketChannel.open();
+            channel.configureBlocking(false);
+            InetSocketAddress isa = new InetSocketAddress (Integer.parseInt(port));
+            channel.socket().bind(isa);
 
-	        selector = Selector.open();
-	        channel.register(selector, SelectionKey.OP_ACCEPT);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            selector = Selector.open();
+            channel.register(selector, SelectionKey.OP_ACCEPT);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
     }
     
-/*
- * 
- * 
- */
     private void saveIpChannelPair(SocketChannel channel) {
-    	String ip = null;
-    	try {
-			ip = channel.getRemoteAddress().toString();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	channelList.addPair(ip, channel);
+        String ip = null;
+        try {
+            ip = channel.getRemoteAddress().toString();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        channelList.addPair(ip, channel);
     }
     
 /*
- * 
- * 
+ * @requires ip of current channel
+ * @requires message buffer
+ * @promises call appropriate 'receiverMessage(ip, buffer)' method
  */
     private void selectReceiver(String ip, ByteBuffer buffer){
-    	byte messageType = buffer.get(4);
+        byte messageType = buffer.get(4);
         if (messageType == MessageTypes.HEARTBEAT.bytes()) {
             // Pass to heartbeatReceiver
-        	heartBeatReceiver.receiveMessage(ip, buffer);
+            heartBeatReceiver.receiveMessage(ip, buffer);
         } else if (messageType == MessageTypes.INFO.bytes()) {
             // Pass to informationReceiver
-        	infoRequestReceiver.receiveMessage(ip, buffer);
+            infoRequestReceiver.receiveMessage(ip, buffer);
         } else if (messageType == MessageTypes.CHAT.bytes()) {
             // Pass to chatReceiver
             chatReceiver.receiveMessage(ip, buffer);
@@ -122,124 +119,87 @@ public class MessageReceiver {
             fileReceiver.receiveMessage(ip, buffer);
         } else if (messageType == MessageTypes.STATUS.bytes()) {
             // Pass to statusReceiver
-        	userReceiver.receiveMessage(ip, buffer);
+            userReceiver.receiveMessage(ip, buffer);
         } else {
             assert(false);
         }
-    	
-    	
-    	
-    	
-    	
-    	byte type = buffer.get(4);
-    	
-    	switch (type) {
-    	
-    	case 1: type = 0x01;//Heartbeat
-    	heartBeatReceiver.receiveMessage(ip, buffer);
-    	break;
-    	
-    	case 2: type = 0x02;//Login
-    	loginReceiver.receiveMessage(ip, buffer);
-    	break;
-    	
-    	case 3: type = 0x03;//information Request
-    	infoRequestReceiver.receiveMessage(ip, buffer);
-    	break;
-    	
-    	case 4: type = 0x04;//User Action
-    	userReceiver.receiveMessage(ip, buffer);
-    	break;
-    	
-    	case 5: type = 0x05;//chat
-    	chatReceiver.receiveMessage(ip, buffer);
-    	break;
-    	
-    	case 6: type = 0x06;//File
-    	fileReceiver.receiveMessage(ip, buffer);
-    	break;
-    	
-    	}
-    	
     }
     
 /*
- *
- * 
- * 
+ *Listen for client connections and communications 
+ *Uses a SocketChannel to queue sockets, service ready sockets sequentially
+ * @requires the SocketChannel to be initialized
+ * @promises to service ready channels
  */
     public void waitForClients() {
-	   boolean terminated = false;
-	   ByteBuffer inBuffer = null;
-	   ByteBuffer outBuffer = null;
+       boolean terminated = false;
+       ByteBuffer inBuffer = null;
+       ByteBuffer outBuffer = null;
        Charset charset = Charset.forName( "us-ascii" );  
        CharsetDecoder decoder = charset.newDecoder();  
-	   int BUFFERSIZE = 32000;
-	   int bytesRecv = 0;
-	   
-	   try {
+       int BUFFERSIZE = 32000;
+       int bytesRecv = 0;
+       
+       try {
         //boolean terminated = false;
         while (!terminated) 
         {
-				if (selector.select(500) < 0) {
-					System.out.println("select() failed");
-					System.exit(1);
-				}
+                if (selector.select(500) < 0) {
+                    System.out.println("select() failed");
+                    System.exit(1);
+                }
 
-				// Get set of ready sockets
-				Set readyKeys = selector.selectedKeys();
-				Iterator readyItor = readyKeys.iterator();
+                // Get set of ready sockets
+                Set readyKeys = selector.selectedKeys();
+                Iterator readyItor = readyKeys.iterator();
 
-				// Walk through the ready set
-				while (readyItor.hasNext()) {
-					// Get key from set
-					SelectionKey key = (SelectionKey) readyItor.next();
+                // Walk through the ready set
+                while (readyItor.hasNext()) {
+                    // Get key from set
+                    SelectionKey key = (SelectionKey) readyItor.next();
+                    // Remove current entry
+                    readyItor.remove();
+                    // Accept new connections, if any
+                    if (key.isAcceptable()) {
 
-					// Remove current entry
-					readyItor.remove();
+                        SocketChannel cchannel = ((ServerSocketChannel) key
+                                .channel()).accept();
+                        cchannel.configureBlocking(false);
+                        System.out.println("Accept conncection from "
+                                + cchannel.socket().toString());
 
-					// Accept new connections, if any
-					if (key.isAcceptable()) {
+                        // Register the new connection for read operation
+                        cchannel.register(selector, SelectionKey.OP_READ);
+                        saveIpChannelPair(cchannel);
+                    } else {
+                        SocketChannel cchannel = (SocketChannel) key.channel();
+                        if (key.isReadable()) {
+                            // Socket socket = cchannel.socket();
+                            // Open input and output streams
+                            inBuffer = ByteBuffer.allocateDirect(BUFFERSIZE);
+                            outBuffer = ByteBuffer.allocate(BUFFERSIZE);
 
-						SocketChannel cchannel = ((ServerSocketChannel) key
-								.channel()).accept();
-						cchannel.configureBlocking(false);
-						System.out.println("Accept conncection from "
-								+ cchannel.socket().toString());
+                            // Read from socket
+                            bytesRecv = cchannel.read(inBuffer);
+                            if (bytesRecv <= 0) {
+                                System.out
+                                        .println("read() error, or connection closed");
+                                key.cancel(); // deregister the socket
+                                channelList.removeIP(cchannel.getRemoteAddress().toString());
+                                continue;
+                            }
+                            inBuffer.flip(); // make buffer available
+                            outBuffer.put(inBuffer);
+                            inBuffer.clear();
+                            //outBuffer.flip(); //TODO if it doesn't work try this
+                            selectReceiver(cchannel.getRemoteAddress().toString(), outBuffer);
+                                                    }
+                    }
+                } // end of while (readyItor.hasNext())
+            } // end of while (!terminated)
+        } catch (IOException e) {
+            System.out.println(e);
+        }
 
-						// Register the new connection for read operation
-						cchannel.register(selector, SelectionKey.OP_READ);
-						saveIpChannelPair(cchannel);
-					} else {
-						SocketChannel cchannel = (SocketChannel) key.channel();
-						if (key.isReadable()) {
-							// Socket socket = cchannel.socket();
-
-							// Open input and output streams
-							inBuffer = ByteBuffer.allocateDirect(BUFFERSIZE);
-							outBuffer = ByteBuffer.allocate(BUFFERSIZE);
-
-							// Read from socket
-							bytesRecv = cchannel.read(inBuffer);
-							if (bytesRecv <= 0) {
-								System.out
-										.println("read() error, or connection closed");
-								key.cancel(); // deregister the socket
-								channelList.removeIP(cchannel.getRemoteAddress().toString());
-								continue;
-							}
-							inBuffer.flip(); // make buffer available
-							outBuffer.put(inBuffer);
-							inBuffer.clear();
-							outBuffer.flip(); //TODO not sure if this is right
-							selectReceiver(cchannel.getRemoteAddress().toString(), outBuffer);
-													}
-					}
-				} // end of while (readyItor.hasNext())
-			} // end of while (!terminated)
-		} catch (IOException e) {
-			System.out.println(e);
-		}
-
-	}
+    }
 }
