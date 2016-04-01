@@ -2,13 +2,12 @@ package agni.server.communication;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.util.Iterator;
 import java.util.Set;
@@ -50,13 +49,29 @@ public class MessageReceiver {
         this.heartBeatReceiver = heartbeatReceiver;
     	this.channelList = channels;
     }
+    
+    public enum MessageTypes {
+        HEARTBEAT((byte)0x01),
+        LOGIN((byte)0x02),
+        INFO((byte)0x03),
+        CHAT((byte)0x05),
+        FILE((byte)0x06),
+        STATUS((byte)0x04);
+        
+        private final byte bytes;
+        private MessageTypes(byte bytes) {
+            this.bytes = bytes;
+        }
+         final public byte bytes() {
+            return bytes;
+         }
+      }
 /*
  *@requires server port number
  *@promises selector initialized and ready for connection requests
  *@promises socket channel is initialized to be non-blocking and bound to specified port
  */
     public void initializeConnection(String port) {
-
         try {
 			ServerSocketChannel.open();
 	        channel.configureBlocking(false);
@@ -92,6 +107,30 @@ public class MessageReceiver {
  * 
  */
     private void selectReceiver(String ip, ByteBuffer buffer){
+    	byte messageType = buffer.get(4);
+        if (messageType == MessageTypes.HEARTBEAT.bytes()) {
+            // Pass to heartbeatReceiver
+        	heartBeatReceiver.receiveMessage(ip, buffer);
+        } else if (messageType == MessageTypes.INFO.bytes()) {
+            // Pass to informationReceiver
+        	infoRequestReceiver.receiveMessage(ip, buffer);
+        } else if (messageType == MessageTypes.CHAT.bytes()) {
+            // Pass to chatReceiver
+            chatReceiver.receiveMessage(ip, buffer);
+        } else if (messageType == MessageTypes.FILE.bytes()) {
+            // Pass to fileReceiver
+            fileReceiver.receiveMessage(ip, buffer);
+        } else if (messageType == MessageTypes.STATUS.bytes()) {
+            // Pass to statusReceiver
+        	userReceiver.receiveMessage(ip, buffer);
+        } else {
+            assert(false);
+        }
+    	
+    	
+    	
+    	
+    	
     	byte type = buffer.get(4);
     	
     	switch (type) {
@@ -133,6 +172,7 @@ public class MessageReceiver {
 	   boolean terminated = false;
 	   ByteBuffer inBuffer = null;
 	   ByteBuffer outBuffer = null;
+       Charset charset = Charset.forName( "us-ascii" );  
        CharsetDecoder decoder = charset.newDecoder();  
 	   int BUFFERSIZE = 32000;
 	   int bytesRecv = 0;
