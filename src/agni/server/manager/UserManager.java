@@ -139,7 +139,7 @@ public class UserManager implements UserListener {
         	if (!groupChatDataGuard.chatExists(groupName)){ 
         		groupChatDataGuard.createGroupChat(username, groupName); 	//create chat
         		if(!groupChatDataGuard.userCurrentChat(username).equals(null)) {
-        			groupChatDataGuard.removeUserFromChat(username, groupChatDataGuard.userCurrentChat(user));
+        			groupChatDataGuard.removeUserFromChat(username, groupChatDataGuard.userCurrentChat(username));
         		}
         		groupChatDataGuard.addUserToChat(username, groupName);
         		infoSender.sendInfo(ip, "creating chatroom " + groupName);	
@@ -150,7 +150,13 @@ public class UserManager implements UserListener {
         }
         else if (type == UserRequestType.REMOVE_CHAT.bytes()){       // remove chat 
            String groupName = argument;
-           
+           if (groupChatDataGuard.chatExists(groupName)){ 
+        	   groupChatDataGuard.deleteGroupChat(groupName); 
+        	   infoSender.sendInfo(ip,  "removing chatroom " + groupName);
+           }
+           else {
+        	   infoSender.sendInfo(ip,  "chatroom " + groupName + " does not exist");
+           }
         }
     }
 

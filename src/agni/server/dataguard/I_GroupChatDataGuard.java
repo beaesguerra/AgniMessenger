@@ -6,7 +6,10 @@ public interface I_GroupChatDataGuard {
     
     public void createGroupChat(String owner, String groupChatName);
 
-    /* Throw IllegalArgumentException if groupChat does not exist */
+    /* Throw IllegalArgumentException if groupChat does not exist 
+     * Should remove group, remove messages associated with it, and 
+     * remove all tuples in GroupMembers table with the same groupChatName
+     * */
     public void deleteGroupChat(String groupChatName);
 
     public String owner(String groupChatName);
@@ -16,6 +19,7 @@ public interface I_GroupChatDataGuard {
     public void addMessage(String message, String sender, String groupname);
 
     public String[] users(String groupChatName);
+    
     
     public void changeUserCurrentChat(String user, String chatname);
 

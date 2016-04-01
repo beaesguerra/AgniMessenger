@@ -27,6 +27,9 @@ public class UserDataGuard implements I_UserDataGuard {
 
     }
 
+    /*
+     * if ip == null, remove from data structure that keeps track of online users
+     */
     public void changeUserCurrentIp(String user, String ip) {
 
     }

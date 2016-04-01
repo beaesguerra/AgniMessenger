@@ -15,7 +15,10 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
 
     }
 
-    /* Throw IllegalArgumentException if groupChat does not exist */
+    /* Throw IllegalArgumentException if groupChat does not exist 
+     * Should remove group, remove messages associated with it, and 
+     * remove all tuples in GroupMembers table with the same groupChatName
+     * */
     public void deleteGroupChat(String groupChatName) {
         
     }
@@ -36,6 +39,8 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
         return null;
     }
 
+    /*
+     */
     @Override
     public void changeUserCurrentChat(String user, String chatname) {
         // TODO Auto-generated method stub
