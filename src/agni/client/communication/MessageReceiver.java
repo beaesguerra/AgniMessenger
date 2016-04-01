@@ -5,7 +5,7 @@ import java.net.Socket;
 public class MessageReceiver implements Runnable {
     private Socket tcpSocket;
 
-    public void MessageReceiver() {
+    public MessageReceiver() {
 
     }
 
