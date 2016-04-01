@@ -21,9 +21,10 @@ public class FileManager implements FileListener {
         this.fileDataGuard = fileDataGuard;
     }
 
-    @Override
-    public void chatRequest(String ip, byte type) {
-        // TODO Auto-generated method stub
-        
-    }
+
+  @Override
+  public void fileRequest(String ip, byte EOF, String fileName, byte[] file) {
+    // TODO Auto-generated method stub
+    
+  }
 }
