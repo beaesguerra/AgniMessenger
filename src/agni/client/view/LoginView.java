@@ -1,5 +1,6 @@
 package agni.client.view;
 
+import agni.client.AgniClient;
 import agni.client.HeartbeatMonitor;
 
 import agni.client.action.*;
@@ -20,6 +21,7 @@ import charvax.swing.JTextField;
 
 public class LoginView extends JFrame implements AgniClientView, ActionListener, KeyListener {
 
+    private AgniClient client;
     private LoginActionHandler loginActionHandler;
     private InfoRequestActionHandler infoRequestActionHandler;
     private HeartbeatMonitor serverMonitor;
@@ -28,8 +30,10 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
     private final int WIDTH = 80;
     private final int HEIGHT = 24;
 
-    public LoginView(LoginActionHandler loginActionHandler,
+    public LoginView(AgniClient client,
+                     LoginActionHandler loginActionHandler,
                      InfoRequestActionHandler infoRequestActionHandler) {
+        this.client = client;
         this.loginActionHandler = loginActionHandler;
         this.infoRequestActionHandler = infoRequestActionHandler;
         this.serverMonitor = new HeartbeatMonitor(5000000000L); //5 second timeout period
@@ -60,14 +64,14 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
 
         outputArea.setEditable(false);
         inputLine.addKeyListener(this);
-        // (new Thread(serverMonitor)).start();
+        // (new Thread(serverMonitor)).start(); // uncomment later
     }
 
     @Override
     public NextState displayUi() {
         show();
         inputLine.requestFocus();
-        appendToOutputArea("Welcome to Agni!");
+        appendToOutputArea("Welcome to Agni! Please Login!");
         return null;
     }
 
@@ -111,7 +115,7 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
             if (!inputLine.getText().equals("")) {
                 handleInput(inputLine.getText());
                 inputLine.setText("");
-                if(serverMonitor.isTimedOut()){
+                if (serverMonitor.isTimedOut()) {
                     appendToOutputArea(" *** TIMED OUT FROM SERVER ***");
                 }
             }
@@ -121,15 +125,28 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
     private void handleInput(String input) {
         if (input.charAt(0) == '/') {
             handleCommand(input.substring(1, input.length()));
+        } else {
+            appendToOutputArea("User : " + input);
         }
-        appendToOutputArea("User : " + input);
     }
 
     private void handleCommand(String input) {
-        appendToOutputArea("UserCommand(" + input + ")");
-        if (input.equals("q") || input.equals("quit")) {
+        switch (input) {
+        case "q":
             System.gc();
             System.exit(0);
+            break;
+        case "idle":
+            this.hide();
+            client.changeState(AgniClientView.NextState.IDLE_VIEW);
+            break;
+        case "chat":
+            this.hide();
+            client.changeState(AgniClientView.NextState.CHAT_VIEW);
+            break;
+        default:
+            appendToOutputArea("Unknown command \"" + input + "\"");
+            break;
         }
     }
 
@@ -140,7 +157,7 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
 
     @Override
     public void infoReaction(String message) {
-        if(message.equals("approved")){
+        if (message.equals("approved")) {
             appendToOutputArea("Login successful!");
         } else {
             appendToOutputArea(" *** SERVER *** \n" + message);
@@ -149,7 +166,7 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
 
     @Override
     public void statusReaction(String user, Status status) {
-        // do nothign in login view
+        // do nothing in login view
     }
 
     @Override
