@@ -74,11 +74,10 @@ public class ChatView extends JFrame implements AgniClientView, ActionListener, 
     }
 
     @Override
-    public NextState displayUi() {
+    public void displayUi() {
         show();
         inputLine.requestFocus();
         appendToOutputArea("ChatView!");
-        return null;
     }
 
     public synchronized void appendToOutputArea(String message) {

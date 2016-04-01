@@ -8,6 +8,6 @@ public interface AgniClientView extends ReceiverListener {
         IDLE_VIEW, 
         CHAT_VIEW;
     }
-    
-    public NextState displayUi();
+
+    public void displayUi();
 }

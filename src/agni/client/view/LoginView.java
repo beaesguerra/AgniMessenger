@@ -68,11 +68,10 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
     }
 
     @Override
-    public NextState displayUi() {
+    public void displayUi() {
         show();
         inputLine.requestFocus();
         appendToOutputArea("Welcome to Agni! Please Login!");
-        return null;
     }
 
     public synchronized void appendToOutputArea(String message) {
