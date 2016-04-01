@@ -3,6 +3,7 @@ package agni.server.communication;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
+import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
@@ -30,8 +31,7 @@ public class MessageReceiver {
     InfoRequestReceiver infoRequestReceiver = null;
     LoginReceiver loginReceiver = null;
     UserReceiver userReceiver = null;
-    
-    
+
     
     public MessageReceiver(ChannelList channels,
             LoginReceiver loginReceiver,
@@ -54,10 +54,10 @@ public class MessageReceiver {
         HEARTBEAT((byte)0x01),
         LOGIN((byte)0x02),
         INFO((byte)0x03),
+        STATUS((byte)0x04),
         CHAT((byte)0x05),
-        FILE((byte)0x06),
-        STATUS((byte)0x04);
-        
+        FILE((byte)0x06);
+
         private final byte bytes;
         private MessageTypes(byte bytes) {
             this.bytes = bytes;
@@ -66,6 +66,7 @@ public class MessageReceiver {
             return bytes;
          }
       }
+
 /*
  *@requires server port number
  *@promises selector initialized and ready for connection requests
@@ -84,7 +85,6 @@ public class MessageReceiver {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
     }
     
     private void saveIpChannelPair(SocketChannel channel) {
@@ -125,18 +125,37 @@ public class MessageReceiver {
         }
     }
     
+    /*
+     *accept new client connection request
+     * @requires SelectionKey key
+     * @promises register new client and add new ip/channel pair to list
+     */  
+    public void registerNewClient(SelectionKey key) {
+        SocketChannel cchannel = null;
+        try {
+            cchannel = ((ServerSocketChannel) key
+                    .channel()).accept();
+            cchannel.configureBlocking(false);
+            System.out.println("Accept conncection from "
+                    + cchannel.socket().toString());
+            cchannel.register(selector, SelectionKey.OP_READ);  
+        } catch (IOException e2) {
+            // TODO Auto-generated catch block
+            e2.printStackTrace();
+        }
+        saveIpChannelPair(cchannel);
+    }
+    
 /*
  *Listen for client connections and communications 
  *Uses a SocketChannel to queue sockets, service ready sockets sequentially
  * @requires the SocketChannel to be initialized
- * @promises to service ready channels
+ * @promises to service ready channels by calling selectReceiver or registerNewClient
  */
     public void waitForClients() {
        boolean terminated = false;
        ByteBuffer inBuffer = null;
        ByteBuffer outBuffer = null;
-       Charset charset = Charset.forName( "us-ascii" );  
-       CharsetDecoder decoder = charset.newDecoder();  
        int BUFFERSIZE = 32000;
        int bytesRecv = 0;
        
@@ -159,22 +178,13 @@ public class MessageReceiver {
                     SelectionKey key = (SelectionKey) readyItor.next();
                     // Remove current entry
                     readyItor.remove();
+                    
                     // Accept new connections, if any
                     if (key.isAcceptable()) {
-
-                        SocketChannel cchannel = ((ServerSocketChannel) key
-                                .channel()).accept();
-                        cchannel.configureBlocking(false);
-                        System.out.println("Accept conncection from "
-                                + cchannel.socket().toString());
-
-                        // Register the new connection for read operation
-                        cchannel.register(selector, SelectionKey.OP_READ);
-                        saveIpChannelPair(cchannel);
+                        registerNewClient(key);
                     } else {
                         SocketChannel cchannel = (SocketChannel) key.channel();
                         if (key.isReadable()) {
-                            // Socket socket = cchannel.socket();
                             // Open input and output streams
                             inBuffer = ByteBuffer.allocateDirect(BUFFERSIZE);
                             outBuffer = ByteBuffer.allocate(BUFFERSIZE);
