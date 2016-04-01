@@ -36,19 +36,19 @@ public class InfoRequestActionHandler {
      * @param infoType - the type of the information to be sent
      * */
     public void requestInfo(byte infoType) {
-    	/*
-		- byte representing the type of request information
-		- Server IP (0x00) , Port (0x01), and Name (0x02)
-		- Current users online (0x03)
-		- Current chats (0x04)
-    	 */
-    	int numBytes = HEADER_LENGTH_SIZE +
-    				   MESSAGE_TYPE_SIZE;
-    	byte[] packedMessage = new byte[numBytes];
-    	System.arraycopy(intToByteArray(numBytes), 0, packedMessage, 0, 4);
-    	Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
-    	System.arraycopy(intToByteArray(infoType), 0, packedMessage, 5, 1); // not sure if the length can be 1
-    	messageSender.sendMessage(packedMessage);
+        /*
+        - byte representing the type of request information
+        - Server IP (0x00) , Port (0x01), and Name (0x02)
+        - Current users online (0x03)
+        - Current chats (0x04)
+         */
+        int numBytes = HEADER_LENGTH_SIZE +
+                       MESSAGE_TYPE_SIZE;
+        byte[] packedMessage = new byte[numBytes];
+        System.arraycopy(intToByteArray(numBytes), 0, packedMessage, 0, 4);
+        Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
+        System.arraycopy(intToByteArray(infoType), 0, packedMessage, 5, 1); // not sure if the length can be 1
+        messageSender.sendMessage(packedMessage);
     }
     
     public static final byte[] intToByteArray(int value) {
