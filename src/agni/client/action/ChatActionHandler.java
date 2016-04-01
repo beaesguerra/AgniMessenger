@@ -1,6 +1,9 @@
 package agni.client.action;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+
+import com.sun.javafx.image.IntToBytePixelConverter;
 
 import agni.client.communication.MessageSender;
 
@@ -25,6 +28,14 @@ public class ChatActionHandler {
                            MESSAGE_TYPE_SIZE +
                            messageBytes.length;
     		byte[] packedMessage = new byte[numBytes];
+    		// filling the first 4 bytes with message length
+    		System.arraycopy(intToByteArray(numBytes), 0, 
+    				         packedMessage, 0, 4);
+    		// filling the message type in 4th byte
+    		Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
+    		// adding the messageBytes
+    		System.arraycopy(messageBytes, 0, packedMessage, 5 , message.length());
+    		messageSender.sendMessage(packedMessage);
     	}
     }
     
@@ -38,5 +49,14 @@ public class ChatActionHandler {
             }
         }
         return isAscii;
+    }
+    
+    public static final byte[] intToByteArray(int value) {
+        return new byte[] {
+                   (byte)(value >>> 24),
+                   (byte)(value >>> 16),
+                   (byte)(value >>> 8),
+                   (byte)value
+               };
     }
 }
