@@ -29,8 +29,7 @@ public class ChatActionHandler {
                            messageBytes.length;
             byte[] packedMessage = new byte[numBytes];
             // filling the first 4 bytes with message length
-            System.arraycopy(intToByteArray(numBytes), 0, 
-                             packedMessage, 0, 4);
+            System.arraycopy(intToByteArray(numBytes), 0, packedMessage, 0, 4);
             // filling the message type in 4th byte
             Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
             // adding the messageBytes
