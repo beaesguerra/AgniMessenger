@@ -150,7 +150,7 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
         if(message.equals("APPROVED")){
             appendToOutputArea("Login successful!");
         } else {
-            appendToOutputArea(message);
+            appendToOutputArea(" *** SERVER *** \n" + message);
         }
     }
 
