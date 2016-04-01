@@ -17,14 +17,14 @@ public class UserManager implements UserListener{
         this.userDataGuard = userDataGuard;
     }
     private boolean friendHasAccepted(String username, String friend) {
-    	String [] friendList = userDataGuard.getFriends(friend); 
-		if(Arrays.asList(friendList).contains(username)) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+        String [] friendList = userDataGuard.getFriends(friend); 
+        if(Arrays.asList(friendList).contains(username)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
     public enum UserRequestType {
         JOIN_CHAT((byte)0x00),
         LEAVE_CHAT((byte)0x01),
@@ -45,84 +45,84 @@ public class UserManager implements UserListener{
     @Override
     public void userRequest(String ip, byte type, String argument) {
         // TODO Auto-generated method stub
-    	String username = userDataGuard.getUsername(ip);
-    	if(type == UserRequestType.JOIN_CHAT.bytes()) { 			// join chat; argument = group to join
-        	String groupName = argument; 
-        	if (userDataGuard.groupExists(groupName)) {
-        		if (!userDataGuard.userCurrentChat(username).equals(null)) {
-        			userDataGuard.removeUserFromChat(username, userDataGuard.userCurrentChat(username));
-        		}
-        		userDataGuard.addUserToChat(username,groupName); 
-        		infoSender.sendInfo(ip, "success: joining " + groupName);
-        	}
-        	else {
-        		infoSender.sendInfo(ip, "failed: " + groupName + " doesn't exist");
-        	}
+        String username = userDataGuard.getUsername(ip);
+        if(type == UserRequestType.JOIN_CHAT.bytes()) {             // join chat; argument = group to join
+            String groupName = argument; 
+            if (userDataGuard.groupExists(groupName)) {
+                if (!userDataGuard.userCurrentChat(username).equals(null)) {
+                    userDataGuard.removeUserFromChat(username, userDataGuard.userCurrentChat(username));
+                }
+                userDataGuard.addUserToChat(username,groupName); 
+                infoSender.sendInfo(ip, "success: joining " + groupName);
+            }
+            else {
+                infoSender.sendInfo(ip, "failed: " + groupName + " doesn't exist");
+            }
         }
-        else if (type == UserRequestType.LEAVE_CHAT.bytes()){ 	// leave chat 
-        	String groupName = userDataGuard.userCurrentChat(username); 
-        	if (!userDataGuard.userCurrentChat(username).equals(null)) {
-        		userDataGuard.removeUserFromChat(username,groupName); 
-        		infoSender.sendInfo(ip, "success: leaving " + groupName);
-        	}
-        	else {
-        		infoSender.sendInfo(ip, "failed: no current chat open");
-        	}
-        	
+        else if (type == UserRequestType.LEAVE_CHAT.bytes()){   // leave chat 
+            String groupName = userDataGuard.userCurrentChat(username); 
+            if (!userDataGuard.userCurrentChat(username).equals(null)) {
+                userDataGuard.removeUserFromChat(username,groupName); 
+                infoSender.sendInfo(ip, "success: leaving " + groupName);
+            }
+            else {
+                infoSender.sendInfo(ip, "failed: no current chat open");
+            }
+            
         }
-        else if (type == UserRequestType.FRIENDS_LIST.bytes()){ 	// see friends list 
-        	String [] friendList = userDataGuard.getFriends(username); 
-        	String friends = "";
-        	for (int i = 0; i < friendList.length; i++) {
-        		friends.concat(friendList[i] + " " );
-        		if(userDataGuard.isOnline(friendList[i])) {
-        			friends.concat("online" + " \n" );
-        		}
-        		else {
-        			friends.concat("offline" + " \n" );
-        		}
-        	}
-        	infoSender.sendInfo(ip, "friends:" + friends);
+        else if (type == UserRequestType.FRIENDS_LIST.bytes()){     // see friends list 
+            String [] friendList = userDataGuard.getFriends(username); 
+            String friends = "";
+            for (int i = 0; i < friendList.length; i++) {
+                friends.concat(friendList[i] + " " );
+                if(userDataGuard.isOnline(friendList[i])) {
+                    friends.concat("online" + " \n" );
+                }
+                else {
+                    friends.concat("offline" + " \n" );
+                }
+            }
+            infoSender.sendInfo(ip, "friends:" + friends);
         }
-        else if (type == UserRequestType.FRIEND_STATUS.bytes()){		// check friend status ; argument = friend to check 
-        	String friend = argument;
-        	if (userDataGuard.isOnline(friend)) {
-        		infoSender.sendInfo(ip, friend + " online");
-        	}
-        	else {
-        		infoSender.sendInfo(ip, friend + " offline");
-        	}
+        else if (type == UserRequestType.FRIEND_STATUS.bytes()){        // check friend status ; argument = friend to check 
+            String friend = argument;
+            if (userDataGuard.isOnline(friend)) {
+                infoSender.sendInfo(ip, friend + " online");
+            }
+            else {
+                infoSender.sendInfo(ip, friend + " offline");
+            }
         }
-        else if (type == UserRequestType.ADD_FRIEND.bytes()){		// add friend 
-        	String friend = argument;
-        	if (userDataGuard.userExists(argument)) {
-        		
-        		String [] friendList = userDataGuard.getFriends(username); 
-        		
-        		if(Arrays.asList(friendList).contains(friend)) {
-        			if (friendHasAccepted(username,friend)) {
-        				infoSender.sendInfo(ip, friend + " already added");
-        			}
-        			else {
-        				infoSender.sendInfo(ip, "pending friend request for " + friend);
-        			}
-        		}
-        		else {
-        			userDataGuard.createFriendship(username, friend);
-        			infoSender.sendInfo(ip, "sending friend request to " + friend);
-        		}
-        	}
-        	else {
-        		infoSender.sendInfo(ip,  friend + " doesn't exist");
-        	}
-        	
+        else if (type == UserRequestType.ADD_FRIEND.bytes()){       // add friend 
+            String friend = argument;
+            if (userDataGuard.userExists(argument)) {
+                
+                String [] friendList = userDataGuard.getFriends(username); 
+                
+                if(Arrays.asList(friendList).contains(friend)) {
+                    if (friendHasAccepted(username,friend)) {
+                        infoSender.sendInfo(ip, friend + " already added");
+                    }
+                    else {
+                        infoSender.sendInfo(ip, "pending friend request for " + friend);
+                    }
+                }
+                else {
+                    userDataGuard.createFriendship(username, friend);
+                    infoSender.sendInfo(ip, "sending friend request to " + friend);
+                }
+            }
+            else {
+                infoSender.sendInfo(ip,  friend + " doesn't exist");
+            }
+            
         }
-        else if (type == UserRequestType.LOGOUT.bytes()){		// logout 
-        	userDataGuard.changeUserCurrentIp(username, null);
-        	infoSender.sendInfo(ip, "logged out");
+        else if (type == UserRequestType.LOGOUT.bytes()){       // logout 
+            userDataGuard.changeUserCurrentIp(username, null);
+            infoSender.sendInfo(ip, "logged out");
         }
     }
 
-	
+    
 
 }
