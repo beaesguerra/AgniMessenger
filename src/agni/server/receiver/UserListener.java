@@ -7,4 +7,5 @@ public interface UserListener {
     * ip will have been converted from inet to String
     */
     public void userRequest (String ip, byte type, String message);
+
 }
