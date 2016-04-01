@@ -18,25 +18,25 @@ public class ChatActionHandler {
     }
 
     public void requestChatAction(String message) {
-    	if(message == null)
-    		throw new NullPointerException("requestChatAction received a null message");
-    	if(!isAllAscii(message)) {
-    		throw new IllegalArgumentException("message wasn't all ascii");
-    	} else {
-    		byte[] messageBytes = message.getBytes(StandardCharsets.US_ASCII);
-    		int numBytes = HEADER_LENGTH_SIZE +
+        if(message == null)
+            throw new NullPointerException("requestChatAction received a null message");
+        if(!isAllAscii(message)) {
+            throw new IllegalArgumentException("message wasn't all ascii");
+        } else {
+            byte[] messageBytes = message.getBytes(StandardCharsets.US_ASCII);
+            int numBytes = HEADER_LENGTH_SIZE +
                            MESSAGE_TYPE_SIZE +
                            messageBytes.length;
-    		byte[] packedMessage = new byte[numBytes];
-    		// filling the first 4 bytes with message length
-    		System.arraycopy(intToByteArray(numBytes), 0, 
-    				         packedMessage, 0, 4);
-    		// filling the message type in 4th byte
-    		Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
-    		// adding the messageBytes
-    		System.arraycopy(messageBytes, 0, packedMessage, 5 , message.length());
-    		messageSender.sendMessage(packedMessage);
-    	}
+            byte[] packedMessage = new byte[numBytes];
+            // filling the first 4 bytes with message length
+            System.arraycopy(intToByteArray(numBytes), 0, 
+                             packedMessage, 0, 4);
+            // filling the message type in 4th byte
+            Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
+            // adding the messageBytes
+            System.arraycopy(messageBytes, 0, packedMessage, 5 , message.length());
+            messageSender.sendMessage(packedMessage);
+        }
     }
     
     private static boolean isAllAscii(String input) {
