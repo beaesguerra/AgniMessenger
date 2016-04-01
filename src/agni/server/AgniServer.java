@@ -48,8 +48,8 @@ public class AgniServer {
 
         // TODO 
         UserDataGuard userDataGuard = new UserDataGuard(null, null, null);
-        I_GroupChatDataGuard chatDataGuard = new GroupChatDataGuard(null, null, null);
-        I_FileDataGuard fileDataGuard = new FileDataGuard(null, null, null);
+        GroupChatDataGuard chatDataGuard = new GroupChatDataGuard(null, null, null);
+        FileDataGuard fileDataGuard = new FileDataGuard(null, null, null);
         InfoDataGuard infoDataGuard = new InfoDataGuard(null, null, null);
 
         LoginReceiver loginReceiver = new LoginReceiver();
@@ -68,7 +68,7 @@ public class AgniServer {
                                                               heartbeatReceiver);
 
         LoginManager loginManager = new LoginManager(infoSender, userDataGuard);
-        UserManager userManager = new UserManager(infoSender, userDataGuard);
+        UserManager userManager = new UserManager(infoSender, userDataGuard, chatDataGuard);
         ChatManager chatManager = new ChatManager(userDataGuard, chatDataGuard, infoSender, chatSender);
         FileManager fileManager = new FileManager(infoSender, fileSender, fileDataGuard, userDataGuard);
         InfoRequestManager infoRequestManager = new InfoRequestManager(infoSender, heartbeatSender, fileDataGuard);
