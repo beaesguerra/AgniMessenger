@@ -45,15 +45,15 @@ public class UserDataGuard implements I_UserDataGuard {
         return null;
     }
 
-	@Override
-	public void userLogin(String ip, String user) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void userLogin(String ip, String user) {
+        // TODO Auto-generated method stub
+        
+    }
 
-	@Override
-	public boolean userExists(String user) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean userExists(String user) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }

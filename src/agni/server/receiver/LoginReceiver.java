@@ -56,7 +56,7 @@ public class LoginReceiver implements MessageParser {
     }
 
     private void notifyNewUserRequest() {
-    	
+        
     }
 
 }
