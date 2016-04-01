@@ -1,23 +1,29 @@
 package agni.server.dataguard;
 
-public class InfoDataGuard {
+public class InfoDataGuard implements I_InfoDataGuard {
 //  private database;
 
-    public InfoDataGuard() {
+    public InfoDataGuard(String dbname, String username, String password) {
 
     }
 
     public String serverName() {
-
-        return new String();
+        return null;
     }
 
-    public void currentOnline() {
+    public int currentOnline() {
+        return -1;
+    }
+
+    public void incrementUsersOnline() {
+
+    }
+
+    public void decrementUsersOnline() {
 
     }
 
     public int totalUsers() {
-
-        return 0; // change this
+        return -1;
     }
 }

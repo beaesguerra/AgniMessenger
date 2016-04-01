@@ -30,12 +30,25 @@ public class MessageReceiver {
     HeartbeatReceiver heartBeatReceiver = null;
     InfoRequestReceiver infoRequestReceiver = null;
     LoginReceiver loginReceiver = null;
-    UserReceiver userActionReceiver = null;
+    UserReceiver userReceiver = null;
     
     
     
-    public MessageReceiver(ChannelList cl) {
-    	channelList = cl;
+    public MessageReceiver(ChannelList channels,
+            LoginReceiver loginReceiver,
+            UserReceiver userReceiver,
+            ChatReceiver chatReceiver,
+            FileReceiver fileReceiver,
+            InfoRequestReceiver infoRequestReceiver, 
+            HeartbeatReceiver heartbeatReceiver) {
+    	
+        this.loginReceiver = loginReceiver;
+        this.userReceiver = userReceiver;
+        this.chatReceiver = chatReceiver;
+        this.fileReceiver = fileReceiver;
+        this.infoRequestReceiver = infoRequestReceiver; 
+        this.heartBeatReceiver = heartbeatReceiver;
+    	this.channelList = channels;
     }
 /*
  *@requires server port number
@@ -84,27 +97,27 @@ public class MessageReceiver {
     	switch (type) {
     	
     	case 1: type = 0x01;//Heartbeat
-    	heartBeatReceiver.receiverMessage(ip, buffer);
+    	heartBeatReceiver.receiveMessage(ip, buffer);
     	break;
     	
     	case 2: type = 0x02;//Login
-    	loginReceiver.receiverMessage(ip, buffer);
+    	loginReceiver.receiveMessage(ip, buffer);
     	break;
     	
     	case 3: type = 0x03;//information Request
-    	infoRequestReceiver.receiverMessage(ip, buffer);
+    	infoRequestReceiver.receiveMessage(ip, buffer);
     	break;
     	
     	case 4: type = 0x04;//User Action
-    	userActionReceiver.receiverMessage(ip, buffer);
+    	userReceiver.receiveMessage(ip, buffer);
     	break;
     	
     	case 5: type = 0x05;//chat
-    	chatReceiver.receiverMessage(ip, buffer);
+    	chatReceiver.receiveMessage(ip, buffer);
     	break;
     	
     	case 6: type = 0x06;//File
-    	fileReceiver.receiverMessage(ip, buffer);
+    	fileReceiver.receiveMessage(ip, buffer);
     	break;
     	
     	}
