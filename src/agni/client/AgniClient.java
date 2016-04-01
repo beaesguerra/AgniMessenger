@@ -15,40 +15,79 @@ import charvax.swing.JMenuBar;
 import charvax.swing.JMenuItem;
 import charvax.swing.JPanel;
 
+// EXIT CODE OF 3 MEANS TIMEOUT FROM SERVER
+
 public class AgniClient {
 
+    private MessageSender messageSender;
+    private MessageReceiver messageReceiver;
+    private HeartbeatReceiver heartbeatReceiver;
+    private InformationReceiver informationReceiver;
+    private StatusReceiver statusReceiver;
+    private ChatReceiver chatReceiver;
+    private FileReceiver fileReceiver;
+    private LoginActionHandler loginActionHandler;
+    private InfoRequestActionHandler infoRequestActionHandler;
+    private UserActionHandler userActionHandler;
+    private ChatActionHandler chatActionHandler;
+    private FileActionHandler fileActionHandler;
+    private HeartbeatSender heartbeatSender;
+    private LoginView loginView;
+    private IdleView idleView;
+    private ChatView chatView;
+
     public AgniClient() {
+        messageSender = new MessageSender();
+        messageReceiver = new MessageReceiver();
+
+        heartbeatReceiver = new HeartbeatReceiver();
+        informationReceiver = new InformationReceiver();
+        statusReceiver = new StatusReceiver();
+        chatReceiver = new ChatReceiver();
+        fileReceiver = new FileReceiver();
+
+        loginActionHandler = new LoginActionHandler(messageSender);
+        infoRequestActionHandler = new InfoRequestActionHandler(messageSender);
+        userActionHandler = new UserActionHandler(messageSender);
+        chatActionHandler = new ChatActionHandler(messageSender);
+        fileActionHandler = new FileActionHandler(messageSender);
+        heartbeatSender = new HeartbeatSender(messageSender, 500);
+
+        loginView = new LoginView(this,
+                                  loginActionHandler,
+                                  infoRequestActionHandler);
+        idleView = new IdleView(this,
+                                infoRequestActionHandler,
+                                userActionHandler);
+        chatView = new ChatView(this,
+                                infoRequestActionHandler,
+                                userActionHandler,
+                                chatActionHandler,
+                                fileActionHandler);
+    }
+
+    public void changeState(AgniClientView.NextState nextState) {
+        switch (nextState) {
+            case LOGIN_VIEW:
+                loginView.displayUi();                
+                break;
+            case IDLE_VIEW:
+                idleView.displayUi();                                
+                break;
+            case CHAT_VIEW:
+                chatView.displayUi();                                
+                break;
+        }
+    }
+
+    public void runClient() {
+
+        (new Thread(heartbeatSender)).start();
+        loginView.displayUi();
     }
 
     public static void main(String[] args) {
-        MessageSender messageSender = new MessageSender();
-        MessageReceiver messageReceiver = new MessageReceiver();
-
-        HeartbeatReceiver heartbeatReceiver = new HeartbeatReceiver();
-        InformationReceiver informationReceiver = new InformationReceiver();
-        StatusReceiver statusReceiver = new StatusReceiver();
-        ChatReceiver chatReceiver = new ChatReceiver();
-        FileReceiver fileReceiver = new FileReceiver();
-
-        LoginActionHandler loginActionHandler = new LoginActionHandler(messageSender);
-        InfoRequestActionHandler infoRequestActionHandler = new InfoRequestActionHandler(messageSender);
-        HeartbeatActionHandler heartbeatActionHandler = new HeartbeatActionHandler(messageSender);
-        UserActionHandler userActionHandler = new UserActionHandler(messageSender);
-        ChatActionHandler chatActionHandler = new ChatActionHandler(messageSender);
-        FileActionHandler fileActionHandler = new FileActionHandler(messageSender);
-
-        LoginView loginView = new LoginView(loginActionHandler,
-                                            infoRequestActionHandler,
-                                            heartbeatActionHandler);
-        IdleView idleView = new IdleView(infoRequestActionHandler,
-                                         userActionHandler,
-                                         heartbeatActionHandler);
-        ChatView chatView = new ChatView(infoRequestActionHandler,
-                                         userActionHandler,
-                                         chatActionHandler,
-                                         fileActionHandler,
-                                         heartbeatActionHandler);
-
-        loginView.displayUi();
+        AgniClient cl = new AgniClient();
+        cl.runClient();
     }
 }
