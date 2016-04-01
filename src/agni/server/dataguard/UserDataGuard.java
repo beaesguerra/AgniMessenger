@@ -15,7 +15,7 @@ public class UserDataGuard implements I_UserDataGuard {
         return null;
     }
 
-    public String passwordHash(String user) {
+    public String getPasswordHash(String user) {
         return null;
     }
 
@@ -44,11 +44,6 @@ public class UserDataGuard implements I_UserDataGuard {
     public String userCurrentChat(String user) {
         return null;
     }
-
-	@Override
-	public String getPassword(String user) {
-		return null;
-	}
 
 	@Override
 	public void userLogin(String ip, String user) {

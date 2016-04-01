@@ -6,7 +6,7 @@ public interface I_UserDataGuard {
 
     public String salt(String user);
 
-    public String passwordHash(String user);
+    public String getPasswordHash(String user);
 
     public String[] friends(String user);
 
@@ -19,8 +19,6 @@ public interface I_UserDataGuard {
     public void changeUserCurrentChat(String user, String chatname);
 
     public String userCurrentChat(String user);
-
-	public String getPassword(String user);
 
 	public void userLogin(String ip, String user);
 
