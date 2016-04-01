@@ -1,5 +1,7 @@
 package agni.server.manager;
 
+import java.util.Arrays;
+
 import agni.server.dataguard.I_UserDataGuard;
 import agni.server.dataguard.UserDataGuard;
 import agni.server.receiver.UserListener;
@@ -14,7 +16,15 @@ public class UserManager implements UserListener{
         this.infoSender = infoSender;
         this.userDataGuard = userDataGuard;
     }
-
+    private boolean friendHasAccepted(String username, String friend) {
+    	String [] friendList = userDataGuard.getFriends(friend); 
+		if(Arrays.asList(friendList).contains(username)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
     @Override
     public void userRequest(String ip, byte type, String message) {
         // TODO Auto-generated method stub
@@ -39,12 +49,12 @@ public class UserManager implements UserListener{
         		infoSender.sendInfo(ip, "success: leaving " + groupName);
         	}
         	else {
-        		infoSender.sendInfo(ip, "failed: " + groupName + " doesn't exist");
+        		infoSender.sendInfo(ip, "failed: no current chat open");
         	}
         	
         }
         else if (type == 0x02){ 	// see friends list 
-        	String friendList = userDataGuard.getFriendList(username); 
+        	String [] friendList = userDataGuard.getFriends(username); 
         	// TODO get status of each friend
         	//String statusList = userDataGuard.getStatusList(username); 
         	infoSender.sendInfo(ip, "friends:" + friendList);
@@ -62,13 +72,19 @@ public class UserManager implements UserListener{
         	String friend = message;
         	if (userDataGuard.userExists(message)) {
         		
-        		String friendList = userDataGuard.getFriendList(username); 
-        		if(friendList.contains(friend)) {
-        			infoSender.sendInfo(ip, friend + " already added");
+        		String [] friendList = userDataGuard.getFriends(username); 
+        		
+        		if(Arrays.asList(friendList).contains(friend)) {
+        			if (friendHasAccepted(username,friend)) {
+        				infoSender.sendInfo(ip, friend + " already added");
+        			}
+        			else {
+        				infoSender.sendInfo(ip, "pending friend request for " + friend);
+        			}
         		}
         		else {
         			userDataGuard.addFriend(username, friend);
-        			infoSender.sendInfo(ip, friend + " added");
+        			infoSender.sendInfo(ip, "sending friend request to " + friend);
         		}
         	}
         	else {
@@ -79,10 +95,9 @@ public class UserManager implements UserListener{
         else if (type == 0x05){		// logout 
         	userDataGuard.logoutUser(username);
         	infoSender.sendInfo(ip, "logged out");
-        	
         }
-        
-        	
     }
+
+	
 
 }

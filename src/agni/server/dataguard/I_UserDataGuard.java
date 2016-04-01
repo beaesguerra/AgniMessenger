@@ -8,7 +8,7 @@ public interface I_UserDataGuard {
 
     public String passwordHash(String user);
 
-    public String[] friends(String user);
+    public String[] getFriends(String user);
 
     public void createFriendship(String user1, String user2);
 
@@ -27,8 +27,6 @@ public interface I_UserDataGuard {
 	public void addUserToChat(String username, String groupName);
 
 	public void removeUserFromChat(String username, String groupName);
-
-	public String getFriendList(String username);
 
 	public boolean userExists(String message);
 

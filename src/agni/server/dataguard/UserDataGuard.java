@@ -19,7 +19,7 @@ public class UserDataGuard implements I_UserDataGuard {
         return null;
     }
 
-    public String[] friends(String user) {
+    public String[] getFriends(String user) {
         return null;
     }
 
@@ -67,12 +67,6 @@ public class UserDataGuard implements I_UserDataGuard {
 	public void removeUserFromChat(String username, String groupName) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public String getFriendList(String username) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
