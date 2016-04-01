@@ -39,13 +39,18 @@ public class LoginManager implements LoginListener{
     }
     @Override
     public void loginRequest(String ip, String user, String password) {
-        if (password == userDataGuard.getPasswordHash(user)) {
-            userDataGuard.loginUser(ip, user);
-            infoSender.sendInfo(ip, "approved");
-        }
-        else {
-            infoSender.sendInfo(ip, "declined");
-        }
+        try {
+			if (generatePasswordHash(password, userDataGuard.salt(user).getBytes()) == userDataGuard.getPasswordHash(user)) {
+			    userDataGuard.loginUser(ip, user);
+			    infoSender.sendInfo(ip, "approved");
+			}
+			else {
+			    infoSender.sendInfo(ip, "declined");
+			}
+		} catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     @Override
