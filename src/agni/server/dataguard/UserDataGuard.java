@@ -7,7 +7,7 @@ public class UserDataGuard implements I_UserDataGuard {
 
     }
 
-    public void addUser(String username, String salt, String passwordHash) {
+    public void registerUser(String username, String salt, String passwordHash) {
 
     }
 
@@ -35,16 +35,6 @@ public class UserDataGuard implements I_UserDataGuard {
     public String userCurrentIp(String user) {
         return null;
     }
-    /* if chatname == null, remove user from data structure */
-    public void changeUserCurrentChat(String user, String chatname) {
-
-    }
-
-    /* return null if user not in a chat */
-    public String userCurrentChat(String user) {
-        return null;
-    }
-
 	@Override
 	public String getUsername(String ip) {
 		// TODO Auto-generated method stub

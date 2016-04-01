@@ -2,7 +2,7 @@ package agni.server.dataguard;
 
 public interface I_UserDataGuard {
 
-    public void addUser(String username, String salt, String passwordHash);
+    public void registerUser(String username, String salt, String passwordHash);
 
     public String salt(String user);
 
