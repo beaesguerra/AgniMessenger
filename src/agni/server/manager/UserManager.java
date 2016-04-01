@@ -18,7 +18,7 @@ public class UserManager implements UserListener {
 		JOIN_CHAT((byte) 0x00), 
 		LEAVE_CHAT((byte) 0x01), 
 		FRIENDS_LIST((byte) 0x02), 
-		FRIEND_STATUS((byte) 0x03), 
+		USER_STATUS((byte) 0x03), 
 		ADD_FRIEND((byte) 0x04), 
 		LOGOUT((byte) 0x05), 
 		CREATE_CHAT((byte) 0x06), 
@@ -97,7 +97,7 @@ public class UserManager implements UserListener {
             }
             infoSender.sendInfo(ip, "friends:\n" + friends);
         }
-        else if (type == UserRequestType.FRIEND_STATUS.bytes()){        // check friend status ; argument = friend to check 
+        else if (type == UserRequestType.USER_STATUS.bytes()){        // check friend status ; argument = friend to check 
             String friend = argument;
             if(userDataGuard.userExists(friend)) {
 	            if (userDataGuard.isOnline(friend)) {
