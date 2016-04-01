@@ -20,7 +20,7 @@ public interface I_UserDataGuard {
 
     public String userCurrentChat(String user);
 
-    public void userLogin(String ip, String user);
+    public void loginUser(String ip, String user);
 
     public boolean userExists(String user);
 }

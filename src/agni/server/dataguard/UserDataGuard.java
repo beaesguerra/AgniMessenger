@@ -46,7 +46,7 @@ public class UserDataGuard implements I_UserDataGuard {
     }
 
     @Override
-    public void userLogin(String ip, String user) {
+    public void loginUser(String ip, String user) {
         // TODO Auto-generated method stub
         
     }

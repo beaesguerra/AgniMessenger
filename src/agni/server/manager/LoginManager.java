@@ -40,7 +40,7 @@ public class LoginManager implements LoginListener{
     @Override
     public void loginRequest(String ip, String user, String password) {
         if (password == userDataGuard.getPasswordHash(user)) {
-            userDataGuard.userLogin(ip, user);
+            userDataGuard.loginUser(ip, user);
             infoSender.sendInfo(ip, "approved");
         }
         else {
