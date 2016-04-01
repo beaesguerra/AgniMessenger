@@ -49,4 +49,16 @@ public class UserDataGuard implements I_UserDataGuard {
 	public String getPassword(String user) {
 		return null;
 	}
+
+	@Override
+	public void userLogin(String ip, String user) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean userExists(String user) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

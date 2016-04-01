@@ -17,10 +17,27 @@ public class LoginManager implements LoginListener{
 
     @Override
     public void loginRequest(String ip, String user, String password) {
-        if (password == userDataGuard.getPassword(user)) 
-            infoSender.sendInfo(ip, "approved");
-        else
+        if (password == userDataGuard.getPassword(user)) {
+            userDataGuard.userLogin(ip, user);
+        	infoSender.sendInfo(ip, "approved");
+        }
+        else {
             infoSender.sendInfo(ip, "declined");
+        }
     }
+
+	@Override
+	public void newUserRequest(String ip, String user, String password) {
+		if (userDataGuard.userExists(user)) {
+			infoSender.sendInfo(ip, "failure: " + user + " exists");
+		}
+		else {
+			String salt = userDataGuard.salt(user);
+			String passwordHash = userDataGuard.passwordHash(user);
+			userDataGuard.addUser(user, salt, passwordHash);
+			infoSender.sendInfo(ip, "success: " + user + " registered");
+		}
+		
+	}
 
 }
