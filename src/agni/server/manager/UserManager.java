@@ -18,10 +18,13 @@ public class UserManager implements UserListener{
     @Override
     public void userRequest(String ip, byte type, String message) {
         // TODO Auto-generated method stub
-    	String username = userDataGuard.getUsername(ip); 
-        if(type == 0x00) { 			// join chat; message = group to join
+    	String username = userDataGuard.getUsername(ip);
+    	if(type == 0x00) { 			// join chat; message = group to join
         	String groupName = message; 
         	if (userDataGuard.groupExists(groupName)) {
+        		if (!userDataGuard.userCurrentChat(username).equals(null)) {
+        			userDataGuard.removeUserFromChat(username, userDataGuard.userCurrentChat(username));
+        		}
         		userDataGuard.addUserToChat(username,groupName); 
         		infoSender.sendInfo(ip, "success: joining " + groupName);
         	}
