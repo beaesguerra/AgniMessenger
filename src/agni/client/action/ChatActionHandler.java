@@ -1,5 +1,7 @@
 package agni.client.action;
 
+import java.nio.charset.StandardCharsets;
+
 import agni.client.communication.MessageSender;
 
 public class ChatActionHandler {
@@ -13,7 +15,17 @@ public class ChatActionHandler {
     }
 
     public void requestChatAction(String message) {
-    	
+    	if(message == null)
+    		throw new NullPointerException("requestChatAction received a null message");
+    	if(!isAllAscii(message)) {
+    		throw new IllegalArgumentException("message wasn't all ascii");
+    	} else {
+    		byte[] messageBytes = message.getBytes(StandardCharsets.US_ASCII);
+    		int numBytes = HEADER_LENGTH_SIZE +
+                           MESSAGE_TYPE_SIZE +
+                           messageBytes.length;
+    		byte[] packedMessage = new byte[numBytes];
+    	}
     }
     
     private static boolean isAllAscii(String input) {
