@@ -67,7 +67,7 @@ public class LoginManager implements LoginListener{
                 e.printStackTrace();
             }
             String saltString = new String(salt, StandardCharsets.US_ASCII);
-            userDataGuard.addUser(user, saltString, passwordHash);
+            userDataGuard.registerUser(user, saltString, passwordHash);
             infoSender.sendInfo(ip, "success: " + user + " registered");
         }
         
