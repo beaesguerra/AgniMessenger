@@ -43,11 +43,11 @@ public class InfoRequestActionHandler {
         - Current chats (0x04)
          */
         int numBytes = HEADER_LENGTH_SIZE +
-                       MESSAGE_TYPE_SIZE;
+                       MESSAGE_TYPE_SIZE + 1;
         byte[] packedMessage = new byte[numBytes];
-        System.arraycopy(intToByteArray(numBytes), 0, packedMessage, 0, 4);
+        System.arraycopy(intToByteArray(numBytes), 0, packedMessage, 0, numBytes);
         Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
-        System.arraycopy(intToByteArray(infoType), 0, packedMessage, 5, 1); // not sure if the length can be 1
+        System.arraycopy(infoType, 0, packedMessage, 5, 1); // not sure if the length can be 1
         messageSender.sendMessage(packedMessage);
     }
     
