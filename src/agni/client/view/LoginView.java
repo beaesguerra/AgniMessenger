@@ -1,29 +1,22 @@
 package agni.client.view;
 
-import java.awt.event.FocusListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
 import agni.client.HeartbeatMonitor;
+
 import agni.client.action.*;
 import agni.server.sender.StatusSender.Status;
 import charva.awt.BorderLayout;
-import charva.awt.Color;
 import charva.awt.Container;
 import charva.awt.event.ActionEvent;
 import charva.awt.event.ActionListener;
 import charva.awt.event.KeyEvent;
 import charva.awt.event.KeyListener;
-import charvax.swing.BoxLayout;
 import charvax.swing.JFrame;
 import charvax.swing.JLabel;
 import charvax.swing.JMenu;
 import charvax.swing.JMenuBar;
 import charvax.swing.JMenuItem;
-import charvax.swing.JPanel;
 import charvax.swing.JTextArea;
 import charvax.swing.JTextField;
-import charvax.swing.SwingConstants;
 
 public class LoginView extends JFrame implements AgniClientView, ActionListener, KeyListener {
 
