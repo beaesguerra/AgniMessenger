@@ -35,7 +35,7 @@ public class UserDataGuard implements I_UserDataGuard {
     public String userCurrentIp(String user) {
         return null;
     }
-
+    /* if chatname == null, remove user from data structure */
     public void changeUserCurrentChat(String user, String chatname) {
 
     }
