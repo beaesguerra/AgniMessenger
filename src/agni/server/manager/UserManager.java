@@ -64,7 +64,7 @@ public class UserManager implements UserListener {
                 infoSender.sendInfo(ip, "success: joining " + groupName);
             }
             else {
-                infoSender.sendInfo(ip, "failed: " + groupName + " doesn't exist");
+                infoSender.sendInfo(ip, "failed to join chat: " + groupName + " doesn't exist");
             }
         }
         else if (type == UserRequestType.LEAVE_CHAT.bytes()){   // leave chat 
@@ -74,20 +74,25 @@ public class UserManager implements UserListener {
                 infoSender.sendInfo(ip, "success: leaving " + groupName);
             }
             else {
-                infoSender.sendInfo(ip, "failed: not part of a chat");
+                infoSender.sendInfo(ip, "failed to leave chat: not part of a chat");
             }
+            
             
         }
         else if (type == UserRequestType.FRIENDS_LIST.bytes()){     // see friends list 
             String [] friendList = userDataGuard.getFriends(username); 
             String friends = "";
+            if (friendList.length == 0) {
+            	infoSender.sendInfo(ip, "friends:\nYou have no friends (Enoch)"); 
+            	return;
+            }
             for (int i = 0; i < friendList.length; i++) {
                 friends.concat(friendList[i] + " " );
                 if(userDataGuard.isOnline(friendList[i])) {
-                    friends.concat("online \n" );
+                    friends.concat("online\n" );
                 }
                 else {
-                    friends.concat("offline \n" );
+                    friends.concat("offline\n" );
                 }
             }
             infoSender.sendInfo(ip, "friends:\n" + friends);
