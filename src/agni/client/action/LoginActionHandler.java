@@ -45,7 +45,6 @@ public class LoginActionHandler {
                              8, (passwordBytes.length));
             messageSender.sendMessage(packedMessage);
         }
-        
     }
     
     private static boolean isAllAscii(String input) {
