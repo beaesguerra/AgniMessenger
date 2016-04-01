@@ -3,13 +3,10 @@ package agni.server.communication;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -169,8 +166,8 @@ public class MessageReceiver {
                 }
 
                 // Get set of ready sockets
-                Set readyKeys = selector.selectedKeys();
-                Iterator readyItor = readyKeys.iterator();
+                Set<SelectionKey> readyKeys = selector.selectedKeys();
+                Iterator<SelectionKey> readyItor = readyKeys.iterator();
 
                 // Walk through the ready set
                 while (readyItor.hasNext()) {
