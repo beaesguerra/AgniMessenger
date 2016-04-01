@@ -14,7 +14,7 @@ public class StatusSenderTest {
     final String TEST_IP = "localhost";
     final String STATUS_BYTE_HEX = "0b";
     
-    final StatusSender.Status TEST_STATUS_TYPE = StatusSender.Status.AWAY;
+    final StatusSender.Status TEST_STATUS_TYPE = StatusSender.Status.ONLINE;
     final String TEST_STATUS_TYPE_HEX = "02";
     
     // ASCII converted to hex at http://www.asciitohex.com/

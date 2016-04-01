@@ -10,7 +10,7 @@ public class MessageSender {
 
     }
 
-    public void sendMessage(byte[] message) {
+    public synchronized void sendMessage(byte[] message) {
 
     }
 }

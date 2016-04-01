@@ -15,6 +15,8 @@ import charvax.swing.JMenuBar;
 import charvax.swing.JMenuItem;
 import charvax.swing.JPanel;
 
+// EXIT CODE OF 3 MEANS TIMEOUT FROM SERVER
+
 public class AgniClient {
 
     public AgniClient() {
@@ -32,23 +34,21 @@ public class AgniClient {
 
         LoginActionHandler loginActionHandler = new LoginActionHandler(messageSender);
         InfoRequestActionHandler infoRequestActionHandler = new InfoRequestActionHandler(messageSender);
-        HeartbeatActionHandler heartbeatActionHandler = new HeartbeatActionHandler(messageSender);
         UserActionHandler userActionHandler = new UserActionHandler(messageSender);
         ChatActionHandler chatActionHandler = new ChatActionHandler(messageSender);
         FileActionHandler fileActionHandler = new FileActionHandler(messageSender);
+        HeartbeatSender heartbeatSender = new HeartbeatSender(messageSender, 500);
 
         LoginView loginView = new LoginView(loginActionHandler,
-                                            infoRequestActionHandler,
-                                            heartbeatActionHandler);
+                                            infoRequestActionHandler);
         IdleView idleView = new IdleView(infoRequestActionHandler,
-                                         userActionHandler,
-                                         heartbeatActionHandler);
+                                         userActionHandler);
         ChatView chatView = new ChatView(infoRequestActionHandler,
                                          userActionHandler,
                                          chatActionHandler,
-                                         fileActionHandler,
-                                         heartbeatActionHandler);
+                                         fileActionHandler);
 
+        (new Thread(heartbeatSender)).start();
         loginView.displayUi();
     }
 }

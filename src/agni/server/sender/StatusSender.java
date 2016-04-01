@@ -14,17 +14,23 @@ public class StatusSender {
     final private int STATUS_BYTE_SIZE = 1;
 
     public enum Status {
-        OFFLINE((byte)0x00),
-        ONLINE((byte)0x01),
-        AWAY((byte)0x02);
+        OFFLINE((byte)0x00, "offline"),
+        ONLINE((byte)0x01, "online");
 
         private final byte bytes;
-        private Status(byte bytes) {
+        private final String str;
+        
+        private Status(byte bytes, String str) {
             this.bytes = bytes;
+            this.str = str;
         }
 
         public byte bytes() {
             return bytes;
+        }
+
+        public String toString() {
+            return str;
         }
     }
 

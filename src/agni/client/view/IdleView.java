@@ -7,15 +7,12 @@ public class IdleView implements AgniClientView {
 
     private InfoRequestActionHandler infoRequestActionHandler;
     private UserActionHandler userActionHandler;
-    private HeartbeatActionHandler heartbeatActionHandler;
 
     public IdleView(InfoRequestActionHandler infoRequestActionHandler,
-                    UserActionHandler userActionHandler,
-                    HeartbeatActionHandler heartbeatActionHandler) {
+                    UserActionHandler userActionHandler) {
 
         this.infoRequestActionHandler = infoRequestActionHandler;
         this.userActionHandler = userActionHandler;
-        this.heartbeatActionHandler = heartbeatActionHandler;
     }
 
     @Override
