@@ -55,9 +55,19 @@ public class UserManager implements UserListener{
         }
         else if (type == 0x02){ 	// see friends list 
         	String [] friendList = userDataGuard.getFriends(username); 
+        	String friends = "";
+        	for (int i = 0; i < friendList.length; i++) {
+        		friends.concat(friendList[i] + " " );
+        		if(userDataGuard.isOnline(friendList[i])) {
+        			friends.concat("online" + " \n" );
+        		}
+        		else {
+        			friends.concat("offline" + " \n" );
+        		}
+        	}
         	// TODO get status of each friend
         	//String statusList = userDataGuard.getStatusList(username); 
-        	infoSender.sendInfo(ip, "friends:" + friendList);
+        	infoSender.sendInfo(ip, "friends:" + friends);
         }
         else if (type == 0x03){		// check friend status ; message = friend to check 
         	String friend = message;
