@@ -11,20 +11,6 @@ public class UserManager implements UserListener{
     private InfoSender infoSender;
     private I_UserDataGuard userDataGuard;
 
-    public UserManager(InfoSender infoSender,
-                       UserDataGuard userDataGuard) {
-        this.infoSender = infoSender;
-        this.userDataGuard = userDataGuard;
-    }
-    private boolean friendHasAccepted(String username, String friend) {
-        String [] friendList = userDataGuard.getFriends(friend); 
-        if(Arrays.asList(friendList).contains(username)) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
     public enum UserRequestType {
         JOIN_CHAT((byte)0x00),
         LEAVE_CHAT((byte)0x01),
@@ -42,6 +28,21 @@ public class UserManager implements UserListener{
             return bytes;
         }
     }
+    public UserManager(InfoSender infoSender,
+                       UserDataGuard userDataGuard) {
+        this.infoSender = infoSender;
+        this.userDataGuard = userDataGuard;
+    }
+    private boolean friendHasAccepted(String username, String friend) {
+        String [] friendList = userDataGuard.getFriends(friend); 
+        if(Arrays.asList(friendList).contains(username)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
     @Override
     public void userRequest(String ip, byte type, String argument) {
         // TODO Auto-generated method stub
