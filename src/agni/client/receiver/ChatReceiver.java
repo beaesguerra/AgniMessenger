@@ -4,9 +4,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 public class ChatReceiver extends MessageParser {
-    
+
     public ChatReceiver() {
-        
+
     }
 
     private void notifyChatReceived(String sender, String message) {
@@ -24,12 +24,13 @@ public class ChatReceiver extends MessageParser {
         try {
             // Sender's name starts -> 6th bit
             String sender = new String(Arrays.copyOfRange(message, 6,
-                                                       6 + senderNameLength),
-                                                       "us-ascii");
+                                                          6 + senderNameLength),
+                                                          "us-ascii");
             // Message starts -> 7th bit
             String parsedMessage = new String(Arrays.copyOfRange(message,
-                                                      7 + senderNameLength,
-                                                      message.length), "us-ascii");
+                                                                 7 + senderNameLength,
+                                                                 message.length),
+            		                                             "us-ascii");
             notifyChatReceived(sender, parsedMessage);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

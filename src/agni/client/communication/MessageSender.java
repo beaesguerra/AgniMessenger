@@ -12,7 +12,7 @@ public class MessageSender {
     private Socket tcpSocket;
 
     public MessageSender(Socket clientSocket) {
-        
+
     }
 
     public void sendMessage(byte[] message) {

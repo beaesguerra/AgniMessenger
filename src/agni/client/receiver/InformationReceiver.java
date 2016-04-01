@@ -26,8 +26,8 @@ public class InformationReceiver extends MessageParser {
         String info = null;
         try {
             info = new String(Arrays.copyOfRange(message, 5,
-                                     5 + infoLength),
-                                     "us-ascii");
+                                                 5 + infoLength),
+                                                 "us-ascii");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

@@ -13,8 +13,9 @@ public class FileReceiver extends MessageParser {
 
     private void notifyFileReceived(String src, File file) {
         int size = (int) file.getTotalSpace();
-        for(ReceiverListener rListener : super.listeners)
+        for(ReceiverListener rListener : super.listeners) {
             rListener.fileReaction(file.getName(), src, size);
+        }
     }
     
     @Override
@@ -33,14 +34,15 @@ public class FileReceiver extends MessageParser {
         int senderNameLength = (int) message[8];
         try {
             // File name -> 7th bit
-            String fileName = new String(Arrays.copyOfRange(message,
-                                         7, 7 + fileNameLength),
-                                         "us-ascii");
+            String fileName = new String(Arrays.copyOfRange(message, 7,
+            		                                        7 + fileNameLength),
+                                                            "us-ascii");
             // Sender's name starts -> 9th bit
             // (9+file name length) to (9 + file name length + sender name length)
             String src = new String(Arrays.copyOfRange(message,
                                                        9 + fileNameLength,
-                                                       9 + fileNameLength + senderNameLength),
+                                                       9 + fileNameLength +
+                                                       senderNameLength),
                                                        "us-ascii");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
