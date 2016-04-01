@@ -67,7 +67,7 @@ public class UserManager implements UserListener{
                 infoSender.sendInfo(ip, "success: leaving " + groupName);
             }
             else {
-                infoSender.sendInfo(ip, "failed: no current chat open");
+                infoSender.sendInfo(ip, "failed: not part of a chat");
             }
             
         }
