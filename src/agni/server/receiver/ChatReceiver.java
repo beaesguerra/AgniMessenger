@@ -26,7 +26,7 @@ public class ChatReceiver implements MessageParser {
      * @promises chat message as a byte array
      */
     private byte[] parseMessage(byte[] message) {
-    	int length = message.length;
+        int length = message.length;
         byte[] parsedMessage = Arrays.copyOfRange(message,5,length);
         return parsedMessage;
     }
