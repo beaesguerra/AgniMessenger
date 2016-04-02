@@ -26,14 +26,14 @@ public class ChatManager implements ChatListener{
 
     @Override
     public void chatRequest(String ip, String message) {
-    	String sender = userDataGuard.getUsername(ip);
-    	String groupChatName = groupChatDataGuard.userCurrentChat(sender);
-    	String [] membersOfChat = groupChatDataGuard.users(groupChatName);
-    	groupChatDataGuard.addMessage(message, sender, groupChatName);
-    	for (String member : membersOfChat) {
-    		if (userDataGuard.isOnline(member)) {	// would users have to be online to receive a message? 
-    			chatSender.sendChat(userDataGuard.getIp(member), sender, message);
-    		}
-    	}        
+        String sender = userDataGuard.getUsername(ip);
+        String groupChatName = groupChatDataGuard.userCurrentChat(sender);
+        String [] membersOfChat = groupChatDataGuard.users(groupChatName);
+        groupChatDataGuard.addMessage(message, sender, groupChatName);
+        for (String member : membersOfChat) {
+            if (userDataGuard.isOnline(member)) {   // would users have to be online to receive a message? 
+                chatSender.sendChat(userDataGuard.getIp(member), sender, message);
+            }
+        }        
     }
 }

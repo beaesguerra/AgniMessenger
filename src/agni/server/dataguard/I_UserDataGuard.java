@@ -24,6 +24,6 @@ public interface I_UserDataGuard {
 
     public boolean isOnline(String friend);
 
-	public String getIp(String member);
+    public String getIp(String member);
         
 }
