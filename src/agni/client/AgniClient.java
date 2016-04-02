@@ -1,15 +1,34 @@
 package agni.client;
 
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+import agni.client.action.ChatActionHandler;
+import agni.client.action.FileActionHandler;
+import agni.client.action.InfoRequestActionHandler;
+import agni.client.action.LoginActionHandler;
+import agni.client.action.UserActionHandler;
+import agni.client.communication.MessageReceiver;
+import agni.client.communication.MessageSender;
+import agni.client.receiver.ChatReceiver;
+import agni.client.receiver.FileReceiver;
+import agni.client.receiver.HeartbeatReceiver;
+import agni.client.receiver.InformationReceiver;
+import agni.client.receiver.StatusReceiver;
+import agni.client.view.ChatView;
+import agni.client.view.IdleView;
+import agni.client.view.LoginView;
 import agni.client.communication.*;
 import agni.client.receiver.*;
 import agni.client.action.*;
 import agni.client.view.*;
-import javax.swing.SwingUtilities;
 
 // EXIT CODE OF 3 MEANS TIMEOUT FROM SERVER
 
 public class AgniClient {
 
+    private Socket clientSocket;
     private MessageSender messageSender;
     private MessageReceiver messageReceiver;
     private HeartbeatReceiver heartbeatReceiver;
@@ -27,15 +46,23 @@ public class AgniClient {
     private IdleView idleView;
     private ChatView chatView;
 
-    public AgniClient() {
-        messageSender = new MessageSender();
-        messageReceiver = new MessageReceiver();
+    public AgniClient(String[] args) throws NumberFormatException, UnknownHostException, IOException {
+        clientSocket = new Socket(args[0], Integer.parseInt(args[1]));
 
         heartbeatReceiver = new HeartbeatReceiver();
         informationReceiver = new InformationReceiver();
         statusReceiver = new StatusReceiver();
         chatReceiver = new ChatReceiver();
         fileReceiver = new FileReceiver();
+
+        messageSender = new MessageSender(clientSocket);
+        messageReceiver = new MessageReceiver(clientSocket,
+                                              heartbeatReceiver,
+                                              informationReceiver,
+                                              statusReceiver,
+                                              chatReceiver,
+                                              fileReceiver);
+
 
         loginActionHandler = new LoginActionHandler(messageSender);
         infoRequestActionHandler = new InfoRequestActionHandler(messageSender);
@@ -75,15 +102,29 @@ public class AgniClient {
     }
 
     public void runClient() {
+
         (new Thread(heartbeatSender)).start();
-        loginView = new LoginView(this,
-                                  loginActionHandler,
-                                  infoRequestActionHandler);
+        // We need to run messageReceiver somewhere here
+        // messageReceiver.run();
         loginView.displayUi();
+        try {
+			clientSocket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     public static void main(String[] args) {
-        AgniClient cl = new AgniClient();
-        cl.runClient();
+        if (args.length != 2) {
+            System.out.println("Usage: Client <Server IP> <Server Port>");
+            System.exit(1);
+        }
+        
+		try {
+			AgniClient cl = new AgniClient(args);
+			cl.runClient();
+		} catch (NumberFormatException | IOException e) {
+			e.printStackTrace();
+		}
     }
 }
