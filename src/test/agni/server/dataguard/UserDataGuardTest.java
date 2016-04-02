@@ -38,36 +38,36 @@ public class UserDataGuardTest {
         assertTrue(userDataGuard.passwordHash("TestUser").equals("T35TH45H"));
     }
 
-    @Test
-    public void addUserTest() {
-        userDataGuard.addUser("extraUser", "verysalty", "verypasswordyhash");
-        assertTrue(userDataGuard.salt("extraUser").equals("verysalty"));
-        assertTrue(userDataGuard.passwordHash("extraUser").equals("verypasswordyhash"));
-    }
+//    @Test
+//    public void addUserTest() {
+//        userDataGuard.addUser("extraUser", "verysalty", "verypasswordyhash");
+//        assertTrue(userDataGuard.salt("extraUser").equals("verysalty"));
+//        assertTrue(userDataGuard.passwordHash("extraUser").equals("verypasswordyhash"));
+//    }
 
-    @Test
-    public void getFriendsTest() {
-        String[] expectedFriends = {"BillyBob", "EnochTsang"};
-        String[] actualFriends = userDataGuard.friends("TestUser");
+//    @Test
+//    public void getFriendsTest() {
+//        String[] expectedFriends = {"BillyBob", "EnochTsang"};
+//        String[] actualFriends = userDataGuard.friends("TestUser");
+//
+//        Arrays.sort(expectedFriends);
+//        Arrays.sort(actualFriends);
+//
+//        assertArrayEquals(actualFriends, expectedFriends);
+//    }
 
-        Arrays.sort(expectedFriends);
-        Arrays.sort(actualFriends);
-
-        assertArrayEquals(actualFriends, expectedFriends);
-    }
-
-    @Test
-    public void createFriendshipTest() {
-        userDataGuard.addUser("extraUser", "verysalty", "verypasswordyhash");
-        userDataGuard.createFriendship("TestUser", "nofriendsUser");
-        String[] expectedFriends = {"BillyBob", "EnochTsang", "nofriendsUser"};
-        String[] actualFriends = userDataGuard.friends("TestUser");
-
-        Arrays.sort(expectedFriends);
-        Arrays.sort(actualFriends);
-
-        assertArrayEquals(actualFriends, expectedFriends);
-    }
+//    @Test
+//    public void createFriendshipTest() {
+//        userDataGuard.addUser("extraUser", "verysalty", "verypasswordyhash");
+//        userDataGuard.createFriendship("TestUser", "nofriendsUser");
+//        String[] expectedFriends = {"BillyBob", "EnochTsang", "nofriendsUser"};
+//        String[] actualFriends = userDataGuard.friends("TestUser");
+//
+//        Arrays.sort(expectedFriends);
+//        Arrays.sort(actualFriends);
+//
+//        assertArrayEquals(actualFriends, expectedFriends);
+//    }
 
     @Test
     public void userCurrentIp() {
@@ -76,10 +76,10 @@ public class UserDataGuardTest {
         assertTrue(userDataGuard.userCurrentIp("TestUser").equals("192.168.0.1"));
     }
 
-    @Test
-    public void currentChatTest() {
-        assertEquals(userDataGuard.userCurrentChat("TestUser"), null);
-        userDataGuard.changeUserCurrentChat("TestUser", "helloworld");
-        assertTrue(userDataGuard.userCurrentChat("TestUser").equals("helloworld"));
-    }
+//    @Test
+//    public void currentChatTest() {
+//        assertEquals(userDataGuard.userCurrentChat("TestUser"), null);
+//        userDataGuard.changeUserCurrentChat("TestUser", "helloworld");
+//        assertTrue(userDataGuard.userCurrentChat("TestUser").equals("helloworld"));
+//    }
 }
