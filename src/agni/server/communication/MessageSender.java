@@ -7,18 +7,18 @@ import java.nio.channels.SocketChannel;
 
 public class MessageSender implements I_MessageSender {
     private ChannelList channelList;
-	
+  
     public MessageSender(ChannelList channels) {
-    	channelList = channels;
+      channelList = channels;
     }
 
     public void sendMessage(String ipAddress, byte[] message) {
        SocketChannel currentChannel = channelList.getChannel(ipAddress);
        ByteBuffer outBuffer = ByteBuffer.wrap(message);
        try {
-		currentChannel.write(outBuffer);
+    currentChannel.write(outBuffer);
        } catch (IOException e) {
-		e.printStackTrace();
+    e.printStackTrace();
        }
     }
 }
