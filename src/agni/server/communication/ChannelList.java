@@ -13,4 +13,8 @@ public class ChannelList {
 		channels.remove(IPaddress); 
 	}
 	
+	public SocketChannel getChannel(String IPaddress){
+		return channels.get(IPaddress);
+	}
+	
 }
