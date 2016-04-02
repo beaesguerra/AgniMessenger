@@ -48,13 +48,22 @@ public class InfoRequestManager implements InfoListener{
     		infoSender.sendInfo(ip, AgniServer.getServerPort());
     	}
     	else if (type == InfoRequestType.NAME.bytes()){
-    		infoSender.sendInfo(ip, AgniServer.getServerName());
+    		infoSender.sendInfo(ip, infoDataGuard.serverName());
     	}
     	else if (type == InfoRequestType.CURRENT_USERS_ONLINE.bytes()){
+    		String usersOnline = ""; 
+    		for( String user : infoDataGuard.usersOnline()) {
+    			usersOnline.concat(user + "\n");
+    		}
+    		infoSender.sendInfo(ip, "Online users:\n" + usersOnline);
     		
     	}
     	else if (type == InfoRequestType.CURRENT_CHATS.bytes()){
-    		
+    		String chats = "";
+    		for(String chat : infoDataGuard.availableChats()) {
+    			chats.concat(chat + "\n");
+    		}
+    		infoSender.sendInfo(ip, "Available chats:\n" + chats);
     	}
         
     }

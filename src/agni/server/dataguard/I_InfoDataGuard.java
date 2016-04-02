@@ -11,4 +11,8 @@ public interface I_InfoDataGuard {
     public void decrementUsersOnline();
 
     public int totalUsers();
+    
+    public String [] usersOnline();
+
+	public String [] availableChats(); 
 }

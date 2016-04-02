@@ -37,7 +37,6 @@ public class AgniServer {
 	
 	private static String serverIpAddress = "162.246.157.203"; 
 	private static String serverPort = "9001"; 
-	private static String serverName = "server";
 	
 	public static String getServerIp() {
 		return serverIpAddress; 
@@ -47,9 +46,6 @@ public class AgniServer {
 		return serverPort; 
 	}
 	
-	public static String getServerName() { 
-		return serverName; 
-	}
 	
 
     public static void main(String[] args) {
