@@ -34,6 +34,18 @@ import agni.server.communication.ChannelList;
 import agni.server.communication.IpChannelPair;
 
 public class AgniServer {
+	
+	private static String serverIpAddress = "162.246.157.203"; 
+	private static String serverPort = "9001"; 
+	
+	public static String getServerIp() {
+		return serverIpAddress; 
+	}
+	
+	public static String getServerPort() { 
+		return serverPort; 
+	}
+	
 
     public static void main(String[] args) {
 

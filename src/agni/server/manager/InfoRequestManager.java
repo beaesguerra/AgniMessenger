@@ -3,6 +3,7 @@ package agni.server.manager;
 
 import agni.server.receiver.InfoListener;
 import agni.server.sender.HeartbeatSender;
+import agni.server.AgniServer;
 import agni.server.dataguard.I_FileDataGuard;
 import agni.server.sender.InfoSender;
 
@@ -39,8 +40,7 @@ public class InfoRequestManager implements InfoListener{
     @Override
     public void infoRequest(String ip, byte type) {
     	if (type == InfoRequestType.SERVER_IP.bytes()){
-    		String serverIp = "162.246.157.203"; 	// will the server ip always be this?? 
-    		infoSender.sendInfo(ip, serverIp);
+    		infoSender.sendInfo(ip, AgniServer.getServerIp());
     	}
     	else if (type == InfoRequestType.PORT.bytes()){
     		
