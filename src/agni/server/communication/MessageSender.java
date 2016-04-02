@@ -16,9 +16,10 @@ public class MessageSender implements I_MessageSender {
        SocketChannel currentChannel = channelList.getChannel(ipAddress);
        ByteBuffer outBuffer = ByteBuffer.wrap(message);
        try {
-    currentChannel.write(outBuffer);
+        currentChannel.write(outBuffer);
        } catch (IOException e) {
-    e.printStackTrace();
+        System.out.println("IOException caught while writing to Client MessageSender outBuffer ");
+        e.printStackTrace();
        }
     }
 }
