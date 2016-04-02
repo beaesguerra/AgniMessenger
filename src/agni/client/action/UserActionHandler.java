@@ -14,7 +14,7 @@ public class UserActionHandler {
     public UserActionHandler(MessageSender messageSender) {
         this.messageSender = messageSender;
     }
-
+   
     public void requestUserAction(byte userActionType) {
         /*
         - byte representing the type of user action
@@ -31,6 +31,7 @@ public class UserActionHandler {
         System.arraycopy(intToByteArray(numBytes), 0, packedMessage, 0, numBytes);
         Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
         System.arraycopy(userActionType, 0, packedMessage, 5, USER_ACTION_TYPE_LENGTH);
+//        System.arraycopy(src, srcPos, packedMessage, 6, 6 + ArgumentLength);
         messageSender.sendMessage(packedMessage);
     }
     
