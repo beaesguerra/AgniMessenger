@@ -104,22 +104,27 @@ public class MessageReceiver {
  * @promises call appropriate 'receiverMessage(ip, buffer)' method
  */
     private void selectReceiver(String ip, ByteBuffer buffer){
-        byte messageType = buffer.get(4);
+    	//byte messageType = buffer.get(4);
+    	 buffer.flip();
+         int length = buffer.remaining();
+         byte[] byteArray = new byte[length];
+         buffer.get(byteArray);
+         byte messageType = byteArray[4];
         if (messageType == MessageTypes.HEARTBEAT.bytes()) {
             // Pass to heartbeatReceiver
-            heartBeatReceiver.receiveMessage(ip, buffer);
+            heartBeatReceiver.receiveMessage(ip, byteArray);
         } else if (messageType == MessageTypes.INFO.bytes()) {
             // Pass to informationReceiver
-            infoRequestReceiver.receiveMessage(ip, buffer);
+            infoRequestReceiver.receiveMessage(ip, byteArray);
         } else if (messageType == MessageTypes.CHAT.bytes()) {
             // Pass to chatReceiver
-            chatReceiver.receiveMessage(ip, buffer);
+            chatReceiver.receiveMessage(ip, byteArray);
         } else if (messageType == MessageTypes.FILE.bytes()) {
             // Pass to fileReceiver
-            fileReceiver.receiveMessage(ip, buffer);
+            fileReceiver.receiveMessage(ip, byteArray);
         } else if (messageType == MessageTypes.STATUS.bytes()) {
             // Pass to statusReceiver
-            userReceiver.receiveMessage(ip, buffer);
+            userReceiver.receiveMessage(ip, byteArray);
         } else {
             assert(false);
         }
