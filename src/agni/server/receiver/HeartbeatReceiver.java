@@ -1,6 +1,5 @@
 package agni.server.receiver;
 
-import java.nio.ByteBuffer;
 import java.util.Vector;
 
 public class HeartbeatReceiver implements MessageParser {
@@ -22,17 +21,17 @@ public class HeartbeatReceiver implements MessageParser {
     }
 
     /*
-     * parse ByteBuffer into status byte
-     * @requires ByteBuffer Message
+     * parse byte[] into status byte
+     * @requires byte[] Message
      * @promises status as byte
      */
-    private byte parseMessage(ByteBuffer message) {
-        byte parsedMessage = message.get(5);
+    private byte parseMessage(byte[] message) {
+        byte parsedMessage = message[5];
         return parsedMessage;
     }
 
     @Override
-    public void receiveMessage(String ip, ByteBuffer message) {
+    public void receiveMessage(String ip, byte[] message) {
         if(ip==null || message == null)
             throw new NullPointerException();
         byte parsedMessage = this.parseMessage(message);
