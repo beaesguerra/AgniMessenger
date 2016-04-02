@@ -1,7 +1,6 @@
 package agni.server.receiver;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Vector;
 
@@ -23,21 +22,18 @@ public class UserReceiver implements MessageParser {
     }
 
     /*
-     * parse ByteBuffer type byte
-     * @requires ByteBuffer Message
+     * parse byte[] type byte
+     * @requires byte[] Message
      * @promises user request type as a byte
      */
-    private byte[] parseMessage(ByteBuffer message) {
-        message.flip();
-        int length = message.remaining();
-        byte[] byteArray = new byte[length];
-        message.get(byteArray);
-        byte[] parsedMessage = Arrays.copyOfRange(byteArray,5,length);
+    private byte[] parseMessage(byte[] message) {
+        int length = message.length;
+        byte[] parsedMessage = Arrays.copyOfRange(message,5,length);
         return parsedMessage;
     }
 
     @Override
-    public void receiveMessage(String ip, ByteBuffer message) {
+    public void receiveMessage(String ip, byte[] message) {
         String userMessage = null;
         if(ip==null || message == null)
             throw new NullPointerException();

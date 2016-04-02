@@ -20,6 +20,7 @@ public class LoginReceiverTest {
     byte[] testArray = null;    
     int totalMessageLength; 
     ByteBuffer testBuffer = null;
+    byte[] bufferArray = null;
 
     Mockery context = new Mockery();
     LoginListener mockLoginListener;
@@ -38,7 +39,11 @@ public class LoginReceiverTest {
         testBuffer.put(type);
         testBuffer.put(usernameLength);
         testBuffer.put(testArray);
-
+        
+        testBuffer.flip();
+        int length =  testBuffer.remaining();
+        bufferArray = new byte[length];
+        testBuffer.get(bufferArray);
         loginReceiver = new LoginReceiver();
         
         mockLoginListener = context.mock(LoginListener.class);
@@ -55,7 +60,7 @@ public class LoginReceiverTest {
         context.checking(new Expectations() {{
             oneOf(mockLoginListener).loginRequest("192.168.1.1", "Jingles", "Passw0rd!");
         }});
-        loginReceiver.receiveMessage(testIp, testBuffer);
+        loginReceiver.receiveMessage(testIp, bufferArray);
         context.assertIsSatisfied();
     }
     
@@ -65,7 +70,7 @@ public class LoginReceiverTest {
         context.checking(new Expectations() {{
             oneOf(mockLoginListener).loginRequest("192.168.1.1", "Jingles", "Passw0rd!");
         }});
-        loginReceiver.receiveMessage(null, testBuffer);
+        loginReceiver.receiveMessage(null, bufferArray);
         context.assertIsSatisfied();
     }
     

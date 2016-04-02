@@ -1,35 +1,56 @@
 package agni.client;
 
+import java.io.IOException;
+import java.net.Socket;
+import agni.client.action.ChatActionHandler;
+import agni.client.action.FileActionHandler;
+import agni.client.action.HeartbeatActionHandler;
+import agni.client.action.InfoRequestActionHandler;
+import agni.client.action.LoginActionHandler;
+import agni.client.action.UserActionHandler;
+import agni.client.communication.MessageReceiver;
+import agni.client.communication.MessageSender;
+import agni.client.receiver.ChatReceiver;
+import agni.client.receiver.FileReceiver;
+import agni.client.receiver.HeartbeatReceiver;
+import agni.client.receiver.InformationReceiver;
+import agni.client.receiver.StatusReceiver;
+import agni.client.view.ChatView;
+import agni.client.view.IdleView;
+import agni.client.view.LoginView;
 import agni.client.communication.*;
 import agni.client.receiver.*;
 import agni.client.action.*;
 import agni.client.view.*;
-import charva.awt.BorderLayout;
-import charva.awt.Color;
-import charva.awt.Container;
-import charvax.swing.BoxLayout;
-import charvax.swing.JFrame;
-import charvax.swing.JLabel;
-import charvax.swing.JMenu;
-import charvax.swing.JMenuBar;
-import charvax.swing.JMenuItem;
-import charvax.swing.JPanel;
 
 public class AgniClient {
 
     public AgniClient() {
     }
 
-    public static void main(String[] args) {
-        MessageSender messageSender = new MessageSender();
-        MessageReceiver messageReceiver = new MessageReceiver();
+    public static void main(String[] args) throws Exception {
+        
+        if (args.length != 2) {
+            System.out.println("Usage: Client <Server IP> <Server Port>");
+            System.exit(1);
+        }
 
+        // Initialize a client socket connection to the server
+        Socket clientSocket = new Socket(args[0], Integer.parseInt(args[1]));
+       
         HeartbeatReceiver heartbeatReceiver = new HeartbeatReceiver();
         InformationReceiver informationReceiver = new InformationReceiver();
         StatusReceiver statusReceiver = new StatusReceiver();
         ChatReceiver chatReceiver = new ChatReceiver();
         FileReceiver fileReceiver = new FileReceiver();
-
+        
+        MessageSender messageSender = new MessageSender(clientSocket);
+        MessageReceiver messageReceiver = new MessageReceiver(clientSocket,
+                                                              heartbeatReceiver,
+                                                              informationReceiver,
+                                                              statusReceiver,
+                                                              chatReceiver,
+                                                              fileReceiver);
         LoginActionHandler loginActionHandler = new LoginActionHandler(messageSender);
         InfoRequestActionHandler infoRequestActionHandler = new InfoRequestActionHandler(messageSender);
         HeartbeatActionHandler heartbeatActionHandler = new HeartbeatActionHandler(messageSender);
@@ -48,6 +69,15 @@ public class AgniClient {
                                          chatActionHandler,
                                          fileActionHandler,
                                          heartbeatActionHandler);
+
+        // We need to run messageReceiver somewhere here
+        // messageReceiver.run();
+        // After termination functionality
+        try {
+            clientSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         loginView.displayUi();
     }

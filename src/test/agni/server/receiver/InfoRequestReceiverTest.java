@@ -18,6 +18,7 @@ public class InfoRequestReceiverTest {
     final byte testStatus = 0x01;
     int totalMessageLength; 
     ByteBuffer testBuffer = null;
+    byte[] bufferArray = null;
 
     Mockery context = new Mockery();
     InfoListener mockInfoListener;
@@ -34,7 +35,11 @@ public class InfoRequestReceiverTest {
         testBuffer.putInt(totalMessageLength);
         testBuffer.put(type);
         testBuffer.put(testStatus);
-
+        
+        testBuffer.flip();
+        int length =  testBuffer.remaining();
+        bufferArray = new byte[length];
+        testBuffer.get(bufferArray);
         infoReceiver = new InfoRequestReceiver();
         
         mockInfoListener = context.mock(InfoListener.class);
@@ -51,7 +56,7 @@ public class InfoRequestReceiverTest {
         context.checking(new Expectations() {{
             oneOf(mockInfoListener).infoRequest("192.168.1.1", testStatus);
         }});
-        infoReceiver.receiveMessage(testIp, testBuffer);
+        infoReceiver.receiveMessage(testIp, bufferArray);
         context.assertIsSatisfied();
     }
     
@@ -62,7 +67,7 @@ public class InfoRequestReceiverTest {
             final String expectedIp = "192.168.1.1";
             oneOf(mockInfoListener).infoRequest(expectedIp, testStatus);
         }});
-        infoReceiver.receiveMessage(null, testBuffer);
+        infoReceiver.receiveMessage(null, bufferArray);
         context.assertIsSatisfied();
     }
     
