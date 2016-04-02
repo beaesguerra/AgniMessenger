@@ -50,16 +50,16 @@ public class UserDataGuard implements I_UserDataGuard {
         // TODO Auto-generated method stub
         return false;
     }
-	@Override
-	public String getUsername(String ip) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public String getUsername(String ip) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	
-	@Override
-	public boolean isOnline(String friend) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    
+    @Override
+    public boolean isOnline(String friend) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }
