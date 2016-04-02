@@ -63,7 +63,7 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
         validate();
 
         outputArea.setEditable(false);
-        outputArea.append("Welcome to Agni! Please Login!\n");
+        outputArea.append("Welcome to Agni! Please Login!\nUse the command \n/login username password\nOR\n/register username password\n");
         inputLine.addKeyListener(this);
         // (new Thread(serverMonitor)).start(); // uncomment later
     }
