@@ -69,6 +69,7 @@ public class ChatView extends JFrame implements AgniClientView, ActionListener, 
         validate();
 
         outputArea.setEditable(false);
+        outputArea.setText("You have joined the chat!\n");
         inputLine.addKeyListener(this);
         // (new Thread(serverMonitor)).start();
     }
@@ -77,7 +78,7 @@ public class ChatView extends JFrame implements AgniClientView, ActionListener, 
     public void displayUi() {
         show();
         inputLine.requestFocus();
-        appendToOutputArea("ChatView!");
+        // appendToOutputArea("ChatView!");
     }
 
     public synchronized void appendToOutputArea(String message) {
@@ -143,11 +144,9 @@ public class ChatView extends JFrame implements AgniClientView, ActionListener, 
             System.exit(0);
             break;
         case "login":
-            this.hide();
             client.changeState(AgniClientView.NextState.LOGIN_VIEW);
             break;
         case "idle":
-            this.hide();
             client.changeState(AgniClientView.NextState.IDLE_VIEW);
             break;
         default:

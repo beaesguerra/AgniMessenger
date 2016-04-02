@@ -63,6 +63,7 @@ public class IdleView extends JFrame implements AgniClientView, ActionListener, 
         validate();
 
         outputArea.setEditable(false);
+        outputArea.setText("You have logged in!\n");
         inputLine.addKeyListener(this);
         // (new Thread(serverMonitor)).start();
     }
@@ -71,7 +72,6 @@ public class IdleView extends JFrame implements AgniClientView, ActionListener, 
     public void displayUi() {
         show();
         inputLine.requestFocus();
-        appendToOutputArea("IdleView!");
     }
 
     public synchronized void appendToOutputArea(String message) {
@@ -111,11 +111,9 @@ public class IdleView extends JFrame implements AgniClientView, ActionListener, 
             System.exit(0);
             break;
         case "login":
-            this.hide();
             client.changeState(AgniClientView.NextState.LOGIN_VIEW);
             break;
         case "chat":
-            this.hide();
             client.changeState(AgniClientView.NextState.CHAT_VIEW);
             break;
         default:

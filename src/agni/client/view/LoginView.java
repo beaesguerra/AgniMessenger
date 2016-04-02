@@ -63,6 +63,7 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
         validate();
 
         outputArea.setEditable(false);
+        outputArea.append("Welcome to Agni! Please Login!\n");
         inputLine.addKeyListener(this);
         // (new Thread(serverMonitor)).start(); // uncomment later
     }
@@ -71,7 +72,6 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
     public void displayUi() {
         show();
         inputLine.requestFocus();
-        appendToOutputArea("Welcome to Agni! Please Login!");
     }
 
     public synchronized void appendToOutputArea(String message) {
@@ -136,11 +136,9 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
             System.exit(0);
             break;
         case "idle":
-            this.hide();
             client.changeState(AgniClientView.NextState.IDLE_VIEW);
             break;
         case "chat":
-            this.hide();
             client.changeState(AgniClientView.NextState.CHAT_VIEW);
             break;
         default:
