@@ -47,7 +47,6 @@ public class LoginReceiver implements MessageParser {
         return parsedMessage;
     }
 
-
     @Override
     public void receiveMessage(String ip, byte[] message) {  
         if(ip==null || message == null)
