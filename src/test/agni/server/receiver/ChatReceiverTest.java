@@ -17,7 +17,8 @@ public class ChatReceiverTest {
     final byte type = 0x05;
     final String testIp = "192.168.1.1";
     final String testString = "Hello World!";
-    byte[] testArray = null;    
+    byte[] testArray = null; 
+    byte[] bufferArray = null;
     int totalMessageLength; 
     ByteBuffer testBuffer = null;
 
@@ -37,7 +38,7 @@ public class ChatReceiverTest {
         testBuffer.putInt(totalMessageLength);
         testBuffer.put(type);
         testBuffer.put(testArray);
-
+        bufferArray= testBuffer.array();
         chatReceiver = new ChatReceiver();
         
         mockChatListener = context.mock(ChatListener.class);
@@ -54,7 +55,7 @@ public class ChatReceiverTest {
         context.checking(new Expectations() {{
             oneOf(mockChatListener).chatRequest("192.168.1.1", testString);
         }});
-        chatReceiver.receiveMessage(testIp, testBuffer);
+        chatReceiver.receiveMessage(testIp, bufferArray);
         context.assertIsSatisfied();
     }
     
@@ -65,7 +66,7 @@ public class ChatReceiverTest {
             final String expectedIp = "192.168.1.1";
             oneOf(mockChatListener).chatRequest(expectedIp, testString);
         }});
-        chatReceiver.receiveMessage(null, testBuffer);
+        chatReceiver.receiveMessage(null, bufferArray);
         context.assertIsSatisfied();
     }
     
