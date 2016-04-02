@@ -26,7 +26,8 @@ public class UserActionHandler {
         - Logout(0x05)
          */
         int numBytes = HEADER_LENGTH_SIZE +
-                       MESSAGE_TYPE_SIZE + 1;
+                       MESSAGE_TYPE_SIZE +
+                       USER_ACTION_TYPE_LENGTH;
         byte[] packedMessage = new byte[numBytes];
         System.arraycopy(intToByteArray(numBytes), 0, packedMessage, 0, numBytes);
         Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
