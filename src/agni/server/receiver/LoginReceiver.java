@@ -16,6 +16,12 @@ public class LoginReceiver implements MessageParser {
             lListener.loginRequest (ip, username, password);
         }
     }
+    
+    private void notifyNewUserRequest(String ip, String username, String password) {
+        for(LoginListener  lListener : loginListeners) {
+            lListener.newUserRequest (ip, username, password);
+        }
+    }
 
     public void register(LoginListener lListener) {
         loginListeners.add(lListener);
@@ -30,10 +36,10 @@ public class LoginReceiver implements MessageParser {
         int length = message.length;
         byte[] messageArray = Arrays.copyOfRange(message,5,length);
         String[] parsedMessage = new String[2];
-        int usernameLength = messageArray[0];
+        int usernameLength = messageArray[1];
         try {
-            parsedMessage[0] = new String(Arrays.copyOfRange(messageArray, 1, (usernameLength + 1)), "us-ascii");
-            parsedMessage[1] = new String(Arrays.copyOfRange(messageArray, (usernameLength + 1), messageArray.length), "us-ascii");
+            parsedMessage[0] = new String(Arrays.copyOfRange(messageArray, 2, (usernameLength + 2)), "us-ascii");
+            parsedMessage[1] = new String(Arrays.copyOfRange(messageArray, (usernameLength + 2), messageArray.length), "us-ascii");
         } catch (UnsupportedEncodingException e) {
             System.out.println("UnsupportedEncodingException while parsing Login info");
             e.printStackTrace();
@@ -47,7 +53,12 @@ public class LoginReceiver implements MessageParser {
         if(ip==null || message == null)
             throw new NullPointerException();
         String[] parsedMessage = this.parseMessage(message);
-        notifyLoginRequest(ip, parsedMessage[0], parsedMessage[1]);  
+        if(message[5] == 0x00) {
+        	notifyLoginRequest(ip, parsedMessage[0], parsedMessage[1]);  
+        }
+        else if (message[5] == 0x01) {
+        	notifyNewUserRequest(ip, parsedMessage[0], parsedMessage[1]); 
+        }
     }
 
 }
