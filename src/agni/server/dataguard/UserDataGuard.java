@@ -62,4 +62,10 @@ public class UserDataGuard implements I_UserDataGuard {
         // TODO Auto-generated method stub
         return false;
     }
+
+	@Override
+	public String getIp(String member) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
