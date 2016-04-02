@@ -1,12 +1,14 @@
 package test.agni.server.receiver;
 
 import java.nio.ByteBuffer;
+
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import agni.server.receiver.ChatReceiver;
 import agni.server.receiver.FileListener;
 import agni.server.receiver.FileReceiver;
 
@@ -20,6 +22,8 @@ public class FileReceiverTest {
     final String testFile = "Hello World!";
     byte[] testFileArray = null;
     byte[] testFileNameArray = null;
+    byte[] bufferArray= null;
+
     int totalMessageLength; 
     ByteBuffer testBuffer = null;
 
@@ -43,6 +47,11 @@ public class FileReceiverTest {
         testBuffer.put(fileNameLength);
         testBuffer.put(testFileNameArray);
         testBuffer.put(testFileArray);
+        
+        testBuffer.flip();
+        int length =  testBuffer.remaining();
+        bufferArray = new byte[length];
+        testBuffer.get(bufferArray);
 
         fileReceiver = new FileReceiver();
         
@@ -59,7 +68,7 @@ public class FileReceiverTest {
         context.checking(new Expectations() {{
             oneOf(mochFileListener).fileRequest("192.168.1.1", EOF, testFileName, testFileArray);
         }});
-        fileReceiver.receiveMessage(testIp, testBuffer);
+        fileReceiver.receiveMessage(testIp, bufferArray);
         context.assertIsSatisfied();
     }
     
@@ -69,7 +78,7 @@ public class FileReceiverTest {
         context.checking(new Expectations() {{
             oneOf(mochFileListener).fileRequest("192.168.1.1", EOF, testFileName, testFileArray);
         }});
-        fileReceiver.receiveMessage(null, testBuffer);
+        fileReceiver.receiveMessage(null, bufferArray);
         context.assertIsSatisfied();
     }
     

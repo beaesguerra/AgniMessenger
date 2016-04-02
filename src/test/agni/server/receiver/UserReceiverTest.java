@@ -20,6 +20,7 @@ public class UserReceiverTest {
     byte[] testArray = null;
     int totalMessageLength; 
     ByteBuffer testBuffer = null;
+    byte[] bufferArray = null;
 
     Mockery context = new Mockery();
     UserListener mockUserListener;
@@ -38,7 +39,11 @@ public class UserReceiverTest {
         testBuffer.put(type);
         testBuffer.put(testAction);
         testBuffer.put(testArray);
-
+        
+        testBuffer.flip();
+        int length =  testBuffer.remaining();
+        bufferArray = new byte[length];
+        testBuffer.get(bufferArray);
         userReceiver = new UserReceiver();
         
         mockUserListener = context.mock(UserListener.class);
@@ -55,7 +60,7 @@ public class UserReceiverTest {
         context.checking(new Expectations() {{
             oneOf(mockUserListener).userRequest("192.168.1.1", testAction, testMessage);
         }});
-        userReceiver.receiveMessage(testIp, testBuffer);
+        userReceiver.receiveMessage(testIp, bufferArray);
         context.assertIsSatisfied();
     }
     
@@ -65,7 +70,7 @@ public class UserReceiverTest {
         context.checking(new Expectations() {{
             oneOf(mockUserListener).userRequest("192.168.1.1", testAction, testMessage);
         }});
-        userReceiver.receiveMessage(null, testBuffer);
+        userReceiver.receiveMessage(null, bufferArray);
         context.assertIsSatisfied();
     }
     

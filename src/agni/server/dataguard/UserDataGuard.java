@@ -7,7 +7,7 @@ public class UserDataGuard implements I_UserDataGuard {
 
     }
 
-    public void addUser(String username, String salt, String passwordHash) {
+    public void registerUser(String username, String salt, String passwordHash) {
 
     }
 
@@ -19,7 +19,7 @@ public class UserDataGuard implements I_UserDataGuard {
         return null;
     }
 
-    public String[] friends(String user) {
+    public String[] getFriends(String user) {
         return null;
     }
 
@@ -27,6 +27,9 @@ public class UserDataGuard implements I_UserDataGuard {
 
     }
 
+    /*
+     * if ip == null, remove from data structure that keeps track of online users
+     */
     public void changeUserCurrentIp(String user, String ip) {
 
     }
@@ -35,13 +38,21 @@ public class UserDataGuard implements I_UserDataGuard {
     public String userCurrentIp(String user) {
         return null;
     }
+	@Override
+	public String getUsername(String ip) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public void changeUserCurrentChat(String user, String chatname) {
+	@Override
+	public boolean userExists(String message) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
-    }
-
-    /* return null if user not in a chat */
-    public String userCurrentChat(String user) {
-        return null;
-    }
+	@Override
+	public boolean isOnline(String friend) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
