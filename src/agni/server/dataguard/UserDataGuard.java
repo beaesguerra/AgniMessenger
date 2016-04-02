@@ -1,25 +1,58 @@
 package agni.server.dataguard;
 
-public class UserDataGuard {
+public class UserDataGuard implements I_UserDataGuard {
 //  private database;
 
-    public UserDataGuard() {
+    public UserDataGuard(String dbname, String username, String password) {
 
     }
 
-    public void authenticate(String user, String pass) {
+    public void registerUser(String username, String salt, String passwordHash) {
 
     }
 
-    public void lastKnownIp(String user) {
+    public String salt(String user) {
+        return null;
+    }
+
+    public String passwordHash(String user) {
+        return null;
+    }
+
+    public String[] getFriends(String user) {
+        return null;
+    }
+
+    public void createFriendship(String user1, String user2) {
 
     }
 
-    public void currentStatus(String user) {
+    /*
+     * if ip == null, remove from data structure that keeps track of online users
+     */
+    public void changeUserCurrentIp(String user, String ip) {
 
     }
 
-    public void currentChat(String user) {
-
+    /* return null if user not online */
+    public String userCurrentIp(String user) {
+        return null;
     }
+	@Override
+	public String getUsername(String ip) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean userExists(String message) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isOnline(String friend) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

@@ -18,11 +18,14 @@ import agni.client.receiver.StatusReceiver;
 import agni.client.view.ChatView;
 import agni.client.view.IdleView;
 import agni.client.view.LoginView;
+import agni.client.communication.*;
+import agni.client.receiver.*;
+import agni.client.action.*;
+import agni.client.view.*;
 
 public class AgniClient {
 
     public AgniClient() {
-
     }
 
     public static void main(String[] args) throws Exception {
@@ -66,6 +69,7 @@ public class AgniClient {
                                          chatActionHandler,
                                          fileActionHandler,
                                          heartbeatActionHandler);
+
         // We need to run messageReceiver somewhere here
         // messageReceiver.run();
         // After termination functionality
@@ -74,5 +78,7 @@ public class AgniClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        loginView.displayUi();
     }
 }
