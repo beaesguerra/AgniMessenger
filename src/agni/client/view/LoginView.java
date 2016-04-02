@@ -122,14 +122,15 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
     }
 
     private void handleInput(String input) {
-        if (input.charAt(0) == '/') {
-            handleCommand(input.substring(1, input.length()));
+        if (input.charAt(0) == '/' && input.length() > 1) {
+            String[] inputArray = input.substring(1, input.length()).split(" ");
+            handleCommand(inputArray[0], input.split(" "));
         } else {
             appendToOutputArea("User : " + input);
         }
     }
 
-    private void handleCommand(String input) {
+    private void handleCommand(String input, String[] args) {
         switch (input) {
         case "q":
             System.gc();
@@ -140,6 +141,14 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
             break;
         case "chat":
             client.changeState(AgniClientView.NextState.CHAT_VIEW);
+            break;
+        case "login":
+            if(args.length < 3){
+                appendToOutputArea("Please include a username and password");
+            } else {
+                appendToOutputArea(" |*| Logging in with  " + args[1] + " and " + args[2]);
+                loginActionHandler.requestLogin(username, password);
+            }
             break;
         default:
             appendToOutputArea("Unknown command \"" + input + "\"");
