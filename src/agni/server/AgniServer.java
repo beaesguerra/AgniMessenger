@@ -37,6 +37,7 @@ public class AgniServer {
 	
 	private static String serverIpAddress = "162.246.157.203"; 
 	private static String serverPort = "9001"; 
+	private static String serverName = "server";
 	
 	public static String getServerIp() {
 		return serverIpAddress; 
@@ -44,6 +45,10 @@ public class AgniServer {
 	
 	public static String getServerPort() { 
 		return serverPort; 
+	}
+	
+	public static String getServerName() { 
+		return serverName; 
 	}
 	
 
@@ -83,7 +88,7 @@ public class AgniServer {
         UserManager userManager = new UserManager(infoSender, userDataGuard, chatDataGuard);
         ChatManager chatManager = new ChatManager(userDataGuard, chatDataGuard, infoSender, chatSender);
         FileManager fileManager = new FileManager(infoSender, fileSender, fileDataGuard, userDataGuard);
-        InfoRequestManager infoRequestManager = new InfoRequestManager(infoSender, heartbeatSender, fileDataGuard);
+        InfoRequestManager infoRequestManager = new InfoRequestManager(infoSender, heartbeatSender, infoDataGuard);
         StatusManager statusManager = new StatusManager(statusSender, userDataGuard);
 
         loginReceiver.register(loginManager);

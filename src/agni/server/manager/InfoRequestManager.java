@@ -5,11 +5,13 @@ import agni.server.receiver.InfoListener;
 import agni.server.sender.HeartbeatSender;
 import agni.server.AgniServer;
 import agni.server.dataguard.I_FileDataGuard;
+import agni.server.dataguard.I_InfoDataGuard;
+import agni.server.dataguard.InfoDataGuard;
 import agni.server.sender.InfoSender;
 
 public class InfoRequestManager implements InfoListener{
     private InfoSender infoSender;
-    private I_FileDataGuard fileDataGuard;
+    private I_InfoDataGuard infoDataGuard;
 
     public enum InfoRequestType {
         SERVER_IP((byte) 0x00), 
@@ -31,10 +33,10 @@ public class InfoRequestManager implements InfoListener{
     
     public InfoRequestManager(InfoSender infoSender,
                               HeartbeatSender heartbeatSender, 
-                              I_FileDataGuard fileDataGuard) {
+                              InfoDataGuard infoDataGuard) {
 
         this.infoSender = infoSender;
-        this.fileDataGuard = fileDataGuard;
+        this.infoDataGuard = infoDataGuard;
     }
 
     @Override
@@ -46,7 +48,7 @@ public class InfoRequestManager implements InfoListener{
     		infoSender.sendInfo(ip, AgniServer.getServerPort());
     	}
     	else if (type == InfoRequestType.NAME.bytes()){
-    		
+    		infoSender.sendInfo(ip, AgniServer.getServerName());
     	}
     	else if (type == InfoRequestType.CURRENT_USERS_ONLINE.bytes()){
     		
