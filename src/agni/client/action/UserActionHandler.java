@@ -9,12 +9,13 @@ public class UserActionHandler {
     final private int HEADER_LENGTH_SIZE = 4;
     final private int MESSAGE_TYPE_SIZE = 1;
     final private int USER_ACTION_TYPE_LENGTH = 1;
+    final private int EXTRA_ARGUMENT_SIZE = 1;
     final private byte MESSAGE_TYPE = 0x04;
 
     public UserActionHandler(MessageSender messageSender) {
         this.messageSender = messageSender;
     }
-   
+    
     public void requestUserAction(byte userActionType) {
         /*
         - byte representing the type of user action
@@ -32,7 +33,20 @@ public class UserActionHandler {
         System.arraycopy(intToByteArray(numBytes), 0, packedMessage, 0, numBytes);
         Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
         System.arraycopy(userActionType, 0, packedMessage, 5, USER_ACTION_TYPE_LENGTH);
-//        System.arraycopy(src, srcPos, packedMessage, 6, 6 + ArgumentLength);
+        messageSender.sendMessage(packedMessage);
+    }
+   
+    public void requestUserAction(byte userActionType, byte extraArg) {
+    	// one extra byte for the extra argument
+        int numBytes = HEADER_LENGTH_SIZE +
+                       MESSAGE_TYPE_SIZE +
+                       USER_ACTION_TYPE_LENGTH +
+                       EXTRA_ARGUMENT_SIZE;
+        byte[] packedMessage = new byte[numBytes];
+        System.arraycopy(intToByteArray(numBytes), 0, packedMessage, 0, numBytes);
+        Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
+        System.arraycopy(userActionType, 0, packedMessage, 5, USER_ACTION_TYPE_LENGTH);
+        System.arraycopy(extraArg, 0, packedMessage, 6, 6 + EXTRA_ARGUMENT_SIZE);
         messageSender.sendMessage(packedMessage);
     }
     
