@@ -38,7 +38,11 @@ public class ChatReceiverTest {
         testBuffer.putInt(totalMessageLength);
         testBuffer.put(type);
         testBuffer.put(testArray);
-        bufferArray= testBuffer.array();
+           
+        testBuffer.flip();
+        int length =  testBuffer.remaining();
+        bufferArray = new byte[length];
+        testBuffer.get(bufferArray);
         chatReceiver = new ChatReceiver();
         
         mockChatListener = context.mock(ChatListener.class);

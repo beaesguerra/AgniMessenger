@@ -1,12 +1,14 @@
 package test.agni.server.receiver;
 
 import java.nio.ByteBuffer;
+
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import agni.server.receiver.ChatReceiver;
 import agni.server.receiver.FileListener;
 import agni.server.receiver.FileReceiver;
 
@@ -45,8 +47,11 @@ public class FileReceiverTest {
         testBuffer.put(fileNameLength);
         testBuffer.put(testFileNameArray);
         testBuffer.put(testFileArray);
-        bufferArray= testBuffer.array();
-
+        
+        testBuffer.flip();
+        int length =  testBuffer.remaining();
+        bufferArray = new byte[length];
+        testBuffer.get(bufferArray);
 
         fileReceiver = new FileReceiver();
         
