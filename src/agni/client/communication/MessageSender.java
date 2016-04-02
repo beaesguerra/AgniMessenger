@@ -11,25 +11,25 @@ public class MessageSender {
     private DataOutputStream dataOut = null;
 
     public MessageSender(Socket clientSocket) {
-    	tcpSocket = clientSocket;
-    	OutputStream out;
-		try {
-			out = tcpSocket.getOutputStream();
-	    	dataOut = new DataOutputStream(out);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        tcpSocket = clientSocket;
+        OutputStream out;
+        try {
+            out = tcpSocket.getOutputStream();
+            dataOut = new DataOutputStream(out);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     public void sendMessage(byte[] message) {
-    	int length = message.length;
-    	try {
-			dataOut.write(message, 0, length);
-			dataOut.flush();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        int length = message.length;
+        try {
+            dataOut.write(message, 0, length);
+            dataOut.flush();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
