@@ -2,11 +2,16 @@ package agni.client.communication;
 
 import java.net.Socket;
 
-public class MessageSender {
+import agni.client.receiver.ChatReceiver;
+import agni.client.receiver.FileReceiver;
+import agni.client.receiver.HeartbeatReceiver;
+import agni.client.receiver.InformationReceiver;
+import agni.client.receiver.StatusReceiver;
 
+public class MessageSender {
     private Socket tcpSocket;
 
-    public MessageSender() {
+    public MessageSender(Socket clientSocket) {
 
     }
 
