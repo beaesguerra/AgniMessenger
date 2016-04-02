@@ -15,8 +15,8 @@ public class UserActionHandler {
     public UserActionHandler(MessageSender messageSender) {
         this.messageSender = messageSender;
     }
-
-    public void requestUserAction(byte userActionType, byte extraArg, boolean extraArgUsed) {
+    
+    public void requestUserAction(byte userActionType) {
         /*
         - byte representing the type of user action
         - Join Chat(0x00)
@@ -30,14 +30,23 @@ public class UserActionHandler {
                        MESSAGE_TYPE_SIZE +
                        USER_ACTION_TYPE_LENGTH;
         byte[] packedMessage = new byte[numBytes];
-        // one extra byte for the extra argument
-        if(extraArgUsed == true) {
-        	numBytes += EXTRA_ARGUMENT_SIZE;
-        	System.arraycopy(extraArg, 0, packedMessage, 6, 6 + EXTRA_ARGUMENT_SIZE);
-        }
         System.arraycopy(intToByteArray(numBytes), 0, packedMessage, 0, numBytes);
         Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
         System.arraycopy(userActionType, 0, packedMessage, 5, USER_ACTION_TYPE_LENGTH);
+        messageSender.sendMessage(packedMessage);
+    }
+
+    public void requestUserAction(byte userActionType, String extraArg) {
+        int numBytes = HEADER_LENGTH_SIZE +
+                       MESSAGE_TYPE_SIZE +
+                       USER_ACTION_TYPE_LENGTH +
+                       EXTRA_ARGUMENT_SIZE;
+        byte[] packedMessage = new byte[numBytes];
+        System.arraycopy(intToByteArray(numBytes), 0, packedMessage, 0, numBytes);
+        Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
+        System.arraycopy(userActionType, 0, packedMessage, 5, USER_ACTION_TYPE_LENGTH);
+        // one extra byte for the extra argument
+        System.arraycopy(extraArg, 0, packedMessage, 6, 6 + extraArg.length());
         messageSender.sendMessage(packedMessage);
     }
     
