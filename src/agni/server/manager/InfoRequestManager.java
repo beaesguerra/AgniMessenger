@@ -43,7 +43,7 @@ public class InfoRequestManager implements InfoListener{
     		infoSender.sendInfo(ip, AgniServer.getServerIp());
     	}
     	else if (type == InfoRequestType.PORT.bytes()){
-    		
+    		infoSender.sendInfo(ip, AgniServer.getServerPort());
     	}
     	else if (type == InfoRequestType.NAME.bytes()){
     		
