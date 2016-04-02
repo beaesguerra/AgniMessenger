@@ -1,7 +1,6 @@
 package agni.server.receiver;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Vector;
 
@@ -23,17 +22,13 @@ public class LoginReceiver implements MessageParser {
     }
 
     /*
-     * parse ByteBuffer into strings
-     * @requires ByteBuffer Message
+     * parse byte[] into strings
+     * @requires byte[] Message
      * @promises username and password as strings
      */
-    private String[] parseMessage(ByteBuffer message) {
-        message.flip();
-        int length = message.remaining();
-        byte[] byteArray = new byte[length];
-        message.get(byteArray);
-        byte[] messageArray = Arrays.copyOfRange(byteArray,5,length);
-
+    private String[] parseMessage(byte[] message) {
+        int length = message.length;
+        byte[] messageArray = Arrays.copyOfRange(message,5,length);
         String[] parsedMessage = new String[2];
         int usernameLength = messageArray[0];
         try {
@@ -48,15 +43,11 @@ public class LoginReceiver implements MessageParser {
 
 
     @Override
-    public void receiveMessage(String ip, ByteBuffer message) {  
+    public void receiveMessage(String ip, byte[] message) {  
         if(ip==null || message == null)
             throw new NullPointerException();
         String[] parsedMessage = this.parseMessage(message);
         notifyLoginRequest(ip, parsedMessage[0], parsedMessage[1]);  
-    }
-
-    private void notifyNewUserRequest() {
-        
     }
 
 }
