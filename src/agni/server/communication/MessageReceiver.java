@@ -25,12 +25,12 @@ public class MessageReceiver {
     private ServerSocketChannel channel = null;
     private ChannelList channelList = null;
     
-    ChatReceiver chatReceiver = null;
-    FileReceiver fileReceiver = null;
-    HeartbeatReceiver heartBeatReceiver = null;
-    InfoRequestReceiver infoRequestReceiver = null;
-    LoginReceiver loginReceiver = null;
-    UserReceiver userReceiver = null;
+    ChatReceiver chatReceiver;
+    FileReceiver fileReceiver;
+    HeartbeatReceiver heartBeatReceiver;
+    InfoRequestReceiver infoRequestReceiver;
+    LoginReceiver loginReceiver;
+    UserReceiver userReceiver;
 
     
     public MessageReceiver(ChannelList channels,
@@ -104,7 +104,6 @@ public class MessageReceiver {
  * @promises call appropriate 'receiverMessage(ip, buffer)' method
  */
     private void selectReceiver(String ip, ByteBuffer buffer){
-    	//byte messageType = buffer.get(4);
     	 buffer.flip();
          int length = buffer.remaining();
          byte[] byteArray = new byte[length];
@@ -140,7 +139,7 @@ public class MessageReceiver {
         try {
             currentChannel = ((ServerSocketChannel) key.channel()).accept();
             currentChannel.configureBlocking(false);
-            System.out.println("Accept conncection from " + currentChannel.socket().toString());
+            System.out.println("Accept connection from " + currentChannel.socket().toString());
             currentChannel.register(selector, SelectionKey.OP_READ);  
         } catch (IOException e2) {
             // TODO Auto-generated catch block
