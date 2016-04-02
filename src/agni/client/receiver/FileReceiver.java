@@ -32,7 +32,7 @@ public class FileReceiver extends MessageParser {
         // File name length -> 6th bit
         int fileNameLength = message[6];
         // Sender's name length -> 8th bit
-        int senderNameLength = (int) message[8];
+        int senderNameLength = (int) message[8+fileNameLength];
         try {
             // File name -> 7th bit
             String fileName = new String(Arrays.copyOfRange(message, 7,
