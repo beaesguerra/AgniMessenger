@@ -10,6 +10,24 @@ public class InfoRequestManager implements InfoListener{
     private InfoSender infoSender;
     private I_FileDataGuard fileDataGuard;
 
+    public enum InfoRequestType {
+        SERVER_IP((byte) 0x00), 
+        PORT((byte) 0x01), 
+        NAME((byte) 0x02), 
+        CURRENT_USERS_ONLINE((byte) 0x03), 
+        CURRENT_CHATS((byte) 0x04);
+
+        private final byte bytes;
+
+        private InfoRequestType(byte bytes) {
+            this.bytes = bytes;
+        }
+
+        public final byte bytes() {
+            return bytes;
+        }
+    }
+    
     public InfoRequestManager(InfoSender infoSender,
                               HeartbeatSender heartbeatSender, 
                               I_FileDataGuard fileDataGuard) {
@@ -20,7 +38,22 @@ public class InfoRequestManager implements InfoListener{
 
     @Override
     public void infoRequest(String ip, byte type) {
-        // TODO Auto-generated method stub
+    	if (type == InfoRequestType.SERVER_IP.bytes()){
+    		String serverIp = "162.246.157.203"; 	// will the server ip always be this?? 
+    		infoSender.sendInfo(ip, serverIp);
+    	}
+    	else if (type == InfoRequestType.PORT.bytes()){
+    		
+    	}
+    	else if (type == InfoRequestType.NAME.bytes()){
+    		
+    	}
+    	else if (type == InfoRequestType.CURRENT_USERS_ONLINE.bytes()){
+    		
+    	}
+    	else if (type == InfoRequestType.CURRENT_CHATS.bytes()){
+    		
+    	}
         
     }
 
