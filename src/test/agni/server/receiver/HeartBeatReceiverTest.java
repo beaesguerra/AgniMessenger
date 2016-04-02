@@ -17,6 +17,7 @@ public class HeartBeatReceiverTest {
     final byte testStatus = 0x01;
     int totalMessageLength; 
     ByteBuffer testBuffer = null;
+    byte[] bufferArray = null;
 
     Mockery context = new Mockery();
     StatusListener mockStatusListener;
@@ -33,7 +34,12 @@ public class HeartBeatReceiverTest {
         testBuffer.putInt(totalMessageLength);
         testBuffer.put(type);
         testBuffer.put(testStatus);
-
+        
+        testBuffer.flip();
+        int length =  testBuffer.remaining();
+        bufferArray = new byte[length];
+        testBuffer.get(bufferArray);
+        
         hbReceiver = new HeartbeatReceiver();
         
         mockStatusListener = context.mock(StatusListener.class);
@@ -50,7 +56,7 @@ public class HeartBeatReceiverTest {
         context.checking(new Expectations() {{
             oneOf(mockStatusListener).ReceivedHeartBeat("192.168.1.1", testStatus);
         }});
-        hbReceiver.receiveMessage(testIp, testBuffer);
+        hbReceiver.receiveMessage(testIp, bufferArray);
         context.assertIsSatisfied();
     }
     
@@ -61,7 +67,7 @@ public class HeartBeatReceiverTest {
             final String expectedIp = "192.168.1.1";
             oneOf(mockStatusListener).ReceivedHeartBeat(expectedIp, testStatus);
         }});
-        hbReceiver.receiveMessage(null, testBuffer);
+        hbReceiver.receiveMessage(null, bufferArray);
         context.assertIsSatisfied();
     }
     
