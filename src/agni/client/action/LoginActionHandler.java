@@ -10,6 +10,7 @@ public class LoginActionHandler {
     final private int HEADER_LENGTH_SIZE = 4;
     final private int MESSAGE_TYPE_SIZE = 1;
     final private int USERNAME_LENGTH_SIZE = 1;
+    final private int LOGIN_TYPE_SIZE = 1;
     final private byte MESSAGE_TYPE = 0x02;
 
     public LoginActionHandler(MessageSender messageSender) {
@@ -21,7 +22,7 @@ public class LoginActionHandler {
      * @param username - the username of the client
      * @param passoed - the password corresponding to the username of the client
      * */
-    public void requestLogin(String username, String password) {
+    public void requestLogin(String username, String password, byte loginType) {
         if(username == null || password == null) {
             throw new NullPointerException("requestLogin received a null username/password");
         }
@@ -33,16 +34,19 @@ public class LoginActionHandler {
             int numBytes = HEADER_LENGTH_SIZE +
                            MESSAGE_TYPE_SIZE +
                            USERNAME_LENGTH_SIZE +
+                           LOGIN_TYPE_SIZE +
                            usernameBytes.length +
                            passwordBytes.length;
             byte[] packedMessage = new byte[numBytes];
             System.arraycopy(intToByteArray(numBytes), 0, packedMessage, 0, numBytes);
             Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
-            Arrays.fill(packedMessage, 5, 6, (byte) usernameBytes.length);
+            // make the 5th byte a type byte (0x00 -> login, 0x01 -> register)
+            Arrays.fill(packedMessage, 5, 6, loginType);
+            Arrays.fill(packedMessage, 6, 7, (byte) usernameBytes.length);
             System.arraycopy(usernameBytes, 0, packedMessage,
-                             6, (6 + usernameBytes.length));
+                             7, (7 + usernameBytes.length));
             System.arraycopy(passwordBytes, 0, packedMessage,
-                             8, (passwordBytes.length));
+                             9, (passwordBytes.length));
             messageSender.sendMessage(packedMessage);
         }
     }
