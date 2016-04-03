@@ -3,7 +3,11 @@ package agni.client.view;
 import agni.client.AgniClient;
 import agni.client.HeartbeatMonitor;
 
-import agni.client.action.*;
+import agni.client.action.inforequestactionhandler;
+import agni.client.action.useractionhandler;
+import agni.client.action.chatactionhandler;
+import agni.client.action.fileactionhandler;
+import agni.client.action.hearbeatsender;
 import agni.server.sender.StatusSender.Status;
 import charva.awt.BorderLayout;
 import charva.awt.Container;
