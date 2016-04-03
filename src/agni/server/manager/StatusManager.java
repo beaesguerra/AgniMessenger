@@ -28,7 +28,5 @@ public class StatusManager implements StatusListener{
             	statusSender.sendStatus(userDataGuard.userCurrentIp(friend), Status.ONLINE, username);
             }
     	}
-        
-        
     }
 }
