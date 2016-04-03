@@ -7,7 +7,7 @@ public class HeartbeatReceiver implements MessageParser {
     private Vector <HeartbeatListener> heartbeatListeners = null;
 
     public HeartbeatReceiver() {
-    	heartbeatListeners = new Vector<HeartbeatListener>();
+        heartbeatListeners = new Vector<HeartbeatListener>();
     }
 
     private void notifyHeartbeat(String ip, byte status) {
@@ -17,7 +17,7 @@ public class HeartbeatReceiver implements MessageParser {
     }
 
     public void register(HeartbeatListener sListener) {
-    	heartbeatListeners.add(sListener);
+        heartbeatListeners.add(sListener);
     }
 
     /*

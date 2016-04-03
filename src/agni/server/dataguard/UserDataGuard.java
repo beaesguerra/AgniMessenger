@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class UserDataGuard implements I_UserDataGuard {
 //  private database;
-	HashMap<String,String> userIps; 
+    HashMap<String,String> userIps; 
 
     public UserDataGuard(String dbname, String username, String password) {
 
@@ -66,33 +66,33 @@ public class UserDataGuard implements I_UserDataGuard {
         return false;
     }
 
-	@Override
-	public void resetLastHeartbeat(String username) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void resetLastHeartbeat(String username) {
+        // TODO Auto-generated method stub
+        
+    }
 
-	@Override
-	public String[] getOnlineUsernames() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public String[] getOnlineUsernames() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public void addToLastHeartbeat(String user, float elapsedTime) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void addToLastHeartbeat(String user, float elapsedTime) {
+        // TODO Auto-generated method stub
+        
+    }
 
-	@Override
-	public int getLastHeartbeat(String user) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    @Override
+    public int getLastHeartbeat(String user) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 
-	@Override
-	public String[] getOnlineUserIps() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public String[] getOnlineUserIps() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

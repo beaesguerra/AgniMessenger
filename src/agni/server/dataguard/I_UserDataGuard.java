@@ -24,14 +24,14 @@ public interface I_UserDataGuard {
 
     public boolean isOnline(String friend);
 
-	public void resetLastHeartbeat(String username);
+    public void resetLastHeartbeat(String username);
 
-	public String [] getOnlineUsernames();
+    public String [] getOnlineUsernames();
 
-	public void addToLastHeartbeat(String user, float elapsedTime);
+    public void addToLastHeartbeat(String user, float elapsedTime);
 
-	public int getLastHeartbeat(String user);
+    public int getLastHeartbeat(String user);
 
-	public String [] getOnlineUserIps();
+    public String [] getOnlineUserIps();
         
 }
