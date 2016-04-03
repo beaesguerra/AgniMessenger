@@ -120,6 +120,51 @@ public class IdleView extends JFrame implements AgniClientView, ActionListener, 
         case "chat":
             client.changeState(AgniClientView.NextState.CHAT_VIEW);
             break;
+        case "serverip":
+            infoRequestActionHandler.requestInfo(InfoRequestActionHandler.InfoTypes.SERVER_IP.bytes());
+            break;
+        case "serverport":
+            infoRequestActionHandler.requestInfo(InfoRequestActionHandler.InfoTypes.PORT.bytes());
+            break;
+        case "servername":
+            infoRequestActionHandler.requestInfo(InfoRequestActionHandler.InfoTypes.NAME.bytes());
+            break;
+        case "usersonline":
+            infoRequestActionHandler.requestInfo(InfoRequestActionHandler.InfoTypes.USERS_ONLINE.bytes());
+            break;
+        case "allchats":
+            infoRequestActionHandler.requestInfo(InfoRequestActionHandler.InfoTypes.CURRENT_CHATS.bytes());
+            break;
+        case "join":
+            userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.JOIN_CHAT.bytes());
+            break;
+        case "friends"
+            userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.FRIENDS_LIST.bytes());
+            break;
+        case "friend"
+            if(args.length < 2){
+                appendToOutputArea("Please specify friend to inquire...");
+            } else {
+                userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.FRIEND_STATUS.bytes(), args[1]);
+            }
+            break;
+        case "add"
+            if(args.length < 2){
+                appendToOutputArea("Please specify friend to add...");
+            } else {
+                userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.ADD_FRIEND.bytes(), args[1]);
+            }
+            break;
+        case "logout"
+            userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.LOGOUT.bytes());
+            break;
+        case "create":
+            if(args.length < 2){
+                appendToOutputArea("Specify name of chat room...");
+            } else {
+                userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.CREATE_CHAT.bytes(), args[1]);
+            }
+            break;
         default:
             appendToOutputArea("Unknown command \"" + input + "\"");
             break;
@@ -158,20 +203,23 @@ public class IdleView extends JFrame implements AgniClientView, ActionListener, 
 
     @Override
     public void infoReaction(String message) {
-        // TODO Auto-generated method stub
-
+        appendToOutputArea(" *** SERVER *** \n" + message);
+        if(message.startsWith("success: joining ")){
+            client.changeState(AgniClientView.NextState.CHAT_VIEW);
+        } else if (message.startsWith("logged out")){
+            client.changeState(AgniClientView.NextState.LOGIN_VIEW);
+        }
     }
 
     @Override
     public void statusReaction(String user, Status status) {
-        // TODO Auto-generated method stub
+        appendToOutputArea(" *** " + user + " is " + status.toString());
 
     }
 
     @Override
     public void chatReaction(String sender, String message) {
-        // TODO Auto-generated method stub
-
+        appendToOutputArea("Got a chat, that's not supposed to happen...");
     }
 
     @Override

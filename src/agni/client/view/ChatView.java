@@ -133,14 +133,16 @@ public class ChatView extends JFrame implements AgniClientView, ActionListener, 
     }
 
     private void handleInput(String input) {
-        if (input.charAt(0) == '/') {
-            handleCommand(input.substring(1, input.length()));
+        if (input.charAt(0) == '/' && input.length() > 1) {
+            String[] inputArray = input.substring(1, input.length()).split(" ");
+            handleCommand(inputArray[0], input.split(" "));
         } else {
             appendToOutputArea("User : " + input);
+            chatActionHandler(input);
         }
     }
 
-    private void handleCommand(String input) {
+    private void handleCommand(String input, String[] args) {
         switch (input) {
         case "q":
             System.gc();
@@ -151,6 +153,47 @@ public class ChatView extends JFrame implements AgniClientView, ActionListener, 
             break;
         case "idle":
             client.changeState(AgniClientView.NextState.IDLE_VIEW);
+            break;
+        case "serverip":
+            infoRequestActionHandler.requestInfo(InfoRequestActionHandler.InfoTypes.SERVER_IP.bytes());
+            break;
+        case "serverport":
+            infoRequestActionHandler.requestInfo(InfoRequestActionHandler.InfoTypes.PORT.bytes());
+            break;
+        case "servername":
+            infoRequestActionHandler.requestInfo(InfoRequestActionHandler.InfoTypes.NAME.bytes());
+            break;
+        case "usersonline":
+            infoRequestActionHandler.requestInfo(InfoRequestActionHandler.InfoTypes.USERS_ONLINE.bytes());
+            break;
+        case "allchats":
+            infoRequestActionHandler.requestInfo(InfoRequestActionHandler.InfoTypes.CURRENT_CHATS.bytes());
+            break;
+        case "join":
+            userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.JOIN_CHAT.bytes());
+            break;
+        case "leave"
+            userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.LEAVE_CHAT.bytes());
+            break;
+        case "friends"
+            userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.FRIENDS_LIST.bytes());
+            break;
+        case "friend"
+            if(args.length < 2){
+                appendToOutputArea("Please specify friend to inquire...");
+            } else {
+                userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.FRIEND_STATUS.bytes(), args[1]);
+            }
+            break;
+        case "add"
+            if(args.length < 2){
+                appendToOutputArea("Please specify friend to add...");
+            } else {
+                userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.ADD_FRIEND.bytes(), args[1]);
+            }
+            break;
+        case "logout"
+            userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.LOGOUT.bytes());
             break;
         default:
             appendToOutputArea("Unknown command \"" + input + "\"");
