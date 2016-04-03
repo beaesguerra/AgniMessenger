@@ -108,10 +108,10 @@ public class AgniClient {
         // messageReceiver.run();
         loginView.displayUi();
         try {
-			clientSocket.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+            clientSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
@@ -120,11 +120,11 @@ public class AgniClient {
             System.exit(1);
         }
         
-		try {
-			AgniClient cl = new AgniClient(args);
-			cl.runClient();
-		} catch (NumberFormatException | IOException e) {
-			e.printStackTrace();
-		}
+        try {
+            AgniClient cl = new AgniClient(args);
+            cl.runClient();
+        } catch (NumberFormatException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }
