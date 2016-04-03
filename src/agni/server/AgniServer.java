@@ -67,13 +67,13 @@ public class AgniServer {
                                                               infoRequestReceiver,
                                                               heartbeatReceiver);
 
-        LoginManager loginManager = new LoginManager(infoSender, userDataGuard);
+
         UserManager userManager = new UserManager(infoSender, userDataGuard, chatDataGuard);
         ChatManager chatManager = new ChatManager(userDataGuard, chatDataGuard, infoSender, chatSender);
         FileManager fileManager = new FileManager(infoSender, fileSender, fileDataGuard, userDataGuard);
         InfoRequestManager infoRequestManager = new InfoRequestManager(infoSender, heartbeatSender, fileDataGuard);
         StatusManager statusManager = new StatusManager(statusSender, userDataGuard);
-
+        LoginManager loginManager = new LoginManager(infoSender, userDataGuard, statusManager);
         loginReceiver.register(loginManager);
         userReceiver.register(userManager);
         chatReceiver.register(chatManager);
