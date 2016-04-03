@@ -25,7 +25,7 @@ public class StatusManager implements StatusListener{
     			 statusSender.sendStatus(userDataGuard.userCurrentIp(friend), Status.OFFLINE, username);  
             }
             else if (status == Status.ONLINE.bytes()) { 
-            	
+            	statusSender.sendStatus(userDataGuard.userCurrentIp(friend), Status.ONLINE, username);
             }
     	}
         
