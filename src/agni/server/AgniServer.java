@@ -82,5 +82,11 @@ public class AgniServer {
         fileReceiver.register(fileManager);
         infoRequestReceiver.register(infoRequestManager);
         heartbeatReceiver.register(heartbeatManager);
+        
+        // TODO:	
+        //	while (true) {
+        // 		receivePackets(); 
+        // 		heartbeatManager.update(); 
+        // } 
     }
 }
