@@ -13,6 +13,7 @@ public class UserManager implements UserListener {
     private InfoSender infoSender;
     private I_UserDataGuard userDataGuard;
     private I_GroupChatDataGuard groupChatDataGuard;
+    private StatusManager statusManager;
 
     public enum UserRequestType {
         JOIN_CHAT((byte) 0x00), 
@@ -35,10 +36,11 @@ public class UserManager implements UserListener {
         }
     }
 
-    public UserManager(InfoSender infoSender, UserDataGuard userDataGuard, GroupChatDataGuard groupChatDataGuard) {
+    public UserManager(InfoSender infoSender, UserDataGuard userDataGuard, GroupChatDataGuard groupChatDataGuard, StatusManager statusManager) {
         this.infoSender = infoSender;
         this.userDataGuard = userDataGuard;
         this.groupChatDataGuard = groupChatDataGuard;
+        this.statusManager = statusManager;
     }
 
     private boolean friendHasAccepted(String username, String friend) {
@@ -138,6 +140,7 @@ public class UserManager implements UserListener {
         else if (type == UserRequestType.LOGOUT.bytes()){       // logout 
             userDataGuard.changeUserCurrentIp(username, null);
             infoSender.sendInfo(ip, "logged out");
+            statusManager.receiveStatusChange(ip, (byte)0x00);
         }
         else if (type == UserRequestType.CREATE_CHAT.bytes()){       // create chat 
             String groupName = argument; 
