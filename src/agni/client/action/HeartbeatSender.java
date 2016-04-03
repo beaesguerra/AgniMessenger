@@ -2,7 +2,7 @@ package agni.client.action;
 
 import agni.client.communication.MessageSender;
 
-public class HeartbeatSender implements Runnable{
+public class HeartbeatSender implements Runnable {
     private MessageSender messageSender;
     private int period;
 
@@ -26,13 +26,13 @@ public class HeartbeatSender implements Runnable{
     }
 
     public void run() {
-        while(true){
+        while (true) {
             // send a heart beat
             try {
-				Thread.sleep(period);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+                Thread.sleep(period);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
