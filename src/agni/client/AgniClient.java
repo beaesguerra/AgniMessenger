@@ -2,9 +2,10 @@ package agni.client;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.net.UnknownHostException;
+
 import agni.client.action.ChatActionHandler;
 import agni.client.action.FileActionHandler;
-import agni.client.action.HeartbeatActionHandler;
 import agni.client.action.InfoRequestActionHandler;
 import agni.client.action.LoginActionHandler;
 import agni.client.action.UserActionHandler;
@@ -23,62 +24,107 @@ import agni.client.receiver.*;
 import agni.client.action.*;
 import agni.client.view.*;
 
+// EXIT CODE OF 3 MEANS TIMEOUT FROM SERVER
+
 public class AgniClient {
 
-    public AgniClient() {
+    private Socket clientSocket;
+    private MessageSender messageSender;
+    private MessageReceiver messageReceiver;
+    private HeartbeatReceiver heartbeatReceiver;
+    private InformationReceiver informationReceiver;
+    private StatusReceiver statusReceiver;
+    private ChatReceiver chatReceiver;
+    private FileReceiver fileReceiver;
+    private LoginActionHandler loginActionHandler;
+    private InfoRequestActionHandler infoRequestActionHandler;
+    private UserActionHandler userActionHandler;
+    private ChatActionHandler chatActionHandler;
+    private FileActionHandler fileActionHandler;
+    private HeartbeatSender heartbeatSender;
+    private LoginView loginView;
+    private IdleView idleView;
+    private ChatView chatView;
+
+    public AgniClient(String[] args) throws NumberFormatException, UnknownHostException, IOException {
+        clientSocket = new Socket(args[0], Integer.parseInt(args[1]));
+
+        heartbeatReceiver = new HeartbeatReceiver();
+        informationReceiver = new InformationReceiver();
+        statusReceiver = new StatusReceiver();
+        chatReceiver = new ChatReceiver();
+        fileReceiver = new FileReceiver();
+
+        messageSender = new MessageSender(clientSocket);
+        messageReceiver = new MessageReceiver(clientSocket,
+                                              heartbeatReceiver,
+                                              informationReceiver,
+                                              statusReceiver,
+                                              chatReceiver,
+                                              fileReceiver);
+
+
+        loginActionHandler = new LoginActionHandler(messageSender);
+        infoRequestActionHandler = new InfoRequestActionHandler(messageSender);
+        userActionHandler = new UserActionHandler(messageSender);
+        chatActionHandler = new ChatActionHandler(messageSender);
+        fileActionHandler = new FileActionHandler(messageSender);
+        heartbeatSender = new HeartbeatSender(messageSender, 500);
+
+        loginView = null;
+        idleView = null;
+        chatView = null;
     }
 
-    public static void main(String[] args) throws Exception {
-        
-        if (args.length != 2) {
-            System.out.println("Usage: Client <Server IP> <Server Port>");
-            System.exit(1);
+    public void changeState(AgniClientView.NextState nextState) {
+        switch (nextState) {
+        case LOGIN_VIEW:
+            loginView = new LoginView(this,
+                                      loginActionHandler,
+                                      infoRequestActionHandler);
+            loginView.show();
+            break;
+        case IDLE_VIEW:
+            idleView = new IdleView(this,
+                                    infoRequestActionHandler,
+                                    userActionHandler);
+            idleView.show();
+            break;
+        case CHAT_VIEW:
+            chatView = new ChatView(this,
+                                    infoRequestActionHandler,
+                                    userActionHandler,
+                                    chatActionHandler,
+                                    fileActionHandler);
+            chatView.show();
+            break;
         }
+    }
 
-        // Initialize a client socket connection to the server
-        Socket clientSocket = new Socket(args[0], Integer.parseInt(args[1]));
-       
-        HeartbeatReceiver heartbeatReceiver = new HeartbeatReceiver();
-        InformationReceiver informationReceiver = new InformationReceiver();
-        StatusReceiver statusReceiver = new StatusReceiver();
-        ChatReceiver chatReceiver = new ChatReceiver();
-        FileReceiver fileReceiver = new FileReceiver();
-        
-        MessageSender messageSender = new MessageSender(clientSocket);
-        MessageReceiver messageReceiver = new MessageReceiver(clientSocket,
-                                                              heartbeatReceiver,
-                                                              informationReceiver,
-                                                              statusReceiver,
-                                                              chatReceiver,
-                                                              fileReceiver);
-        LoginActionHandler loginActionHandler = new LoginActionHandler(messageSender);
-        InfoRequestActionHandler infoRequestActionHandler = new InfoRequestActionHandler(messageSender);
-        HeartbeatActionHandler heartbeatActionHandler = new HeartbeatActionHandler(messageSender);
-        UserActionHandler userActionHandler = new UserActionHandler(messageSender);
-        ChatActionHandler chatActionHandler = new ChatActionHandler(messageSender);
-        FileActionHandler fileActionHandler = new FileActionHandler(messageSender);
+    public void runClient() {
 
-        LoginView loginView = new LoginView(loginActionHandler,
-                                            infoRequestActionHandler,
-                                            heartbeatActionHandler);
-        IdleView idleView = new IdleView(infoRequestActionHandler,
-                                         userActionHandler,
-                                         heartbeatActionHandler);
-        ChatView chatView = new ChatView(infoRequestActionHandler,
-                                         userActionHandler,
-                                         chatActionHandler,
-                                         fileActionHandler,
-                                         heartbeatActionHandler);
-
+        (new Thread(heartbeatSender)).start();
         // We need to run messageReceiver somewhere here
         // messageReceiver.run();
-        // After termination functionality
+        loginView.displayUi();
         try {
             clientSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-        loginView.displayUi();
+    public static void main(String[] args) {
+        if (args.length != 2) {
+            System.out.println("Usage: Client <Server IP> <Server Port>");
+            System.exit(1);
+        }
+        
+        try {
+            AgniClient cl = new AgniClient(args);
+            cl.runClient();
+        } catch (NumberFormatException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }
