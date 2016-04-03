@@ -6,7 +6,7 @@ public interface I_UserDataGuard {
 
     public String salt(String user);
 
-    public String passwordHash(String user);
+    public String getPasswordHash(String user);
 
     public String[] getFriends(String user);
 
@@ -18,10 +18,10 @@ public interface I_UserDataGuard {
 
     public String getUsername(String ip);
 
-    public boolean userExists(String message);
+    public void loginUser(String ip, String user);
+
+    public boolean userExists(String user);
 
     public boolean isOnline(String friend);
-    
-    
-    
+        
 }

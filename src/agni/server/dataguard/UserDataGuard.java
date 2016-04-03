@@ -15,7 +15,7 @@ public class UserDataGuard implements I_UserDataGuard {
         return null;
     }
 
-    public String passwordHash(String user) {
+    public String getPasswordHash(String user) {
         return null;
     }
 
@@ -38,21 +38,28 @@ public class UserDataGuard implements I_UserDataGuard {
     public String userCurrentIp(String user) {
         return null;
     }
-	@Override
-	public String getUsername(String ip) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public boolean userExists(String message) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public void loginUser(String ip, String user) {
+        // TODO Auto-generated method stub
+        
+    }
 
-	@Override
-	public boolean isOnline(String friend) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean userExists(String user) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+    @Override
+    public String getUsername(String ip) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    
+    @Override
+    public boolean isOnline(String friend) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }
