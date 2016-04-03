@@ -82,7 +82,6 @@ public class ChatView extends JFrame implements AgniClientView, ActionListener, 
     public void displayUi() {
         show();
         inputLine.requestFocus();
-        // appendToOutputArea("ChatView!");
     }
 
     public synchronized void appendToOutputArea(String message) {
@@ -166,20 +165,17 @@ public class ChatView extends JFrame implements AgniClientView, ActionListener, 
 
     @Override
     public void infoReaction(String message) {
-        // TODO Auto-generated method stub
-
+        appendToOutputArea(" *** SERVER *** \n" + message);
     }
 
     @Override
     public void statusReaction(String user, Status status) {
-        // TODO Auto-generated method stub
-
+        appendToOutputArea(" *** " + user + " is " + status.toString());
     }
 
     @Override
     public void chatReaction(String sender, String message) {
-        // TODO Auto-generated method stub
-
+        appendToOutputArea(sender + ": " + message)
     }
 
     @Override
