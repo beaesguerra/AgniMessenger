@@ -4,7 +4,10 @@ import agni.client.receiver.ReceiverListener;
 
 public interface AgniClientView extends ReceiverListener {
     public enum NextState {
-        LoginView, IdleView, ChatView;
+        LOGIN_VIEW, 
+        IDLE_VIEW, 
+        CHAT_VIEW;
     }
-    public NextState displayUi();
+
+    public void displayUi();
 }

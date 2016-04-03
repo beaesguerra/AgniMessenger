@@ -27,7 +27,7 @@ public class MessageSender {
 
     }
 
-    public void sendMessage(byte[] message) {
+    public synchronized void sendMessage(byte[] message) {
         int length = message.length;
         try {
             dataOut.write(message, 0, length);
