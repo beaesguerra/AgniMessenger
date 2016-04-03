@@ -16,7 +16,7 @@ public class StatusManager implements StatusListener{
     }
 
     @Override
-    public void ReceivedHeartBeat(String ip, byte status) {
+    public void receiveStatusChange(String ip, byte status) {
         // TODO Auto-generated method stub
         
     }
