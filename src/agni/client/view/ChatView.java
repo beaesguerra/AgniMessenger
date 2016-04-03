@@ -6,7 +6,7 @@ import agni.client.action.InfoRequestActionHandler;
 import agni.client.action.UserActionHandler;
 import agni.client.action.ChatActionHandler;
 import agni.client.action.FileActionHandler;
-import agni.client.action.HearbeatSender;
+import agni.client.action.HeartbeatSender;
 import agni.server.sender.StatusSender.Status;
 import charva.awt.BorderLayout;
 import charva.awt.Container;
@@ -138,7 +138,7 @@ public class ChatView extends JFrame implements AgniClientView, ActionListener, 
             handleCommand(inputArray[0], input.split(" "));
         } else {
             appendToOutputArea("User : " + input);
-            chatActionHandler(input);
+            chatActionHandler.requestChatAction(input);
         }
     }
 
@@ -172,27 +172,27 @@ public class ChatView extends JFrame implements AgniClientView, ActionListener, 
         case "join":
             userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.JOIN_CHAT.bytes());
             break;
-        case "leave"
+        case "leave":
             userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.LEAVE_CHAT.bytes());
             break;
-        case "friends"
-            userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.FRIENDS_LIST.bytes());
+        case "friends":
+            userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.FRIEND_LIST.bytes());
             break;
-        case "friend"
+        case "friend":
             if(args.length < 2){
                 appendToOutputArea("Please specify friend to inquire...");
             } else {
                 userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.FRIEND_STATUS.bytes(), args[1]);
             }
             break;
-        case "add"
+        case "add":
             if(args.length < 2){
                 appendToOutputArea("Please specify friend to add...");
             } else {
                 userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.ADD_FRIEND.bytes(), args[1]);
             }
             break;
-        case "logout"
+        case "logout":
             userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.LOGOUT.bytes());
             break;
         default:
@@ -218,7 +218,7 @@ public class ChatView extends JFrame implements AgniClientView, ActionListener, 
 
     @Override
     public void chatReaction(String sender, String message) {
-        appendToOutputArea(sender + ": " + message)
+        appendToOutputArea(sender + ": " + message);
     }
 
     @Override

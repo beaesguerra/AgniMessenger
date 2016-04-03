@@ -19,7 +19,7 @@ public class UserActionHandler {
         FRIEND_STATUS((byte)0x03),
         ADD_FRIEND((byte)0x04),
         LOGOUT((byte)0x05),
-        CREATE_CHAT((byte(0x06)));
+        CREATE_CHAT((byte)0x06);
         
         private final byte bytes;
         private UserRequestTypes(byte bytes) {

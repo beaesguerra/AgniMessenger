@@ -2,11 +2,8 @@ package agni.client.view;
 
 import agni.client.AgniClient;
 import agni.client.HeartbeatMonitor;
-import agni.client.action.inforequestactionhandler;
-import agni.client.action.useractionhandler;
-import agni.client.action.chatactionhandler;
-import agni.client.action.fileactionhandler;
-import agni.client.action.hearbeatsender;
+import agni.client.action.InfoRequestActionHandler;
+import agni.client.action.UserActionHandler;
 import agni.server.sender.StatusSender.Status;
 import charva.awt.BorderLayout;
 import charva.awt.Container;
@@ -101,14 +98,15 @@ public class IdleView extends JFrame implements AgniClientView, ActionListener, 
     }
 
     private void handleInput(String input) {
-        if (input.charAt(0) == '/') {
-            handleCommand(input.substring(1, input.length()));
+        if (input.charAt(0) == '/' && input.length() > 1) {
+            String[] inputArray = input.substring(1, input.length()).split(" ");
+            handleCommand(inputArray[0], input.split(" "));
         } else {
             appendToOutputArea("User : " + input);
         }
     }
 
-    private void handleCommand(String input) {
+    private void handleCommand(String input, String[] args) {
         switch (input) {
         case "q":
             System.gc();
@@ -138,24 +136,24 @@ public class IdleView extends JFrame implements AgniClientView, ActionListener, 
         case "join":
             userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.JOIN_CHAT.bytes());
             break;
-        case "friends"
-            userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.FRIENDS_LIST.bytes());
+        case "friends":
+            userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.FRIEND_LIST.bytes());
             break;
-        case "friend"
+        case "friend":
             if(args.length < 2){
                 appendToOutputArea("Please specify friend to inquire...");
             } else {
                 userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.FRIEND_STATUS.bytes(), args[1]);
             }
             break;
-        case "add"
+        case "add":
             if(args.length < 2){
                 appendToOutputArea("Please specify friend to add...");
             } else {
                 userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.ADD_FRIEND.bytes(), args[1]);
             }
             break;
-        case "logout"
+        case "logout":
             userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.LOGOUT.bytes());
             break;
         case "create":

@@ -3,11 +3,11 @@ package agni.client.view;
 import agni.client.AgniClient;
 import agni.client.HeartbeatMonitor;
 
-import agni.client.action.inforequestactionhandler;
-import agni.client.action.useractionhandler;
-import agni.client.action.chatactionhandler;
-import agni.client.action.fileactionhandler;
-import agni.client.action.hearbeatsender;
+import agni.client.action.InfoRequestActionHandler;
+import agni.client.action.LoginActionHandler;
+import agni.client.action.UserActionHandler;
+import agni.client.action.ChatActionHandler;
+import agni.client.action.FileActionHandler;
 import agni.server.sender.StatusSender.Status;
 import charva.awt.BorderLayout;
 import charva.awt.Container;
@@ -151,7 +151,15 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
                 appendToOutputArea("Please include a username and password");
             } else {
                 appendToOutputArea(" |*| Logging in with  " + args[1] + " and " + args[2]);
-                loginActionHandler.requestLogin(args[1], args[2]);
+                loginActionHandler.requestLogin(args[1], args[2], (byte)0x00);
+            }
+            break;
+        case "register":
+            if(args.length < 3){
+                appendToOutputArea("Please include a username and password");
+            } else {
+                appendToOutputArea(" |*| Registering with  " + args[1] + " and " + args[2]);
+                loginActionHandler.requestLogin(args[1], args[2], (byte)0x01);
             }
             break;
         default:
