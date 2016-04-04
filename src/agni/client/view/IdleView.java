@@ -206,11 +206,11 @@ public class IdleView extends JFrame implements AgniClientView, ActionListener, 
     @Override
     public void infoReaction(String message) {
         appendToOutputArea(" *** SERVER *** \n" + message);
-        if(message.startsWith("success: joining ")){
-            client.changeState(AgniClientView.NextState.CHAT_VIEW);
-        } else if (message.startsWith("logged out")){
-            client.changeState(AgniClientView.NextState.LOGIN_VIEW);
-        }
+        // if(message.startsWith("success: joining ")){
+        //     client.changeState(AgniClientView.NextState.CHAT_VIEW);
+        // } else if (message.startsWith("logged out")){
+        //     client.changeState(AgniClientView.NextState.LOGIN_VIEW);
+        // }
     }
 
     @Override

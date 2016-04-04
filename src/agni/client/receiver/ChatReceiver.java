@@ -17,6 +17,7 @@ public class ChatReceiver extends MessageParser {
     
     @Override
     public void receiveMessage(byte[] message) {
+        System.out.println("GOT LOTS OF DANK SHIT");
         if(message == null)
             throw new NullPointerException("receiveMessage got a null message");
         // Sender's name length -> 5th bit
