@@ -126,7 +126,7 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
 
     public String[] users(String groupChatName) throws SQLException {
     	Statement stmt = conn.createStatement();
-    	String statement = "SELECT username FROM GroupChats, Users WHERE name = \"" + groupChatName + "\" and ownerId = id;";
+    	String statement = "SELECT username FROM GroupChats, Users WHERE name = \"" + groupChatName + "\"";
     	System.out.println(statement);
     	ResultSet rs = stmt.executeQuery(statement);
     	
