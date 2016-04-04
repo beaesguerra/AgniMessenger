@@ -6,6 +6,10 @@ import agni.client.view.*;
 public abstract class MessageParser {
     protected Vector <ReceiverListener> listeners;
 
+    public MessageParser() {
+        listeners = new Vector<ReceiverListener>();
+    }
+
     public void register(AgniClientView listener) {
         // Need to check if new-view exists in the vector
         if(!listeners.contains(listener)) {
