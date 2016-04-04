@@ -1,10 +1,20 @@
 package agni.server.dataguard;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+
 public class GroupChatDataGuard implements I_GroupChatDataGuard {
-//  private database;
+	private Connection database;
 
-    public GroupChatDataGuard(String dbname, String username, String password) {
-
+    public GroupChatDataGuard(String dbname, String username, String password) throws SQLException {
+    	MysqlDataSource dataSource = new MysqlDataSource(); 
+    	dataSource.setUser("agni");
+    	dataSource.setPassword(""); 
+    	dataSource.setDatabaseName("agni");
+    	database = dataSource.getConnection(); 
+    	
     }
 
     public String[] allGroupChats() {
