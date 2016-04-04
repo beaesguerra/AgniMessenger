@@ -6,7 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ ChatReceiverTest.class, FileReceiverTest.class,
-		HeartBeatReceiverTest.class, InfoRequestReceiverTest.class,
+		InfoRequestReceiverTest.class,
 		LoginReceiverTest.class, UserReceiverTest.class })
 public class AllReceiverTests {
 

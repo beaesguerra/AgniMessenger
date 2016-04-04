@@ -1,9 +1,5 @@
-package agni.client.action;
-
-import agni.client.communication.MessageSender;
-
-public class HeartbeatSender implements Runnable {
-    private MessageSender messageSender;
+public class CliHeartbeatSender implements Runnable {
+    private CliMessageSender messageSender;
     private int period;
 
     public enum Status {
@@ -20,7 +16,7 @@ public class HeartbeatSender implements Runnable {
         }
     }
 
-    public HeartbeatSender(MessageSender messageSender, int period) {
+    public CliHeartbeatSender(CliMessageSender messageSender, int period) {
         this.messageSender = messageSender;
         this.period = period;
     }
@@ -28,6 +24,7 @@ public class HeartbeatSender implements Runnable {
     public void run() {
         while (true) {
             messageSender.sendMessage(hexStringToByteArray("000000060101"));
+            System.out.println("SENDING HEARTBEAT");
             try {
                 Thread.sleep(period);
             } catch (InterruptedException e) {
@@ -36,7 +33,8 @@ public class HeartbeatSender implements Runnable {
         }
     }
 
-    private static byte[] hexStringToByteArray(String s) {
+
+    public static byte[] hexStringToByteArray(String s) {
         int len = s.length();
         byte[] data = new byte[len / 2];
         for (int i = 0; i < len; i += 2) {

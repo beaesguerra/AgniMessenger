@@ -34,8 +34,5 @@ public interface I_UserDataGuard {
 
     public String [] getOnlineUserIps();
 
-    public String getIp(String member);
-
-	String[] usersOnline();
-        
+    public String getIp(String member);        
 }

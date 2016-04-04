@@ -60,7 +60,7 @@ public class UserManager implements UserListener {
         if(type == UserRequestType.JOIN_CHAT.bytes()) {             // join chat; argument = group to join
             String groupName = argument; 
             if (groupChatDataGuard.chatExists(groupName)) {
-                if (!groupChatDataGuard.userCurrentChat(username).equals(null)) {
+                if (groupChatDataGuard.userCurrentChat(username) != null) {
                     groupChatDataGuard.removeUserFromChat(username, groupChatDataGuard.userCurrentChat(username));
                 }
                 groupChatDataGuard.addUserToChat(username,groupName); 
@@ -72,7 +72,7 @@ public class UserManager implements UserListener {
         }
         else if (type == UserRequestType.LEAVE_CHAT.bytes()){   // leave chat 
             String groupName = groupChatDataGuard.userCurrentChat(username); 
-            if (!groupChatDataGuard.userCurrentChat(username).equals(null)) {
+            if (groupChatDataGuard.userCurrentChat(username) != null) {
                 groupChatDataGuard.removeUserFromChat(username,groupName); 
                 infoSender.sendInfo(ip, "success: leaving " + groupName);
             }
@@ -90,12 +90,12 @@ public class UserManager implements UserListener {
                 return;
             }
             for (int i = 0; i < friendList.length; i++) {
-                friends.concat(friendList[i] + " " );
+                friends += friendList[i] + " ";
                 if(userDataGuard.isOnline(friendList[i])) {
-                    friends.concat("online\n" );
+                    friends += "online\n";
                 }
                 else {
-                    friends.concat("offline\n" );
+                    friends += "offline\n";
                 }
             }
             infoSender.sendInfo(ip, "friends:\n" + friends);
@@ -147,7 +147,7 @@ public class UserManager implements UserListener {
             String groupName = argument; 
             if (!groupChatDataGuard.chatExists(groupName)){ 
                 groupChatDataGuard.createGroupChat(username, groupName);    //create chat
-                if(!groupChatDataGuard.userCurrentChat(username).equals(null)) {
+                if(groupChatDataGuard.userCurrentChat(username) != null) {
                     groupChatDataGuard.removeUserFromChat(username, groupChatDataGuard.userCurrentChat(username));
                 }
                 groupChatDataGuard.addUserToChat(username, groupName);

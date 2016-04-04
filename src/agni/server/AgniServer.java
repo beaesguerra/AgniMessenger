@@ -54,7 +54,7 @@ public class AgniServer {
 	
 	
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
         ChannelList channels = new ChannelList();
         MessageSender messageSender = new MessageSender(channels);
@@ -66,15 +66,18 @@ public class AgniServer {
         HeartbeatSender heartbeatSender = new HeartbeatSender(messageSender);
 
         // TODO 
-        UserDataGuard userDataGuard = new UserDataGuard(null, null, null);
-        GroupChatDataGuard chatDataGuard = null;
+        UserDataGuard userDataGuard = null;
 		try {
-			chatDataGuard = new GroupChatDataGuard(null, null, null);
+			userDataGuard = new UserDataGuard("agni", "agni", "");
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        FileDataGuard fileDataGuard = new FileDataGuard(null, null, null);
+
+        GroupChatDataGuard chatDataGuard = new GroupChatDataGuard("agni", "agni", "");
+        FileDataGuard fileDataGuard = new FileDataGuard("agni", "agni", "");
+
 
         LoginReceiver loginReceiver = new LoginReceiver();
         UserReceiver userReceiver = new UserReceiver();
@@ -82,14 +85,6 @@ public class AgniServer {
         FileReceiver fileReceiver = new FileReceiver();
         InfoRequestReceiver infoRequestReceiver = new InfoRequestReceiver();
         HeartbeatReceiver heartbeatReceiver = new HeartbeatReceiver();
-
-        MessageReceiver messageReceiver = new MessageReceiver(channels,
-                                                              loginReceiver,
-                                                              userReceiver,
-                                                              chatReceiver,
-                                                              fileReceiver,
-                                                              infoRequestReceiver,
-                                                              heartbeatReceiver);
 
 
         ChatManager chatManager = new ChatManager(userDataGuard, chatDataGuard, infoSender, chatSender);
@@ -100,6 +95,15 @@ public class AgniServer {
         StatusManager statusManager = new StatusManager(statusSender, userDataGuard);
         LoginManager loginManager = new LoginManager(infoSender, userDataGuard, statusManager);
         UserManager userManager = new UserManager(infoSender, userDataGuard, chatDataGuard, statusManager);
+
+        MessageReceiver messageReceiver = new MessageReceiver(channels,
+                                                              loginReceiver,
+                                                              userReceiver,
+                                                              chatReceiver,
+                                                              fileReceiver,
+                                                              infoRequestReceiver,
+                                                              heartbeatReceiver,
+                                                              heartbeatManager);
         
         loginReceiver.register(loginManager);
         userReceiver.register(userManager);
@@ -108,6 +112,9 @@ public class AgniServer {
         infoRequestReceiver.register(infoRequestManager);
         heartbeatReceiver.register(heartbeatManager);
         
+        messageReceiver.initializeConnection(args[0]);
+        messageReceiver.waitForClients();
+
         // TODO:	
         //	while (true) {
         // 		receivePackets(); 
