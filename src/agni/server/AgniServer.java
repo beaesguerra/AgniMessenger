@@ -14,6 +14,7 @@ import agni.server.dataguard.FileDataGuard;
 import agni.server.dataguard.UserDataGuard;
 import agni.server.manager.ChatManager;
 import agni.server.manager.FileManager;
+import agni.server.manager.HeartbeatManager;
 import agni.server.manager.InfoRequestManager;
 import agni.server.manager.LoginManager;
 import agni.server.manager.StatusManager;
@@ -83,18 +84,27 @@ public class AgniServer {
                                                               infoRequestReceiver,
                                                               heartbeatReceiver);
 
-        LoginManager loginManager = new LoginManager(infoSender, userDataGuard);
-        UserManager userManager = new UserManager(infoSender, userDataGuard, chatDataGuard);
+
         ChatManager chatManager = new ChatManager(userDataGuard, chatDataGuard, infoSender, chatSender);
         FileManager fileManager = new FileManager(infoSender, fileSender, fileDataGuard, userDataGuard);
         InfoRequestManager infoRequestManager = new InfoRequestManager(infoSender, heartbeatSender, userDataGuard, chatDataGuard);
+        //StatusManager statusManager = new StatusManager(statusSender, userDataGuard);
+        HeartbeatManager heartbeatManager = new HeartbeatManager(heartbeatSender, userDataGuard); 
         StatusManager statusManager = new StatusManager(statusSender, userDataGuard);
-
+        LoginManager loginManager = new LoginManager(infoSender, userDataGuard, statusManager);
+        UserManager userManager = new UserManager(infoSender, userDataGuard, chatDataGuard, statusManager);
+        
         loginReceiver.register(loginManager);
         userReceiver.register(userManager);
         chatReceiver.register(chatManager);
         fileReceiver.register(fileManager);
         infoRequestReceiver.register(infoRequestManager);
-        heartbeatReceiver.register(statusManager);
+        heartbeatReceiver.register(heartbeatManager);
+        
+        // TODO:	
+        //	while (true) {
+        // 		receivePackets(); 
+        // 		heartbeatManager.update(); 
+        // } 
     }
 }

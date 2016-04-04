@@ -54,7 +54,7 @@ public class HeartBeatReceiverTest {
     @Test
     public void correctInputTest() {
         context.checking(new Expectations() {{
-            oneOf(mockStatusListener).ReceivedHeartBeat("192.168.1.1", testStatus);
+            oneOf(mockStatusListener).receiveStatusChange("192.168.1.1", testStatus);
         }});
         hbReceiver.receiveMessage(testIp, bufferArray);
         context.assertIsSatisfied();
@@ -65,7 +65,7 @@ public class HeartBeatReceiverTest {
     public void nullIpTest() {
         context.checking(new Expectations() {{
             final String expectedIp = "192.168.1.1";
-            oneOf(mockStatusListener).ReceivedHeartBeat(expectedIp, testStatus);
+            oneOf(mockStatusListener).receiveStatusChange(expectedIp, testStatus);
         }});
         hbReceiver.receiveMessage(null, bufferArray);
         context.assertIsSatisfied();
@@ -75,7 +75,7 @@ public class HeartBeatReceiverTest {
     public void nullMessageTest() {
         context.checking(new Expectations() {{
             final String expectedIp = "192.168.1.1";
-            oneOf(mockStatusListener).ReceivedHeartBeat(expectedIp, testStatus);
+            oneOf(mockStatusListener).receiveStatusChange(expectedIp, testStatus);
         }});
         hbReceiver.receiveMessage(testIp, null);
         context.assertIsSatisfied();
