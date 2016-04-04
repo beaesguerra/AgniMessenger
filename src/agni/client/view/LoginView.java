@@ -175,8 +175,9 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
 
     @Override
     public void infoReaction(String message) {
-        if (message.equals("approved")) {
+        if (message.equals("approved!")) {
             appendToOutputArea("Login successful!");
+            client.changeState(AgniClientView.NextState.IDLE_VIEW);
         } else {
             appendToOutputArea(" *** SERVER *** \n" + message);
         }

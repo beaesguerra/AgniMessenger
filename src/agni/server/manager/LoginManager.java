@@ -56,14 +56,6 @@ public class LoginManager implements LoginListener{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if(userDataGuard.isOnline(user)){
-				infoSender.sendInfo(ip, "successfully Logged in");
-			}
-			else{
-				infoSender.sendInfo(ip, "unsuccessful Log in attempt");
-
-			}
-				
     	}
     	else{
     		infoSender.sendInfo(ip,  "user does not exist");

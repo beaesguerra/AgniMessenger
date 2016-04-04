@@ -1,5 +1,6 @@
 package agni.client.action;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import agni.client.communication.MessageSender;
@@ -50,23 +51,25 @@ public class UserActionHandler {
                        MESSAGE_TYPE_SIZE +
                        USER_ACTION_TYPE_LENGTH;
         byte[] packedMessage = new byte[numBytes];
-        System.arraycopy(intToByteArray(numBytes), 0, packedMessage, 0, numBytes);
+        System.arraycopy(intToByteArray(numBytes), 0, packedMessage, 0, 4);
         Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
-        System.arraycopy(userActionType, 0, packedMessage, 5, USER_ACTION_TYPE_LENGTH);
+        Arrays.fill(packedMessage, 5, 6, userActionType);
         messageSender.sendMessage(packedMessage);
     }
 
     public void requestUserAction(byte userActionType, String extraArg) {
-        int numBytes = HEADER_LENGTH_SIZE +
+    	byte[] extraArgBytes = extraArg.getBytes(StandardCharsets.US_ASCII);
+    	int numBytes = HEADER_LENGTH_SIZE +
                        MESSAGE_TYPE_SIZE +
                        USER_ACTION_TYPE_LENGTH +
-                       EXTRA_ARGUMENT_SIZE;
+                       extraArgBytes.length;
         byte[] packedMessage = new byte[numBytes];
-        System.arraycopy(intToByteArray(numBytes), 0, packedMessage, 0, numBytes);
+        System.arraycopy(intToByteArray(numBytes), 0, packedMessage, 0, 4);
         Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
-        System.arraycopy(userActionType, 0, packedMessage, 5, USER_ACTION_TYPE_LENGTH);
+        Arrays.fill(packedMessage, 5, 6, userActionType);
         // one extra byte for the extra argument
-        System.arraycopy(extraArg, 0, packedMessage, 6, 6 + extraArg.length());
+        
+        System.arraycopy(extraArgBytes, 0, packedMessage, 6, extraArgBytes.length);
         messageSender.sendMessage(packedMessage);
     }
     
