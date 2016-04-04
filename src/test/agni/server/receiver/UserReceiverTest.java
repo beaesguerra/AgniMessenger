@@ -1,6 +1,8 @@
 package test.agni.server.receiver;
 
 import java.nio.ByteBuffer;
+import java.sql.SQLException;
+
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.After;
@@ -57,9 +59,14 @@ public class UserReceiverTest {
 
     @Test
     public void correctInputTest() {
-        context.checking(new Expectations() {{
-            oneOf(mockUserListener).userRequest("192.168.1.1", testAction, testMessage);
-        }});
+        try {
+			context.checking(new Expectations() {{
+			    oneOf(mockUserListener).userRequest("192.168.1.1", testAction, testMessage);
+			}});
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         userReceiver.receiveMessage(testIp, bufferArray);
         context.assertIsSatisfied();
     }
@@ -67,18 +74,28 @@ public class UserReceiverTest {
     
     @Test(expected = NullPointerException.class)
     public void nullIpTest() {
-        context.checking(new Expectations() {{
-            oneOf(mockUserListener).userRequest("192.168.1.1", testAction, testMessage);
-        }});
+        try {
+			context.checking(new Expectations() {{
+			    oneOf(mockUserListener).userRequest("192.168.1.1", testAction, testMessage);
+			}});
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         userReceiver.receiveMessage(null, bufferArray);
         context.assertIsSatisfied();
     }
     
     @Test(expected = NullPointerException.class)
     public void nullMessageTest() {
-        context.checking(new Expectations() {{
-            oneOf(mockUserListener).userRequest("192.168.1.1", testAction, testMessage);
-        }});
+        try {
+			context.checking(new Expectations() {{
+			    oneOf(mockUserListener).userRequest("192.168.1.1", testAction, testMessage);
+			}});
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         userReceiver.receiveMessage(testIp, null);
         context.assertIsSatisfied();
     }

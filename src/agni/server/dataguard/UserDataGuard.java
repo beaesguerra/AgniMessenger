@@ -33,6 +33,8 @@ public class UserDataGuard implements I_UserDataGuard {
     		stmt.setString(1, username);
     		stmt.setString(2, salt);
     		stmt.setString(3, passwordHash);
+    		String query = stmt.toString().substring(48);
+    		System.out.println(query);
     		stmt.executeUpdate();
 			stmt.close();
     	} catch (SQLException e) {
@@ -48,7 +50,10 @@ public class UserDataGuard implements I_UserDataGuard {
     	String result = null;
     	try {
     		stmt = database.createStatement();
-			rs = stmt.executeQuery("SELECT salt FROM Users WHERE username = \""+user + "\"");
+    		String query = "SELECT salt FROM Users WHERE username = \""+user + "\"";
+    		System.out.println(query);
+    		rs = stmt.executeQuery(query);
+			
 			rs.first();
 			result = rs.getString(1);
 			rs.close();
@@ -66,7 +71,10 @@ public class UserDataGuard implements I_UserDataGuard {
     	String result = null;
     	try {
     		stmt = database.createStatement();
-			rs = stmt.executeQuery("SELECT passwordHash FROM Users WHERE username = \""+user+ "\"");
+    		String query = "SELECT passwordHash FROM Users WHERE username = \""+user+ "\""; 
+    		System.out.println(query);
+			rs = stmt.executeQuery(query);
+			
 			rs.first();
 			result = rs.getString(1);
 			stmt.close();
@@ -88,9 +96,15 @@ public class UserDataGuard implements I_UserDataGuard {
     	try {
     		stmtA = database.createStatement();
 			stmtB = database.createStatement();
-			rsA = stmtA.executeQuery("SELECT id FROM Users WHERE username = \"" + user + "\"");
+			String query = "SELECT id FROM Users WHERE username = \"" + user + "\"";
+			System.out.println(query);
+			rsA = stmtA.executeQuery(query);
+			
 			rsA.first();
-			rsB = stmtB.executeQuery("SELECT userIDTwo FROM Friends WHERE userIDOne =\""+rsA.getString(1)+"\"" );
+			query = "SELECT userIDTwo FROM Friends WHERE userIDOne =\""+rsA.getString(1)+"\"" ;
+			System.out.println(query);
+			rsB = stmtB.executeQuery(query);
+			
 			//rsB.first();
 			//System.out.println(rsB.getString(1));
 			
@@ -125,9 +139,18 @@ public class UserDataGuard implements I_UserDataGuard {
     		stmtA = database.createStatement();
 			stmtB = database.createStatement();
 			stmtC = database.createStatement();
-			rsA = stmtA.executeQuery("SELECT id FROM Users WHERE username == "+user1);
-			rsB = stmtB.executeQuery("SELECT id FROM Users WHERE username == "+user2);
-			rsC = stmtC.executeQuery("INSERT INTO Friends (userIdOne, userIdTwo) values (" + rsA.getString(1) + ", " + rsB.getString(1) +")");
+			String query = "SELECT id FROM Users WHERE username == "+user1;
+			System.out.println(query);
+			rsA = stmtA.executeQuery(query);
+			
+			query = "SELECT id FROM Users WHERE username == "+user2; 
+			System.out.println(query);
+			rsB = stmtB.executeQuery(query);
+			
+			query = "INSERT INTO Friends (userIdOne, userIdTwo) values (" + rsA.getString(1) + ", " + rsB.getString(1) +")";
+			System.out.println(query);
+			rsC = stmtC.executeQuery(query);
+			
 			rsA.close();
 			stmtA.close();
 			rsB.close();
