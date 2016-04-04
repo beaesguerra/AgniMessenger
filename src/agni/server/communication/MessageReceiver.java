@@ -10,6 +10,7 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Set;
@@ -117,6 +118,8 @@ public class MessageReceiver {
          int length = buffer.remaining();
          byte[] byteArray = new byte[length];
          buffer.get(byteArray);
+         System.out.println(new String(byteArray, StandardCharsets.US_ASCII));
+         
          byte messageType = byteArray[4];
         if (messageType == MessageTypes.HEARTBEAT.bytes()) {
             // Pass to heartbeatReceiver
