@@ -153,6 +153,14 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
                 appendToOutputArea("Please include a username and password");
             } else {
                 appendToOutputArea(" |*| Logging in with  " + args[1] + " and " + args[2]);
+                loginActionHandler.requestLogin(args[1], args[2], (byte) 0x00);
+            }
+            break;
+        case "register":
+            if(args.length < 3){
+                appendToOutputArea("Please include a username and password");
+            } else {
+                appendToOutputArea(" |*| Registering in with  " + args[1] + " and " + args[2]);
                 loginActionHandler.requestLogin(args[1], args[2], (byte) 0x01);
             }
             break;

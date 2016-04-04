@@ -38,15 +38,15 @@ public class LoginActionHandler {
                            usernameBytes.length +
                            passwordBytes.length;
             byte[] packedMessage = new byte[numBytes];
-            System.arraycopy(intToByteArray(numBytes), 0, packedMessage, 0, numBytes);
+            System.arraycopy(intToByteArray(numBytes), 0, packedMessage, 0, 4);
             Arrays.fill(packedMessage, 4, 5, MESSAGE_TYPE);
             // make the 5th byte a type byte (0x00 -> login, 0x01 -> register)
             Arrays.fill(packedMessage, 5, 6, loginType);
             Arrays.fill(packedMessage, 6, 7, (byte) usernameBytes.length);
             System.arraycopy(usernameBytes, 0, packedMessage,
-                             7, (7 + usernameBytes.length));
+                             7, usernameBytes.length);
             System.arraycopy(passwordBytes, 0, packedMessage,
-                             9, (passwordBytes.length));
+                             9, passwordBytes.length);
             messageSender.sendMessage(packedMessage);
         }
     }

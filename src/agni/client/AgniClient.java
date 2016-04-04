@@ -102,11 +102,11 @@ public class AgniClient {
     }
 
     public void runClient() {
-
-        (new Thread(heartbeatSender)).start();
+        (new Thread(messageReceiver)).start();
+        changeState(AgniClientView.NextState.LOGIN_VIEW);
+        heartbeatSender.run();
         // We need to run messageReceiver somewhere here
-        // messageReceiver.run();
-        loginView.displayUi();
+
         try {
             clientSocket.close();
         } catch (IOException e) {
