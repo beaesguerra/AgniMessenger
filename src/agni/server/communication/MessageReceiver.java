@@ -116,35 +116,37 @@ public class MessageReceiver {
     private void selectReceiver(String ip, ByteBuffer buffer) throws SQLException{
     	 buffer.flip();
          int length = buffer.remaining();
-         byte[] byteArray = new byte[length];
-         buffer.get(byteArray);
-         System.out.print("PRINTING BYTE ARRAY ");
-         for(int i = 0; i < byteArray.length; i++){
-            System.out.print(byteArray[i] + ",");
+         if(length > 0) {
+	         byte[] byteArray = new byte[length];
+	         buffer.get(byteArray);
+	         System.out.print("PRINTING BYTE ARRAY ");
+	         for(int i = 0; i < byteArray.length; i++){
+	            System.out.print(byteArray[i] + ",");
+	         }
+	         System.out.println(" DONE PRINTING BYTE ARRAY");
+	         
+	         byte messageType = byteArray[4];
+	        if (messageType == MessageTypes.HEARTBEAT.bytes()) {
+	            // Pass to heartbeatReceiver
+	            heartBeatReceiver.receiveMessage(ip, byteArray);
+	        } else if (messageType == MessageTypes.INFO.bytes()) {
+	            // Pass to informationReceiver
+	            infoRequestReceiver.receiveMessage(ip, byteArray);
+	        } else if (messageType == MessageTypes.CHAT.bytes()) {
+	            // Pass to chatReceiver
+	            chatReceiver.receiveMessage(ip, byteArray);
+	        } else if (messageType == MessageTypes.FILE.bytes()) {
+	            // Pass to fileReceiver
+	            fileReceiver.receiveMessage(ip, byteArray);
+	        } else if (messageType == MessageTypes.STATUS.bytes()) {
+	            // Pass to statusReceiver
+	            userReceiver.receiveMessage(ip, byteArray);
+	        } else if (messageType == MessageTypes.LOGIN.bytes()) {
+	            loginReceiver.receiveMessage(ip, byteArray);
+	        } else {
+	            assert(false);
+	        }
          }
-         System.out.println(" DONE PRINTING BYTE ARRAY");
-         
-         byte messageType = byteArray[4];
-        if (messageType == MessageTypes.HEARTBEAT.bytes()) {
-            // Pass to heartbeatReceiver
-            heartBeatReceiver.receiveMessage(ip, byteArray);
-        } else if (messageType == MessageTypes.INFO.bytes()) {
-            // Pass to informationReceiver
-            infoRequestReceiver.receiveMessage(ip, byteArray);
-        } else if (messageType == MessageTypes.CHAT.bytes()) {
-            // Pass to chatReceiver
-            chatReceiver.receiveMessage(ip, byteArray);
-        } else if (messageType == MessageTypes.FILE.bytes()) {
-            // Pass to fileReceiver
-            fileReceiver.receiveMessage(ip, byteArray);
-        } else if (messageType == MessageTypes.STATUS.bytes()) {
-            // Pass to statusReceiver
-            userReceiver.receiveMessage(ip, byteArray);
-        } else if (messageType == MessageTypes.LOGIN.bytes()) {
-            loginReceiver.receiveMessage(ip, byteArray);
-        } else {
-            assert(false);
-        }
     }
     
     /*
