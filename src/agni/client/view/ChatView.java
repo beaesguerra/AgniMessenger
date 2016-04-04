@@ -137,7 +137,6 @@ public class ChatView extends JFrame implements AgniClientView, ActionListener, 
             String[] inputArray = input.substring(1, input.length()).split(" ");
             handleCommand(inputArray[0], input.split(" "));
         } else {
-            appendToOutputArea("User : " + input);
             chatActionHandler.requestChatAction(input);
         }
     }
