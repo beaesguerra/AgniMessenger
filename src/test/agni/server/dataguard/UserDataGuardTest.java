@@ -26,7 +26,10 @@ public class UserDataGuardTest {
             Thread.sleep(100);
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        } catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         userDataGuard = new UserDataGuard("agni_test", "agni_tester", "");
     }
 
@@ -49,7 +52,7 @@ public class UserDataGuardTest {
 
     @Test
     public void getFriendsTest() {
-        String[] expectedFriends = {"TestUser", "EnochTsang"};
+        String[] expectedFriends = {"TestUser"};
         String[] actualFriends = userDataGuard.getFriends("BillyBob");
 
         Arrays.sort(expectedFriends);

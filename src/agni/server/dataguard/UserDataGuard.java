@@ -74,27 +74,30 @@ public class UserDataGuard implements I_UserDataGuard {
     }
 
     public String[] getFriends(String user) {
-    	ArrayList<String> result = new ArrayList<String>();
+    	ArrayList<String> resultList = new ArrayList<String>();
+    	String result[] = null;
     	Statement stmtA = null;
     	Statement stmtB = null;
     	Statement stmtC = null;
     	ResultSet rsA = null;
     	ResultSet rsB = null;
     	ResultSet rsC = null;
-
+    	
     	try {
     		stmtA = database.createStatement();
 			stmtB = database.createStatement();
 			stmtC = database.createStatement();
+			System.out.println("0");
 			rsA = stmtA.executeQuery("SELECT id FROM Users WHERE username == "+user);
+			System.out.println("1");
 			rsB = stmtB.executeQuery("SELECT userIDTwo FROM Friends WHERE userIDOne == "+rsA.getString(1) );
 			rsC = stmtC.executeQuery("SELECT userIDOne FROM Friends WHERE userIDTwo == "+rsA.getString(1) );
-		
+			
 			while(rsB.next()) {
-				result.add(rsB.getString(1));
+				resultList.add(rsB.getString(1));
 			}
 			while(rsC.next()){
-				result.add(rsC.getString(1));
+				resultList.add(rsC.getString(1));
 			}
 
 			rsA.close();
@@ -107,7 +110,10 @@ public class UserDataGuard implements I_UserDataGuard {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        return 	(String[]) result.toArray();
+    	for(int i = 0; i < resultList.size(); i++) {
+    		result[i] = resultList.get(i);
+    	}
+    	return result;
     }
 
     public void createFriendship(String user1, String user2) {
@@ -256,12 +262,16 @@ public class UserDataGuard implements I_UserDataGuard {
     @Override
     public String[] getOnlineUserIps() {
     	ArrayList<String> onlineUsersIp = new ArrayList<String>();
+    	String[] result = null;
     	for(int i = 0; i < userInfo.size(); i++) {
     		if(userInfo.get(i).ip != null) {
     			onlineUsersIp.add(userInfo.get(i).ip);
     		}
+    	} 
+    	for(int i = 0; i < onlineUsersIp.size(); i++) {
+    		result[i] = onlineUsersIp.get(i);
     	}
-    	return (String[]) onlineUsersIp.toArray();
+    	return result;
     }
     
     @Override
