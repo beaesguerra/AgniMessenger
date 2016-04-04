@@ -32,9 +32,14 @@ public class ChatManager implements ChatListener{
         String sender = userDataGuard.getUsername(ip);
         String groupChatName = groupChatDataGuard.userCurrentChat(sender);
         String [] membersOfChat = groupChatDataGuard.users(groupChatName);
+        System.out.println("MEMBERS ARE:");
+        for(int i = 0; i < membersOfChat.length; i++){
+            System.out.println("    " + membersOfChat[i]);
+        }
         groupChatDataGuard.addMessage(message, sender, groupChatName);
         for (String member : membersOfChat) {
             if (userDataGuard.isOnline(member)) {   // would users have to be online to receive a message? 
+                System.out.println("SENDING CHAT TO " + member);
                 chatSender.sendChat(userDataGuard.getIp(member), sender, message);
             }
         }        
