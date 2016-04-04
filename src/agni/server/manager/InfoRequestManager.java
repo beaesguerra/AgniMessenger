@@ -57,7 +57,7 @@ public class InfoRequestManager implements InfoListener{
     	}
     	else if (type == InfoRequestType.CURRENT_USERS_ONLINE.bytes()){
     		String usersOnline = ""; 
-    		for( String user : userDataGuard.usersOnline()) {
+    		for( String user : userDataGuard.getOnlineUsernames()) {
     			usersOnline.concat(user + "\n");
     		}
     		infoSender.sendInfo(ip, "Online users:\n" + usersOnline);

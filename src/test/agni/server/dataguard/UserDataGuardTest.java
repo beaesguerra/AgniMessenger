@@ -19,13 +19,20 @@ public class UserDataGuardTest {
         String dbName = "agni_test";
         String dbUserName = "agni_tester";
         String source = "AgniTest.sql";
-        String[] commands =  new String[]{"mysql", "--user=" + dbUserName, dbName,"-e", "source " + source};
+        String[] commands =  new String[] {"mysql", "--user=" + dbUserName, dbName, "-e", "source " + source};
         try {
-			Runtime.getRuntime().exec(commands);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+            Runtime.getRuntime().exec(commands);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         userDataGuard = new UserDataGuard("agni_test", "agni_tester", "");
+    }
+
+    @Test
+    public void registerUserTest() {
+        userDataGuard.registerUser("SomeTestUser", "asalt", "ahash");
+        assertTrue(userDataGuard.salt("SomeTestUser").equals("asalt"));
+        assertTrue(userDataGuard.getPasswordHash("SomeTestUser").equals("ahash"));
     }
 
     @Test
@@ -38,48 +45,147 @@ public class UserDataGuardTest {
         assertTrue(userDataGuard.getPasswordHash("TestUser").equals("T35TH45H"));
     }
 
-//    @Test
-//    public void addUserTest() {
-//        userDataGuard.addUser("extraUser", "verysalty", "verypasswordyhash");
-//        assertTrue(userDataGuard.salt("extraUser").equals("verysalty"));
-//        assertTrue(userDataGuard.passwordHash("extraUser").equals("verypasswordyhash"));
-//    }
+    @Test
+    public void getFriendsTest() {
+        String[] expectedFriends = {"TestUser", "EnochTsang"};
+        String[] actualFriends = userDataGuard.getFriends("BillyBob");
 
-//    @Test
-//    public void getFriendsTest() {
-//        String[] expectedFriends = {"BillyBob", "EnochTsang"};
-//        String[] actualFriends = userDataGuard.friends("TestUser");
-//
-//        Arrays.sort(expectedFriends);
-//        Arrays.sort(actualFriends);
-//
-//        assertArrayEquals(actualFriends, expectedFriends);
-//    }
+        Arrays.sort(expectedFriends);
+        Arrays.sort(actualFriends);
 
-//    @Test
-//    public void createFriendshipTest() {
-//        userDataGuard.addUser("extraUser", "verysalty", "verypasswordyhash");
-//        userDataGuard.createFriendship("TestUser", "nofriendsUser");
-//        String[] expectedFriends = {"BillyBob", "EnochTsang", "nofriendsUser"};
-//        String[] actualFriends = userDataGuard.friends("TestUser");
-//
-//        Arrays.sort(expectedFriends);
-//        Arrays.sort(actualFriends);
-//
-//        assertArrayEquals(actualFriends, expectedFriends);
-//    }
+        assertArrayEquals(actualFriends, expectedFriends);
+    }
+
+    public void createFriendship(String user1, String user2) {
+        userDataGuard.createFriendship("EnochTsang", "TestUser");
+
+        String[] expectedFriends = {"TestUser"};
+        String[] actualFriends = userDataGuard.getFriends("EnochTsang");
+
+        Arrays.sort(expectedFriends);
+        Arrays.sort(actualFriends);
+
+        assertArrayEquals(actualFriends, expectedFriends);
+    }
 
     @Test
-    public void userCurrentIp() {
+    public void userCurrentIpTest() {
         assertEquals(userDataGuard.userCurrentIp("TestUser"), null);
         userDataGuard.changeUserCurrentIp("TestUser", "192.168.0.1");
         assertTrue(userDataGuard.userCurrentIp("TestUser").equals("192.168.0.1"));
+
+        userDataGuard.changeUserCurrentIp("TestUser", null);
     }
 
-//    @Test
-//    public void currentChatTest() {
-//        assertEquals(userDataGuard.userCurrentChat("TestUser"), null);
-//        userDataGuard.changeUserCurrentChat("TestUser", "helloworld");
-//        assertTrue(userDataGuard.userCurrentChat("TestUser").equals("helloworld"));
-//    }
+    @Test
+    public void getUserNameTest() {
+        userDataGuard.changeUserCurrentIp("TestUser", "192.168.0.1");
+        assertTrue(userDataGuard.getUsername("192.168.0.1").equals("TestUser"));
+    }
+
+    @Test
+    public void loginUserTest() {
+        assertFalse(userDataGuard.isOnline("TestUser"));
+        userDataGuard.loginUser("192.168.1.1", "TestUser");
+        assertTrue(userDataGuard.isOnline("TestUser"));
+
+        assertFalse(userDataGuard.isOnline("EnochTsang"));
+        userDataGuard.loginUser("192.168.1.2", "EnochTsang");
+        assertTrue(userDataGuard.isOnline("EnochTsang"));
+    }
+
+    public void logoutUserTest() {
+        assertFalse(userDataGuard.isOnline("TestUser"));
+        userDataGuard.loginUser("192.168.1.1", "TestUser");
+        userDataGuard.changeUserCurrentIp("TestUser", null);
+        assertFalse(userDataGuard.isOnline("TestUser"));
+    }
+
+    @Test
+    public void userExistsTrueTest(){
+        assertTrue(userDataGuard.userExists("TestUser"));
+    }
+
+    @Test
+    public void userExistsFalseTest(){
+        assertTrue(userDataGuard.userExists("NonExistentUser"));
+    }
+
+    @Test
+    public void heartbeatTest(){
+        userDataGuard.loginUser("1", "TestUser");
+        assertEquals(userDataGuard.getLastHeartbeat("TestUser"), 0);
+        userDataGuard.addToLastHeartbeat("TestUser", 69);
+        assertEquals(userDataGuard.getLastHeartbeat("TestUser"), 69);
+        userDataGuard.addToLastHeartbeat("TestUser", 30);
+        assertEquals(userDataGuard.getLastHeartbeat("TestUser"), 99);
+        userDataGuard.resetLastHeartbeat("TestUser");
+        assertEquals(userDataGuard.getLastHeartbeat("TestUser"), 0);
+    }
+
+    @Test
+    public void getOnlineUsernamesTest(){
+        String[] expectedOnline = {};
+        String[] actualOnline = userDataGuard.getOnlineUserIps();
+        Arrays.sort(expectedOnline);
+        Arrays.sort(actualOnline);
+        assertArrayEquals(actualOnline, expectedOnline);
+
+        userDataGuard.loginUser("1", "EnochTsang");
+        expectedOnline = new String[] {"1"};
+        actualOnline = userDataGuard.getOnlineUserIps();
+        Arrays.sort(expectedOnline);
+        Arrays.sort(actualOnline);
+        assertArrayEquals(actualOnline, expectedOnline);
+
+        userDataGuard.loginUser("2", "BillyBob");
+        expectedOnline = new String[] {"1", "2"};
+        actualOnline = userDataGuard.getOnlineUserIps();
+        Arrays.sort(expectedOnline);
+        Arrays.sort(actualOnline);
+        assertArrayEquals(actualOnline, expectedOnline);
+
+        userDataGuard.changeUserCurrentIp("EnochTsang", null);
+        expectedOnline = new String[] {"2"};
+        actualOnline = userDataGuard.getOnlineUserIps();
+        Arrays.sort(expectedOnline);
+        Arrays.sort(actualOnline);
+        assertArrayEquals(actualOnline, expectedOnline);
+    }
+
+    @Test
+    public void getOnlineUserIps(){
+        String[] expectedOnline = {};
+        String[] actualOnline = userDataGuard.getOnlineUserIps();
+        Arrays.sort(expectedOnline);
+        Arrays.sort(actualOnline);
+        assertArrayEquals(actualOnline, expectedOnline);
+
+        userDataGuard.loginUser("1", "EnochTsang");
+        expectedOnline = new String[] {"EnochTsang"};
+        actualOnline = userDataGuard.getOnlineUserIps();
+        Arrays.sort(expectedOnline);
+        Arrays.sort(actualOnline);
+        assertArrayEquals(actualOnline, expectedOnline);
+
+        userDataGuard.loginUser("2", "BillyBob");
+        expectedOnline = new String[] {"EnochTsang", "BillyBob"};
+        actualOnline = userDataGuard.getOnlineUserIps();
+        Arrays.sort(expectedOnline);
+        Arrays.sort(actualOnline);
+        assertArrayEquals(actualOnline, expectedOnline);
+
+        userDataGuard.changeUserCurrentIp("EnochTsang", null);
+        expectedOnline = new String[] {"BillyBob"};
+        actualOnline = userDataGuard.getOnlineUserIps();
+        Arrays.sort(expectedOnline);
+        Arrays.sort(actualOnline);
+        assertArrayEquals(actualOnline, expectedOnline);
+    }
+
+    @Test
+    public void getIpTest(){
+        userDataGuard.loginUser("192.1", "BillyBob");
+        assertTrue(userDataGuard.getIp("BillyBob").equals("192.1"));        
+    }
 }
