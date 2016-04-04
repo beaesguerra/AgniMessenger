@@ -179,7 +179,7 @@ public class LoginView extends JFrame implements AgniClientView, ActionListener,
             appendToOutputArea("Login successful!");
             client.changeState(AgniClientView.NextState.IDLE_VIEW);
         } else {
-            appendToOutputArea(" *** SERVER *** \n" + message);
+            appendToOutputArea(" *** SERVER *** :" + message);
         }
     }
 
