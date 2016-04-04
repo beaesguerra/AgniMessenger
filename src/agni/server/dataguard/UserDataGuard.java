@@ -2,6 +2,7 @@ package agni.server.dataguard;
 
 import java.util.ArrayList;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -25,14 +26,14 @@ public class UserDataGuard implements I_UserDataGuard {
     }
 
     public void registerUser(String username, String salt, String passwordHash) {
-    	ResultSet rs = null;
-    	Statement stmt = null;
+    	PreparedStatement stmt = null;
     	
     	try {
-    		stmt = database.createStatement();
-			stmt = database.createStatement();
-			rs = stmt.executeQuery("INSERT TO Users (username, salt, passwordHash) values (" + username + ", " + salt + ", " + passwordHash + ")");
-			rs.close();
+    		stmt = database.prepareStatement("INSERT into Users (username, salt, passwordHash) values (?, ?, ?);");
+    		stmt.setString(1, username);
+    		stmt.setString(2, salt);
+    		stmt.setString(3, passwordHash);
+    		stmt.executeUpdate();
 			stmt.close();
     	} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -44,33 +45,36 @@ public class UserDataGuard implements I_UserDataGuard {
     public String salt(String user) {
     	ResultSet rs = null;
     	Statement stmt = null;
-    	
+    	String result = null;
     	try {
     		stmt = database.createStatement();
-			rs = stmt.executeQuery("SELECT salt FROM Users WHERE username == "+user);
+			rs = stmt.executeQuery("SELECT salt FROM Users WHERE username = \""+user + "\"");
+			rs.first();
+			result = rs.getString(1);
 			rs.close();
 			stmt.close();
     	} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        return null;
+        return result;
     }
 
     public String getPasswordHash(String user) {
     	ResultSet rs = null;
     	Statement stmt = null;
-    	
+    	String result = null;
     	try {
     		stmt = database.createStatement();
-			rs = stmt.executeQuery("SELECT passwordHash FROM Users WHERE username == "+user);
-			rs.close();
+			rs = stmt.executeQuery("SELECT passwordHash FROM Users WHERE username = \""+user+ "\"");
+			rs.first();
+			result = rs.getString(1);
 			stmt.close();
     	} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        return null;
+        return result;
     }
 
     public String[] getFriends(String user) {
@@ -78,38 +82,31 @@ public class UserDataGuard implements I_UserDataGuard {
     	String result[] = null;
     	Statement stmtA = null;
     	Statement stmtB = null;
-    	Statement stmtC = null;
     	ResultSet rsA = null;
     	ResultSet rsB = null;
-    	ResultSet rsC = null;
     	
     	try {
     		stmtA = database.createStatement();
 			stmtB = database.createStatement();
-			stmtC = database.createStatement();
-			System.out.println("0");
-			rsA = stmtA.executeQuery("SELECT id FROM Users WHERE username == "+user);
-			System.out.println("1");
-			rsB = stmtB.executeQuery("SELECT userIDTwo FROM Friends WHERE userIDOne == "+rsA.getString(1) );
-			rsC = stmtC.executeQuery("SELECT userIDOne FROM Friends WHERE userIDTwo == "+rsA.getString(1) );
+			rsA = stmtA.executeQuery("SELECT id FROM Users WHERE username = \"" + user + "\"");
+			rsA.first();
+			rsB = stmtB.executeQuery("SELECT userIDTwo FROM Friends WHERE userIDOne =\""+rsA.getString(1)+"\"" );
+			//rsB.first();
+			//System.out.println(rsB.getString(1));
 			
 			while(rsB.next()) {
 				resultList.add(rsB.getString(1));
-			}
-			while(rsC.next()){
-				resultList.add(rsC.getString(1));
 			}
 
 			rsA.close();
 			stmtA.close();
 			rsB.close();
 			stmtB.close();
-			rsC.close();
-			stmtC.close();
     	} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    	result = new String[resultList.size()];
     	for(int i = 0; i < resultList.size(); i++) {
     		result[i] = resultList.get(i);
     	}
@@ -228,13 +225,19 @@ public class UserDataGuard implements I_UserDataGuard {
     @Override
     public String[] getOnlineUsernames() {
     	ArrayList<String> onlineUsers = new ArrayList<String>();
+    	String[] result = null;
     	for(int i = 0; i < userInfo.size(); i++) {
     		if(userInfo.get(i).ip != null) {
     			onlineUsers.add(userInfo.get(i).username);
     		}
     	}
-    	return (String[]) onlineUsers.toArray();
+    	result = new String[onlineUsers.size()];
+    	for(int i = 0; i < onlineUsers.size(); i++) {
+    		result[i] = onlineUsers.get(i);
+    	}
+    	return result;
     }
+    
     
     // add to a user's current lastheartbeat time
     @Override
@@ -268,6 +271,7 @@ public class UserDataGuard implements I_UserDataGuard {
     			onlineUsersIp.add(userInfo.get(i).ip);
     		}
     	} 
+    	result = new String[onlineUsersIp.size()];
     	for(int i = 0; i < onlineUsersIp.size(); i++) {
     		result[i] = onlineUsersIp.get(i);
     	}

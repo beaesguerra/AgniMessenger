@@ -20,10 +20,10 @@ public class UserDataGuardTest {
         String dbName = "agni_test";
         String dbUserName = "agni_tester";
         String source = "AgniTest.sql";
-        String[] commands =  new String[] {"mysql", "--user=" + dbUserName, dbName, "-e", "source " + source};
+        String[] commands =  new String[] {"/usr/local/bin/mysql", "--user=" + dbUserName, dbName, "-e", "source " + source};
         try {
             Runtime.getRuntime().exec(commands);
-            Thread.sleep(100);
+            Thread.sleep(300);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -52,7 +52,7 @@ public class UserDataGuardTest {
 
     @Test
     public void getFriendsTest() {
-        String[] expectedFriends = {"TestUser"};
+        String[] expectedFriends = {"1234567890"};
         String[] actualFriends = userDataGuard.getFriends("BillyBob");
 
         Arrays.sort(expectedFriends);
@@ -76,7 +76,7 @@ public class UserDataGuardTest {
     @Test
     public void userCurrentIpTest() {
         assertEquals(userDataGuard.userCurrentIp("TestUser"), null);
-        userDataGuard.changeUserCurrentIp("TestUser", "192.168.0.1");
+        userDataGuard.loginUser("192.168.0.1", "TestUser");
         assertTrue(userDataGuard.userCurrentIp("TestUser").equals("192.168.0.1"));
 
         userDataGuard.changeUserCurrentIp("TestUser", null);
@@ -84,8 +84,8 @@ public class UserDataGuardTest {
 
     @Test
     public void getUserNameTest() {
-        userDataGuard.changeUserCurrentIp("TestUser", "192.168.0.1");
-        assertTrue(userDataGuard.getUsername("192.168.0.1").equals("TestUser"));
+    	userDataGuard.loginUser("192.168.0.1", "Testman");
+        assertTrue(userDataGuard.getUsername("192.168.0.1").equals("Testman"));
     }
 
     @Test
@@ -108,12 +108,13 @@ public class UserDataGuardTest {
 
     @Test
     public void userExistsTrueTest(){
+    	userDataGuard.loginUser("1", "TestUser");
         assertTrue(userDataGuard.userExists("TestUser"));
     }
 
     @Test
     public void userExistsFalseTest(){
-        assertTrue(userDataGuard.userExists("NonExistentUser"));
+        assertFalse(userDataGuard.userExists("NonExistentUser"));
     }
 
     @Test
@@ -129,7 +130,7 @@ public class UserDataGuardTest {
     }
 
     @Test
-    public void getOnlineUsernamesTest(){
+    public void getOnlineUserIpsTest(){
         String[] expectedOnline = {};
         String[] actualOnline = userDataGuard.getOnlineUserIps();
         Arrays.sort(expectedOnline);
@@ -159,30 +160,30 @@ public class UserDataGuardTest {
     }
 
     @Test
-    public void getOnlineUserIps(){
+    public void getOnlineUsernamesTest(){
         String[] expectedOnline = {};
-        String[] actualOnline = userDataGuard.getOnlineUserIps();
+        String[] actualOnline = userDataGuard.getOnlineUsernames();
         Arrays.sort(expectedOnline);
         Arrays.sort(actualOnline);
         assertArrayEquals(actualOnline, expectedOnline);
 
         userDataGuard.loginUser("1", "EnochTsang");
         expectedOnline = new String[] {"EnochTsang"};
-        actualOnline = userDataGuard.getOnlineUserIps();
+        actualOnline = userDataGuard.getOnlineUsernames();
         Arrays.sort(expectedOnline);
         Arrays.sort(actualOnline);
         assertArrayEquals(actualOnline, expectedOnline);
 
         userDataGuard.loginUser("2", "BillyBob");
         expectedOnline = new String[] {"EnochTsang", "BillyBob"};
-        actualOnline = userDataGuard.getOnlineUserIps();
+        actualOnline = userDataGuard.getOnlineUsernames();
         Arrays.sort(expectedOnline);
         Arrays.sort(actualOnline);
         assertArrayEquals(actualOnline, expectedOnline);
 
         userDataGuard.changeUserCurrentIp("EnochTsang", null);
         expectedOnline = new String[] {"BillyBob"};
-        actualOnline = userDataGuard.getOnlineUserIps();
+        actualOnline = userDataGuard.getOnlineUsernames();
         Arrays.sort(expectedOnline);
         Arrays.sort(actualOnline);
         assertArrayEquals(actualOnline, expectedOnline);
