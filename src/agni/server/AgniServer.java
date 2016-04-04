@@ -89,7 +89,7 @@ public class AgniServer {
         UserManager userManager = new UserManager(infoSender, userDataGuard, chatDataGuard);
         ChatManager chatManager = new ChatManager(userDataGuard, chatDataGuard, infoSender, chatSender);
         FileManager fileManager = new FileManager(infoSender, fileSender, fileDataGuard, userDataGuard);
-        InfoRequestManager infoRequestManager = new InfoRequestManager(infoSender, heartbeatSender, infoDataGuard);
+        InfoRequestManager infoRequestManager = new InfoRequestManager(infoSender, heartbeatSender, userDataGuard, chatDataGuard);
         StatusManager statusManager = new StatusManager(statusSender, userDataGuard);
 
         loginReceiver.register(loginManager);
