@@ -149,4 +149,11 @@ public class GroupChatDataGuardTest {
 	   boolean expected = false;
 	   assertEquals(expected, actual);
    }
+   @Test 
+   public void addUserToChat() throws SQLException {
+	   groupChatDataGuard.addUserToChat("EnochTsang", "TestChat");
+	   String actualChat = groupChatDataGuard.userCurrentChat("EnochTsang");
+	   String expectedChat = "TestChat"; 
+	   assertEquals(actualChat, expectedChat);
+   }
 }

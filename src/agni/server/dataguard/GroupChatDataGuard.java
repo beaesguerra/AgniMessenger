@@ -162,9 +162,20 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
     }
 
     @Override
-    public void addUserToChat(String username, String groupChatName) {
-        // TODO Auto-generated method stub
-        
+    public void addUserToChat(String username, String groupChatName) throws SQLException {
+     	Statement stmt = conn.createStatement();
+     	String statement = "SELECT id FROM Users WHERE username = '" + username + "';";
+    	System.out.println(statement);
+    	ResultSet rs = stmt.executeQuery(statement);
+    	String userId = null;
+    	while (rs.next()) {
+	    	userId = rs.getString("id");
+    	}
+    	statement = "INSERT INTO GroupMembers(userId, groupName) VALUES (" + userId + ", '" + groupChatName + "');"; 
+    	
+    	int rs2 = stmt.executeUpdate(statement);
+    	System.out.println(statement);  
+    	      
     }
 
     @Override
