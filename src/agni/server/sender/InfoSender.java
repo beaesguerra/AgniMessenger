@@ -16,6 +16,7 @@ public class InfoSender {
     }
 
     public void sendInfo(String destIp, String message) {
+        System.out.println("SENDING INFO!!!!");
         if (destIp == null || message == null) {
             throw new NullPointerException();
         } else if (!isAllAscii(message)) {
