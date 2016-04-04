@@ -70,8 +70,16 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
     	}
     }
 
-    public String owner(String groupChatName) {
-        return null;
+    public String owner(String groupChatName) throws SQLException {
+    	Statement stmt = conn.createStatement();
+    	String statement = "SELECT username FROM GroupChats, Users WHERE ownerId = id AND name ='" + groupChatName + "';"; 
+    	System.out.println(statement);
+    	ResultSet rs = stmt.executeQuery(statement);
+    	String ownerName = null;
+    	while (rs.next()) {
+	    	ownerName = rs.getString("username");
+    	}
+		return ownerName;
     }
 
     public String[] history(String groupChatName) {

@@ -14,7 +14,7 @@ public interface I_GroupChatDataGuard {
      * */
     public void deleteGroupChat(String groupChatName) throws SQLException;
 
-    public String owner(String groupChatName);
+    public String owner(String groupChatName) throws SQLException;
 
     public String[] history(String groupChatName);
 
