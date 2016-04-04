@@ -23,5 +23,19 @@ public interface I_UserDataGuard {
     public boolean userExists(String user);
 
     public boolean isOnline(String friend);
+
+    public void resetLastHeartbeat(String username);
+
+    public String [] getOnlineUsernames();
+
+    public void addToLastHeartbeat(String user, float elapsedTime);
+
+    public int getLastHeartbeat(String user);
+
+    public String [] getOnlineUserIps();
+
+    public String getIp(String member);
+
+	String[] usersOnline();
         
 }

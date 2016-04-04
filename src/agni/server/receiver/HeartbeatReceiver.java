@@ -4,20 +4,20 @@ import java.util.Vector;
 
 public class HeartbeatReceiver implements MessageParser {
 
-    private Vector <StatusListener> statusListeners = null;
+    private Vector <HeartbeatListener> heartbeatListeners = null;
 
     public HeartbeatReceiver() {
-        statusListeners = new Vector<StatusListener>();
+        heartbeatListeners = new Vector<HeartbeatListener>();
     }
 
     private void notifyHeartbeat(String ip, byte status) {
-        for ( StatusListener  sListener : statusListeners ) {
-            sListener.ReceivedHeartBeat(ip, status);
+        for ( HeartbeatListener  sListener : heartbeatListeners ) {
+            sListener.receivedHeartBeat(ip, status);
         }
     }
 
-    public void register(StatusListener sListener) {
-        statusListeners.add(sListener);
+    public void register(HeartbeatListener sListener) {
+        heartbeatListeners.add(sListener);
     }
 
     /*
