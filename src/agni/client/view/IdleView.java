@@ -101,8 +101,6 @@ public class IdleView extends JFrame implements AgniClientView, ActionListener, 
         if (input.charAt(0) == '/' && input.length() > 1) {
             String[] inputArray = input.substring(1, input.length()).split(" ");
             handleCommand(inputArray[0], input.split(" "));
-        } else {
-            appendToOutputArea("User : " + input);
         }
     }
 
@@ -206,11 +204,6 @@ public class IdleView extends JFrame implements AgniClientView, ActionListener, 
     @Override
     public void infoReaction(String message) {
         appendToOutputArea(" *** SERVER *** \n" + message);
-        // if(message.startsWith("success: joining ")){
-        //     client.changeState(AgniClientView.NextState.CHAT_VIEW);
-        // } else if (message.startsWith("logged out")){
-        //     client.changeState(AgniClientView.NextState.LOGIN_VIEW);
-        // }
     }
 
     @Override

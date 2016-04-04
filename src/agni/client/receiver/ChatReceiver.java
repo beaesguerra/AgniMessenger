@@ -17,7 +17,7 @@ public class ChatReceiver extends MessageParser {
     
     @Override
     public void receiveMessage(byte[] message) {
-        System.out.println("GOT LOTS OF DANK SHIT");
+        // System.out.println("GOT LOTS OF DANK SHIT");
         if(message == null)
             throw new NullPointerException("receiveMessage got a null message");
         // Sender's name length -> 5th bit
@@ -29,7 +29,7 @@ public class ChatReceiver extends MessageParser {
                                                           "us-ascii");
             // Message starts -> 7th bit
             String parsedMessage = new String(Arrays.copyOfRange(message,
-                                                                 7 + senderNameLength,
+                                                                 6 + senderNameLength,
                                                                  message.length),
             		                                             "us-ascii");
             notifyChatReceived(sender, parsedMessage);
