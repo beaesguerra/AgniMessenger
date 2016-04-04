@@ -3,7 +3,6 @@ package agni.client.action;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
-import com.sun.javafx.image.IntToBytePixelConverter;
 
 import agni.client.communication.MessageSender;
 

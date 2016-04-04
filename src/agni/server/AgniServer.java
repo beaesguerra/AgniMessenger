@@ -54,7 +54,7 @@ public class AgniServer {
 	
 	
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
         ChannelList channels = new ChannelList();
         MessageSender messageSender = new MessageSender(channels);
@@ -69,12 +69,15 @@ public class AgniServer {
         UserDataGuard userDataGuard = null;
 		try {
 			userDataGuard = new UserDataGuard("agni", "agni", "");
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
         GroupChatDataGuard chatDataGuard = new GroupChatDataGuard("agni", "agni", "");
         FileDataGuard fileDataGuard = new FileDataGuard("agni", "agni", "");
+
 
         LoginReceiver loginReceiver = new LoginReceiver();
         UserReceiver userReceiver = new UserReceiver();
