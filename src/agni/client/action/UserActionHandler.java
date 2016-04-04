@@ -12,6 +12,26 @@ public class UserActionHandler {
     final private int EXTRA_ARGUMENT_SIZE = 1;
     final private byte MESSAGE_TYPE = 0x04;
 
+    public enum UserRequestTypes {
+        JOIN_CHAT((byte)0x00),
+        LEAVE_CHAT((byte)0x01),
+        FRIEND_LIST((byte)0x02),
+        FRIEND_STATUS((byte)0x03),
+        ADD_FRIEND((byte)0x04),
+        LOGOUT((byte)0x05),
+        CREATE_CHAT((byte)0x06);
+        
+        private final byte bytes;
+        private UserRequestTypes(byte bytes) {
+            this.bytes = bytes;
+        }
+
+        final public byte bytes() {
+            return bytes;
+        }
+    }
+
+
     public UserActionHandler(MessageSender messageSender) {
         this.messageSender = messageSender;
     }
