@@ -252,11 +252,11 @@ public class UserDataGuard implements I_UserDataGuard {
     // set lastheartbeat for username to 0 
     @Override
     public void resetLastHeartbeat(String username) {
-    	for(int i = 0; i < userInfo.size(); i++) {
-    		if(username.equals(userInfo.get(i).username)) {
-    			userInfo.get(i).lastHeartbeat = 0;
-    		}
-    	}
+    	// for(int i = 0; i < userInfo.size(); i++) {
+    	// 	if(username.equals(userInfo.get(i).username)) {
+    	// 		userInfo.get(i).lastHeartbeat = 0;
+    	// 	}
+    	// }
         
     }
 
