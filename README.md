@@ -4,6 +4,18 @@ The name comes from the Hindu deity Agni who was a swift messenger and keeper of
 Agni will support multiple users in the same chat, real-time updates of peers, file transfer,security with encryption, and high customizability in messages.
 This repository comes bundled with both the client and the server.
 
+## Setup
+
+-Include everything in the lib folder into the class path
+-Compile Chavra on the client side  
+-Export the client and server folders as jars
+
+## Compile
+
+it is required that chavra is compiled on the client side. 
+
+## Required Libraries
+
 ## Styleguide
 
 Spaces not tabs, 4 spaces for indents
