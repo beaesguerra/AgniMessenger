@@ -20,7 +20,8 @@ public class UserDataGuardTest {
         String dbName = "agni_test";
         String dbUserName = "agni_tester";
         String source = "AgniTest.sql";
-        String[] commands =  new String[] {"/usr/local/bin/mysql", "--user=" + dbUserName, dbName, "-e", "source " + source};
+        // String[] commands =  new String[] {"/usr/local/bin/mysql", "--user=" + dbUserName, dbName, "-e", "source " + source};
+        String[] commands =  new String[]{"mysql", "--user=" + dbUserName, dbName,"-e", "source " + source};
         try {
             Runtime.getRuntime().exec(commands);
             Thread.sleep(300);
