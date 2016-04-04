@@ -1,7 +1,10 @@
 package agni.server.dataguard;
 
+import java.util.HashMap;
+
 public class UserDataGuard implements I_UserDataGuard {
 //  private database;
+    // private users, ips, and lastHeartBeat for each online user
 
     public UserDataGuard(String dbname, String username, String password) {
 
@@ -63,6 +66,35 @@ public class UserDataGuard implements I_UserDataGuard {
         return false;
     }
 
+    // set lastheartbeat for username to 0 
+    @Override
+    public void resetLastHeartbeat(String username) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public String[] getOnlineUsernames() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    // add to a user's current lastheartbeat time
+    @Override
+    public void addToLastHeartbeat(String user, float elapsedTime) {
+        // TODO Auto-generated method stub
+        
+    }
+    // return a user's current lastheartbeat
+    @Override
+    public int getLastHeartbeat(String user) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public String[] getOnlineUserIps() {
+		return null;
+    }
     @Override
     public String getIp(String member) {
         // TODO Auto-generated method stub

@@ -15,6 +15,7 @@ import agni.server.dataguard.InfoDataGuard;
 import agni.server.dataguard.UserDataGuard;
 import agni.server.manager.ChatManager;
 import agni.server.manager.FileManager;
+import agni.server.manager.HeartbeatManager;
 import agni.server.manager.InfoRequestManager;
 import agni.server.manager.LoginManager;
 import agni.server.manager.StatusManager;
@@ -71,6 +72,8 @@ public class AgniServer {
         ChatManager chatManager = new ChatManager(userDataGuard, chatDataGuard, infoSender, chatSender);
         FileManager fileManager = new FileManager(infoSender, fileSender, fileDataGuard, userDataGuard);
         InfoRequestManager infoRequestManager = new InfoRequestManager(infoSender, heartbeatSender, fileDataGuard);
+        //StatusManager statusManager = new StatusManager(statusSender, userDataGuard);
+        HeartbeatManager heartbeatManager = new HeartbeatManager(heartbeatSender, userDataGuard); 
         StatusManager statusManager = new StatusManager(statusSender, userDataGuard);
         LoginManager loginManager = new LoginManager(infoSender, userDataGuard, statusManager);
         UserManager userManager = new UserManager(infoSender, userDataGuard, chatDataGuard, statusManager);
@@ -80,6 +83,12 @@ public class AgniServer {
         chatReceiver.register(chatManager);
         fileReceiver.register(fileManager);
         infoRequestReceiver.register(infoRequestManager);
-        heartbeatReceiver.register(statusManager);
+        heartbeatReceiver.register(heartbeatManager);
+        
+        // TODO:	
+        //	while (true) {
+        // 		receivePackets(); 
+        // 		heartbeatManager.update(); 
+        // } 
     }
 }
