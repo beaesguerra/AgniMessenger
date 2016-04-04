@@ -140,6 +140,8 @@ public class MessageReceiver {
         } else if (messageType == MessageTypes.STATUS.bytes()) {
             // Pass to statusReceiver
             userReceiver.receiveMessage(ip, byteArray);
+        } else if (messageType == MessageTypes.LOGIN.bytes()) {
+            loginReceiver.receiveMessage(ip, byteArray);
         } else {
             assert(false);
         }
