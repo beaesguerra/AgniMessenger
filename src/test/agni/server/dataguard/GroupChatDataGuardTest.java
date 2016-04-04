@@ -34,7 +34,7 @@ public class GroupChatDataGuardTest {
         groupChatDataGuard = new GroupChatDataGuard("agni_test", "agni_tester", "");
     }
   
-    @Test
+  //  @Test
     public void getGroupChatsTests() throws SQLException {
     	
         String[] expectedChats = {"TestChat", "AnotherChat"};
@@ -46,7 +46,7 @@ public class GroupChatDataGuardTest {
         assertArrayEquals(actualChats, expectedChats);
     }
 
-    @Test
+  //  @Test
     public void createGroupChatsTest() throws SQLException {
         groupChatDataGuard.createGroupChat("BillyBob", "NewTestChat");
 
@@ -59,7 +59,7 @@ public class GroupChatDataGuardTest {
         assertArrayEquals(actualChats, expectedChats);
     }
 
-   @Test
+   //@Test
     public void deleteGroupChatsTest() throws SQLException {
         groupChatDataGuard.deleteGroupChat("AnotherChat");
 
@@ -72,7 +72,7 @@ public class GroupChatDataGuardTest {
         assertArrayEquals(actualChats, expectedChats);
     }
 
-   // @Test
+    @Test
     public void deleteNonExistingGroupChatsTest() throws SQLException {
         groupChatDataGuard.deleteGroupChat("NonExistingGroupChat");
 

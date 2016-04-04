@@ -49,15 +49,25 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
     	System.out.println(statement);
     }
 
-    /* Throw IllegalArgumentException if groupChat does not exist 
+    /* State groupchatname does not exist if groupchatname doesnt exist
      * Should remove group, remove messages associated with it, and 
      * remove all tuples in GroupMembers table with the same groupChatName
      * */
     public void deleteGroupChat(String groupChatName) throws SQLException {
     	Statement stmt = conn.createStatement();
-    	String statement = "DELETE FROM GroupChats WHERE name = '" + groupChatName + "';";
-    	int rs2 = stmt.executeUpdate(statement);
-    	System.out.println(statement);
+    	String checkStatement = "SELECT name FROM GroupChats WHERE name ='" + groupChatName + "';"; 
+    	ResultSet rs = stmt.executeQuery(checkStatement);
+    	System.out.println(checkStatement);
+    	if (!rs.next()) {
+    		System.out.println("Error:Tried to delete a group chat that does not exist");
+    		
+    	}
+    	else {
+	    	
+	    	String statement = "DELETE FROM GroupChats WHERE name = '" + groupChatName + "';";
+	    	int rs2 = stmt.executeUpdate(statement);
+	    	System.out.println(statement);
+    	}
     }
 
     public String owner(String groupChatName) {
