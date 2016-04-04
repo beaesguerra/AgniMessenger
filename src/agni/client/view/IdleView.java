@@ -134,7 +134,11 @@ public class IdleView extends JFrame implements AgniClientView, ActionListener, 
             infoRequestActionHandler.requestInfo(InfoRequestActionHandler.InfoTypes.CURRENT_CHATS.bytes());
             break;
         case "join":
-            userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.JOIN_CHAT.bytes());
+            if(args.length < 2){
+                appendToOutputArea("Please specify chat to join...");
+            } else {
+                userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.JOIN_CHAT.bytes(), args[1]);
+            }
             break;
         case "friends":
             userActionHandler.requestUserAction(UserActionHandler.UserRequestTypes.FRIEND_LIST.bytes());

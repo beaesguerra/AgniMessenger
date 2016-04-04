@@ -51,7 +51,7 @@ public class UserReceiver implements MessageParser {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
+        System.out.println("USERRECIEVER usermessage is " + userMessage);
         notifyUserRequest(ip, type, userMessage);  
     }
 }
