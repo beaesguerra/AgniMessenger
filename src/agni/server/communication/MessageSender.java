@@ -3,6 +3,7 @@ package agni.server.communication;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import java.nio.charset.StandardCharsets;
 
 
 public class MessageSender implements I_MessageSender {
@@ -13,6 +14,7 @@ public class MessageSender implements I_MessageSender {
     }
 
     public void sendMessage(String ipAddress, byte[] message) {
+    	System.out.println(new String(message, StandardCharsets.US_ASCII));
        SocketChannel currentChannel = channelList.getChannel(ipAddress);
        ByteBuffer outBuffer = ByteBuffer.wrap(message);
        try {
