@@ -27,7 +27,6 @@ public class UserDataGuard implements I_UserDataGuard {
 
     public void registerUser(String username, String salt, String passwordHash) {
     	PreparedStatement stmt = null;
-    	
     	try {
     		stmt = database.prepareStatement("INSERT into Users (username, salt, passwordHash) values (?, ?, ?);");
     		stmt.setString(1, username);
@@ -190,22 +189,38 @@ public class UserDataGuard implements I_UserDataGuard {
 
     @Override
     public void loginUser(String ip, String user) {
-    	if(ip == null || user == null)
+    	if(ip == null || user == null){
     		throw new NullPointerException("loginUser received a null user/ip");
+    	}
         userInfo.add(new UserInfo(user, 0, ip));
     }
 
     @Override
     public boolean userExists(String user) {
+    	
+    	ResultSet rs = null;
+    	Statement stmt = null;
     	boolean userExists = false;
-    	for(int i = 0; i < userInfo.size(); i++) {
-    		if(user.equals(userInfo.get(i).username)) {
-    			userExists = true;
-    			break;
-    		}
-    	}
+    	try {
+    		stmt = database.createStatement();
+    		String query = "SELECT username FROM Users WHERE username = \""+user+ "\""; 
+			rs = stmt.executeQuery(query);
+			
+			while(rs.next()) {
+				userExists = true;
+				break;
+			}
+			
+			stmt.close();
+			rs.close();
+    	} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
          return userExists;
     }
+    
+    
     @Override
     public String getUsername(String ip) {
     	if(ip == null)

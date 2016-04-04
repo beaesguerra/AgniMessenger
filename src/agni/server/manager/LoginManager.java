@@ -41,19 +41,24 @@ public class LoginManager implements LoginListener{
     }
     @Override
     public void loginRequest(String ip, String user, String password) {
-        try {
-            if (generatePasswordHash(password, userDataGuard.salt(user).getBytes()).equals(userDataGuard.getPasswordHash(user))) {
-                userDataGuard.loginUser(ip, user);
-                infoSender.sendInfo(ip, "approved");
-                statusManager.receiveStatusChange(ip, (byte)0x01);
-            }
-            else {
-                infoSender.sendInfo(ip, "declined");
-            }
-        } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    	if(userDataGuard.userExists(user)){
+			try {
+				if (generatePasswordHash(password, userDataGuard.salt(user).getBytes())
+						.equals(userDataGuard.getPasswordHash(user))) {
+					userDataGuard.loginUser(ip, user);
+					infoSender.sendInfo(ip, "approved");
+					statusManager.receiveStatusChange(ip, (byte) 0x01);
+				} else {
+					infoSender.sendInfo(ip, "declined");
+				}
+			} catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	else{
+    		infoSender.sendInfo(ip,  "user does not exist");
+    	}
     }
 
     @Override
@@ -70,6 +75,7 @@ public class LoginManager implements LoginListener{
                 e.printStackTrace();
             }
             String saltString = new String(salt, StandardCharsets.US_ASCII);
+            System.out.println(saltString);
             userDataGuard.registerUser(user, saltString, passwordHash);
             infoSender.sendInfo(ip, "success: " + user + " registered");
         }
