@@ -46,7 +46,7 @@ public class LoginActionHandler {
             System.arraycopy(usernameBytes, 0, packedMessage,
                              7, usernameBytes.length);
             System.arraycopy(passwordBytes, 0, packedMessage,
-                             9, passwordBytes.length);
+                             7 + usernameBytes.length, passwordBytes.length);
             messageSender.sendMessage(packedMessage);
         }
     }
