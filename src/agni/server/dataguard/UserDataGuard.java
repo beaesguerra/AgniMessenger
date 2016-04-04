@@ -215,7 +215,7 @@ public class UserDataGuard implements I_UserDataGuard {
     @Override
     public void resetLastHeartbeat(String username) {
     	for(int i = 0; i < userInfo.size(); i++) {
-    		if(username.equals(user)Info.get(i).username) {
+    		if(username.equals(userInfo.get(i).username)) {
     			userInfo.get(i).lastHeartbeat = 0;
     		}
     	}

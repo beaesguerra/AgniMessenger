@@ -68,13 +68,13 @@ public class AgniServer {
         // TODO 
         UserDataGuard userDataGuard = null;
 		try {
-			userDataGuard = new UserDataGuard(null, null, null);
+			userDataGuard = new UserDataGuard("agni", "agni", "");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        GroupChatDataGuard chatDataGuard = new GroupChatDataGuard(null, null, null);
-        FileDataGuard fileDataGuard = new FileDataGuard(null, null, null);
+        GroupChatDataGuard chatDataGuard = new GroupChatDataGuard("agni", "agni", "");
+        FileDataGuard fileDataGuard = new FileDataGuard("agni", "agni", "");
 
         LoginReceiver loginReceiver = new LoginReceiver();
         UserReceiver userReceiver = new UserReceiver();
