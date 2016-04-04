@@ -1,5 +1,6 @@
 package agni.server.receiver;
 import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Vector;
 
@@ -10,7 +11,7 @@ public class ChatReceiver implements MessageParser {
         chatListeners = new Vector<ChatListener>();
     }
 
-    private void notifyChatRequest(String ip, String message) {
+    private void notifyChatRequest(String ip, String message) throws SQLException {
         for ( ChatListener  cListener : chatListeners ) {
             cListener.chatRequest(ip, message);
         }
@@ -32,7 +33,7 @@ public class ChatReceiver implements MessageParser {
     }
 
     @Override
-    public void receiveMessage(String ip, byte[] message) {
+    public void receiveMessage(String ip, byte[] message) throws SQLException {
         if(ip==null || message == null)
             throw new NullPointerException();
         byte[] parsedArray = this.parseMessage(message);

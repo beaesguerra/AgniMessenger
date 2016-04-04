@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
@@ -18,6 +20,8 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
     	dataSource.setPassword(password); 
     	dataSource.setDatabaseName(dbname);
     	conn = dataSource.getConnection(); 
+    	
+    	
     	
     }
 
@@ -89,9 +93,9 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
     	System.out.println(statement);
     	ArrayList<String> messages = new ArrayList<String>(); 
     	while (rs.next()) {
-    		System.out.println("here");
-    		messages.add(rs.getString("username"));
-    		//System.out.println(rs.getString("username") + ": " + rs.getString("content"));
+    		
+    		messages.add(rs.getString("username") + ": " + rs.getString("content"));
+    		
     	}
     	String [] msgs = new String[messages.size()];
         msgs = messages.toArray(msgs);
@@ -107,9 +111,16 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
     	while (rs.next()) {
 	    	senderId = rs.getString("id");
     	}
-    	statement = "INSERT INTO Messages(senderId, content, groupName) VALUES (" + senderId + ", " + message + ", " + groupname + "');";
+    	System.out.println(senderId);
+    	java.util.Date date = new Date();
+    	Timestamp dateTime = new java.sql.Timestamp(date.getTime()); 
+    	String dateTimeString = dateTime.toString(); 
+    	dateTimeString = dateTimeString.substring(0, dateTimeString.length()-4); 
+    	statement = "INSERT INTO Messages(senderId, sentAt, content, groupName) VALUES (" + senderId + ", '" + dateTimeString + "', '" + message + "', '" + groupname + "');";
+    	int rs2 = stmt.executeUpdate(statement);
     	System.out.println(statement);
-    	ResultSet rs2 = stmt.executeQuery(statement);
+    	
+    	
     	
 		
     }

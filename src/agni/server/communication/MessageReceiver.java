@@ -10,6 +10,7 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -103,7 +104,7 @@ public class MessageReceiver {
  * @requires message buffer
  * @promises call appropriate 'receiverMessage(ip, buffer)' method
  */
-    private void selectReceiver(String ip, ByteBuffer buffer){
+    private void selectReceiver(String ip, ByteBuffer buffer) throws SQLException{
     	 buffer.flip();
          int length = buffer.remaining();
          byte[] byteArray = new byte[length];

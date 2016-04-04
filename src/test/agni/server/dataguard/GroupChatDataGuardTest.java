@@ -31,10 +31,11 @@ public class GroupChatDataGuardTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        
         groupChatDataGuard = new GroupChatDataGuard("agni_test", "agni_tester", "");
     }
   
- //  @Test
+   @Test
     public void getGroupChatsTests() throws SQLException {
     	
         String[] expectedChats = {"TestChat", "AnotherChat"};
@@ -46,7 +47,7 @@ public class GroupChatDataGuardTest {
         assertArrayEquals(actualChats, expectedChats);
     }
 
- // @Test
+  @Test
     public void createGroupChatsTest() throws SQLException {
         groupChatDataGuard.createGroupChat("BillyBob", "NewTestChat");
 
@@ -59,7 +60,7 @@ public class GroupChatDataGuardTest {
         assertArrayEquals(actualChats, expectedChats);
     }
 
-  // @Test
+  @Test
     public void deleteGroupChatsTest() throws SQLException {
         groupChatDataGuard.deleteGroupChat("AnotherChat");
 
@@ -72,7 +73,7 @@ public class GroupChatDataGuardTest {
         assertArrayEquals(actualChats, expectedChats);
     }
 
-  //  @Test
+   @Test
     public void deleteNonExistingGroupChatsTest() throws SQLException {
         groupChatDataGuard.deleteGroupChat("NonExistingGroupChat");
 
@@ -86,20 +87,22 @@ public class GroupChatDataGuardTest {
     }
 
 
-  //  @Test
+   @Test
     public void getGroupChatOwnerTest() throws SQLException {
         assertTrue(groupChatDataGuard.owner("TestChat").equals("TestUser"));
     }
 
-   @Test
+   //@Test
     public void getGroupChatHistoryTest() throws SQLException {
-        groupChatDataGuard.history("TestChat");
+       // tested in addMessageTest()
+        
+        
     }
 
-    //@Test
+    @Test
     public void addMessageTest() throws SQLException {
         groupChatDataGuard.addMessage("hello", "TestUser", "TestChat");
-        String [] expectedMessages = {"hello"} ;
+        String [] expectedMessages = {"TestUser: hello"} ;
         String [] actualMessages = groupChatDataGuard.history("TestChat"); 
         assertArrayEquals(actualMessages, expectedMessages);
     }
