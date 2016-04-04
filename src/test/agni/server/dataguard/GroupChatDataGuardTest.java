@@ -115,10 +115,6 @@ public class GroupChatDataGuardTest {
         assertArrayEquals(actualGroupChatUsers, expectedGroupChatUsers);
     }
 
-   // @Test
-    public void addUserTest() {
-        fail("Not yet implemented");
-    }
     @Test
     public void currentChatTest() throws SQLException {
     	String actualCurrentChat = groupChatDataGuard.userCurrentChat("TestUser");
