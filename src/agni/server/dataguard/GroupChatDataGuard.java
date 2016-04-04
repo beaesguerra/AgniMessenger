@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
@@ -22,17 +23,30 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
 
     public String[] allGroupChats() throws SQLException {
     	Statement stmt = conn.createStatement();
-    	ResultSet rs = stmt.executeQuery("SELECT * FROM GroupChats");
-    	ArrayList<String> groupChatsList = null; 
+    	String statement = "SELECT * FROM GroupChats";
+    	ResultSet rs = stmt.executeQuery(statement);
+    	System.out.println(statement);
+    	ArrayList<String> groupChatsList = new ArrayList<String>(); 
     	while (rs.next()) {
     		groupChatsList.add(rs.getString("name"));
     	}
     	String [] groupChats = new String[groupChatsList.size()];
-        return groupChats;
+        groupChats = groupChatsList.toArray(groupChats);
+    	return groupChats;
     }
 
-    public void createGroupChat(String owner, String groupChatName) {
-
+    public void createGroupChat(String owner, String groupChatName) throws SQLException {
+    	Statement stmt = conn.createStatement();
+    	String statement = "SELECT id FROM Users WHERE username = '" +owner + "';";
+    	System.out.println(statement);
+    	ResultSet rs = stmt.executeQuery(statement);
+    	String ownerId = null;
+    	while (rs.next()) {
+	    	ownerId = rs.getString("id");
+    	}
+    	statement = "INSERT INTO GroupChats VALUES('" + groupChatName + "', " + ownerId + ");";
+    	int rs2 = stmt.executeUpdate(statement);
+    	System.out.println(statement);
     }
 
     /* Throw IllegalArgumentException if groupChat does not exist 

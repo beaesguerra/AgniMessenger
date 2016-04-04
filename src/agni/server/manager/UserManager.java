@@ -1,5 +1,6 @@
 package agni.server.manager;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 
 import agni.server.dataguard.GroupChatDataGuard;
@@ -53,7 +54,7 @@ public class UserManager implements UserListener {
     }
 
     @Override
-    public void userRequest(String ip, byte type, String argument) {
+    public void userRequest(String ip, byte type, String argument) throws SQLException {
         // TODO Auto-generated method stub
         String username = userDataGuard.getUsername(ip);
         if(type == UserRequestType.JOIN_CHAT.bytes()) {             // join chat; argument = group to join

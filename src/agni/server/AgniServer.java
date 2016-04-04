@@ -1,6 +1,7 @@
 package agni.server;
 
 import java.nio.channels.SocketChannel;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -66,7 +67,13 @@ public class AgniServer {
 
         // TODO 
         UserDataGuard userDataGuard = new UserDataGuard(null, null, null);
-        GroupChatDataGuard chatDataGuard = new GroupChatDataGuard(null, null, null);
+        GroupChatDataGuard chatDataGuard = null;
+		try {
+			chatDataGuard = new GroupChatDataGuard(null, null, null);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         FileDataGuard fileDataGuard = new FileDataGuard(null, null, null);
 
         LoginReceiver loginReceiver = new LoginReceiver();

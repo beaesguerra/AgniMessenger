@@ -6,7 +6,7 @@ public interface I_GroupChatDataGuard {
 
     public String[] allGroupChats() throws SQLException;
     
-    public void createGroupChat(String owner, String groupChatName);
+    public void createGroupChat(String owner, String groupChatName) throws SQLException;
 
     /* Throw IllegalArgumentException if groupChat does not exist 
      * Should remove group, remove messages associated with it, and 
