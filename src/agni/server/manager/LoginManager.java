@@ -42,7 +42,7 @@ public class LoginManager implements LoginListener{
     @Override
     public void loginRequest(String ip, String user, String password) {
         try {
-            if (generatePasswordHash(password, userDataGuard.salt(user).getBytes()) == userDataGuard.getPasswordHash(user)) {
+            if (generatePasswordHash(password, userDataGuard.salt(user).getBytes()).equals(userDataGuard.getPasswordHash(user))) {
                 userDataGuard.loginUser(ip, user);
                 infoSender.sendInfo(ip, "approved");
                 statusManager.receiveStatusChange(ip, (byte)0x01);

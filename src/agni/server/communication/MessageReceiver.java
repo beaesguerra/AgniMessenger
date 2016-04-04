@@ -164,7 +164,6 @@ public class MessageReceiver {
  */
     public void waitForClients() {
         final int errorCheck = 500; 
-        boolean terminated = false;
         ByteBuffer inBuffer = null;
         ByteBuffer outBuffer = null;
         int BUFFERSIZE = 32000;
@@ -172,7 +171,7 @@ public class MessageReceiver {
        
         try {
         //boolean terminated = false;
-        while (!terminated) 
+        while (true) 
         {
                 heartbeatManager.update();
                 if (selector.select(errorCheck) < 0) {

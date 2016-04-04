@@ -145,7 +145,7 @@ public class UserDataGuard implements I_UserDataGuard {
      */
     public void changeUserCurrentIp(String user, String ip) {
     	for(int i = 0; i<userInfo.size(); i++){
-    		if(userInfo.get(i).username == user)
+    		if(userInfo.get(i).username.equals(user))
     			if(ip == null) {
         			userInfo.get(i).ip = null;	
     			}
@@ -159,7 +159,7 @@ public class UserDataGuard implements I_UserDataGuard {
     public String userCurrentIp(String user) {
     	String currentIP = null;
     	for(int i = 0; i < userInfo.size(); i++) {
-    		if(userInfo.get(i).username == user)
+    		if(userInfo.get(i).username.equals(user))
     			currentIP = userInfo.get(i).ip;
     	}
 		return currentIP;
@@ -176,7 +176,7 @@ public class UserDataGuard implements I_UserDataGuard {
     public boolean userExists(String user) {
     	boolean userExists = false;
     	for(int i = 0; i < userInfo.size(); i++) {
-    		if(user == userInfo.get(i).username) {
+    		if(user.equals(userInfo.get(i).username)) {
     			userExists = true;
     			break;
     		}
@@ -189,7 +189,7 @@ public class UserDataGuard implements I_UserDataGuard {
     		throw new NullPointerException("getUsername received a null ip");
     	String userName = null;
     	for(int i = 0; i < userInfo.size(); i++) {
-    		if(ip == userInfo.get(i).ip) {
+    		if(ip.equals(userInfo.get(i).ip)) {
     			userName = userInfo.get(i).username;
     		}
     	}
@@ -201,7 +201,7 @@ public class UserDataGuard implements I_UserDataGuard {
     public boolean isOnline(String friend) {
     	boolean isOnline = false;
     	for(int i = 0; i < userInfo.size(); i++) {
-    		if(friend == userInfo.get(i).username) {
+    		if(friend.equals(userInfo.get(i).username)) {
     			if(userInfo.get(i).ip != null){
     				isOnline = true;
     				break;
@@ -215,7 +215,7 @@ public class UserDataGuard implements I_UserDataGuard {
     @Override
     public void resetLastHeartbeat(String username) {
     	for(int i = 0; i < userInfo.size(); i++) {
-    		if(username == userInfo.get(i).username) {
+    		if(username.equals(user)Info.get(i).username) {
     			userInfo.get(i).lastHeartbeat = 0;
     		}
     	}
@@ -243,7 +243,7 @@ public class UserDataGuard implements I_UserDataGuard {
     @Override
     public void addToLastHeartbeat(String user, float elapsedTime) {
     	for(int i = 0; i < userInfo.size(); i++) {
-    		if(userInfo.get(i).username == user) {
+    		if(userInfo.get(i).username.equals(user)) {
     			userInfo.get(i).lastHeartbeat += elapsedTime;
     			break;
     		}
@@ -254,7 +254,7 @@ public class UserDataGuard implements I_UserDataGuard {
     public int getLastHeartbeat(String user) {
     	int lastHeartBeat = -1;
     	for(int i = 0; i < userInfo.size(); i++) {
-    		if(userInfo.get(i).username == user) {
+    		if(userInfo.get(i).username.equals(user)) {
     			lastHeartBeat = (int) userInfo.get(i).lastHeartbeat;
     			break;
     		}
@@ -282,7 +282,7 @@ public class UserDataGuard implements I_UserDataGuard {
     public String getIp(String user) {
     	String userIp = null;
     	for(int i = 0; i < userInfo.size(); i++) {
-    		if(userInfo.get(i).username == user) {
+    		if(userInfo.get(i).username.equals(user)) {
     			userIp = userInfo.get(i).ip;
     			break;
     		}
