@@ -29,7 +29,7 @@ public class MessageSender {
     }
 
     public synchronized void sendMessage(byte[] message) {
-    	System.out.println(new String(message, StandardCharsets.US_ASCII));
+    	// System.out.println(new String(message, StandardCharsets.US_ASCII));
         
     	int length = message.length;
         try {

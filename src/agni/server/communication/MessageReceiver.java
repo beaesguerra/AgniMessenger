@@ -118,7 +118,11 @@ public class MessageReceiver {
          int length = buffer.remaining();
          byte[] byteArray = new byte[length];
          buffer.get(byteArray);
-         System.out.println(new String(byteArray, StandardCharsets.US_ASCII));
+         System.out.print("PRINTING BYTE ARRAY ");
+         for(int i = 0; i < byteArray.length; i++){
+            System.out.print(byteArray[i] + ",");
+         }
+         System.out.println(" DONE PRINTING BYTE ARRAY");
          
          byte messageType = byteArray[4];
         if (messageType == MessageTypes.HEARTBEAT.bytes()) {

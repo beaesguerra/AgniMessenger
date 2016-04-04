@@ -74,7 +74,6 @@ public class MessageReceiver implements Runnable {
             } catch (IOException e) {
                 System.exit(1);
             }
-            System.out.println(new String(lineBytes, StandardCharsets.US_ASCII));
             
             byte messageType = lineBytes[4];
             if (messageType == MessageTypes.HEARTBEAT.bytes()) {
