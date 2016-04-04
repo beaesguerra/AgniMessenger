@@ -82,12 +82,36 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
 		return ownerName;
     }
 
-    public String[] history(String groupChatName) {
-        return null;
+    public String[] history(String groupChatName) throws SQLException {
+    	Statement stmt = conn.createStatement();
+    	String statement = "SELECT username, content  FROM Messages, Users WHERE senderId = id AND groupName = '" + groupChatName + "';";
+    	ResultSet rs = stmt.executeQuery(statement);
+    	System.out.println(statement);
+    	ArrayList<String> messages = new ArrayList<String>(); 
+    	while (rs.next()) {
+    		System.out.println("here");
+    		messages.add(rs.getString("username"));
+    		//System.out.println(rs.getString("username") + ": " + rs.getString("content"));
+    	}
+    	String [] msgs = new String[messages.size()];
+        msgs = messages.toArray(msgs);
+    	return msgs;
     }
 
-    public void addMessage(String message, String sender, String groupname){
-
+    public void addMessage(String message, String sender, String groupname) throws SQLException{
+    	Statement stmt = conn.createStatement();
+    	String statement = "SELECT id FROM Users WHERE username = '" + sender + "';";
+    	System.out.println(statement);
+    	ResultSet rs = stmt.executeQuery(statement);
+    	String senderId = null;
+    	while (rs.next()) {
+	    	senderId = rs.getString("id");
+    	}
+    	statement = "INSERT INTO Messages(senderId, content, groupName) VALUES (" + senderId + ", " + message + ", " + groupname + "');";
+    	System.out.println(statement);
+    	ResultSet rs2 = stmt.executeQuery(statement);
+    	
+		
     }
 
     public String[] users(String groupChatName) {

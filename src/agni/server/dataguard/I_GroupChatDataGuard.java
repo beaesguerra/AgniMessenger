@@ -16,9 +16,9 @@ public interface I_GroupChatDataGuard {
 
     public String owner(String groupChatName) throws SQLException;
 
-    public String[] history(String groupChatName);
+    public String[] history(String groupChatName) throws SQLException;
 
-    public void addMessage(String message, String sender, String groupname);
+    public void addMessage(String message, String sender, String groupname) throws SQLException;
 
     public String[] users(String groupChatName);
     
