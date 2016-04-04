@@ -19,10 +19,7 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
     	dataSource.setUser(username);
     	dataSource.setPassword(password); 
     	dataSource.setDatabaseName(dbname);
-    	conn = dataSource.getConnection(); 
-    	
-    	
-    	
+    	conn = dataSource.getConnection();     	
     }
 
     public String[] allGroupChats() throws SQLException {
@@ -147,11 +144,8 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
 	    	userId = rs.getString("id");
     	}
     	statement = "UPDATE GroupMembers SET groupName = '" + chatname + "' WHERE userId = " + userId +";";
-    	
     	int rs2 = stmt.executeUpdate(statement);
     	System.out.println(statement);
-    	
-        
     }
 
     @Override
@@ -180,9 +174,12 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
     }
 
     @Override
-    public boolean chatExists(String groupName) {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean chatExists(String groupName) throws SQLException {
+    	Statement stmt = conn.createStatement();
+    	String statement = "SELECT name FROM GroupChats WHERE name = '" + groupName + "';"; 
+    	ResultSet rs = stmt.executeQuery(statement);
+    	System.out.println(statement);
+    	return rs.next();
     }
   
 }

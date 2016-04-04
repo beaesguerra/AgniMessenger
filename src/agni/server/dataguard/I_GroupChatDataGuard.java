@@ -31,7 +31,7 @@ public interface I_GroupChatDataGuard {
 
     public void removeUserFromChat(String username, String groupName);
 
-    public boolean chatExists(String groupName);
+    public boolean chatExists(String groupName) throws SQLException;
 
 	
 

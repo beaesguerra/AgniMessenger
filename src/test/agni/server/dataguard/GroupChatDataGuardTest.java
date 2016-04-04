@@ -137,5 +137,16 @@ public class GroupChatDataGuardTest {
     	assertEquals(actualCurrentChat, expectedCurrentChat);
     	
     }
-   
+   @Test
+   public void chatExistsTest() throws SQLException {
+	   boolean actual = groupChatDataGuard.chatExists("TestChat");
+	   boolean expected = true;
+	   assertEquals(expected, actual);
+   }
+   @Test
+   public void chatDoesNotExistTest() throws SQLException {
+	   boolean actual = groupChatDataGuard.chatExists("does not exist");
+	   boolean expected = false;
+	   assertEquals(expected, actual);
+   }
 }
