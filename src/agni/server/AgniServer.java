@@ -11,7 +11,6 @@ import agni.server.dataguard.GroupChatDataGuard;
 import agni.server.dataguard.I_FileDataGuard;
 import agni.server.dataguard.I_GroupChatDataGuard;
 import agni.server.dataguard.FileDataGuard;
-import agni.server.dataguard.InfoDataGuard;
 import agni.server.dataguard.UserDataGuard;
 import agni.server.manager.ChatManager;
 import agni.server.manager.FileManager;
@@ -35,6 +34,24 @@ import agni.server.communication.ChannelList;
 import agni.server.communication.IpChannelPair;
 
 public class AgniServer {
+	
+	private static String serverIpAddress = "162.246.157.203"; 
+	private static String serverPort = "9001"; 
+	private static String serverName = "AgniMessenger Server";
+	
+	
+	public static String getServerIp() {
+		return serverIpAddress; 
+	}
+	
+	public static String getServerPort() { 
+		return serverPort; 
+	}
+	public static String getServerName() {
+		return serverName;
+	}
+	
+	
 
     public static void main(String[] args) {
 
@@ -51,7 +68,6 @@ public class AgniServer {
         UserDataGuard userDataGuard = new UserDataGuard(null, null, null);
         GroupChatDataGuard chatDataGuard = new GroupChatDataGuard(null, null, null);
         FileDataGuard fileDataGuard = new FileDataGuard(null, null, null);
-        InfoDataGuard infoDataGuard = new InfoDataGuard(null, null, null);
 
         LoginReceiver loginReceiver = new LoginReceiver();
         UserReceiver userReceiver = new UserReceiver();
@@ -71,7 +87,7 @@ public class AgniServer {
 
         ChatManager chatManager = new ChatManager(userDataGuard, chatDataGuard, infoSender, chatSender);
         FileManager fileManager = new FileManager(infoSender, fileSender, fileDataGuard, userDataGuard);
-        InfoRequestManager infoRequestManager = new InfoRequestManager(infoSender, heartbeatSender, fileDataGuard);
+        InfoRequestManager infoRequestManager = new InfoRequestManager(infoSender, heartbeatSender, userDataGuard, chatDataGuard);
         //StatusManager statusManager = new StatusManager(statusSender, userDataGuard);
         HeartbeatManager heartbeatManager = new HeartbeatManager(heartbeatSender, userDataGuard); 
         StatusManager statusManager = new StatusManager(statusSender, userDataGuard);

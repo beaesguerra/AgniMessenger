@@ -31,6 +31,8 @@ public interface I_GroupChatDataGuard {
 
     public boolean chatExists(String groupName);
 
+	String[] availableChats();
+
 
 
 }
