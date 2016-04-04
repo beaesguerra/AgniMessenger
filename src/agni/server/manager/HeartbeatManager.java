@@ -23,18 +23,18 @@ public class HeartbeatManager implements HeartbeatListener{
     }
     
     public void update() {
-        if (System.currentTimeMillis() - lastTimeSent > 200) {
-            sendHeartbeats(); 
-            lastTimeSent = System.currentTimeMillis(); 
-        }
-        float elapsedTime = System.currentTimeMillis() - lastTimeSent; 
-        lastTimeSent = System.currentTimeMillis();
-        for (String user : userDataGuard.getOnlineUsernames()) {
-            userDataGuard.addToLastHeartbeat(user, elapsedTime); 
-            if(userDataGuard.getLastHeartbeat(user) > 5000) {
-                userDataGuard.changeUserCurrentIp(user, null);
-            }
-        }
+//        if (System.currentTimeMillis() - lastTimeSent > 200) {
+//            sendHeartbeats(); 
+//            lastTimeSent = System.currentTimeMillis(); 
+//        }
+//        float elapsedTime = System.currentTimeMillis() - lastTimeSent; 
+//        lastTimeSent = System.currentTimeMillis();
+//        for (String user : userDataGuard.getOnlineUsernames()) {
+//            userDataGuard.addToLastHeartbeat(user, elapsedTime); 
+//            if(userDataGuard.getLastHeartbeat(user) > 5000) {
+//                userDataGuard.changeUserCurrentIp(user, null);
+//            }
+//        }
     }
 
     private void sendHeartbeats() {

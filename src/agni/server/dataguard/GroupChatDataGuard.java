@@ -39,14 +39,14 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
 
     public void createGroupChat(String owner, String groupChatName) throws SQLException {
     	Statement stmt = conn.createStatement();
-    	String statement = "SELECT id FROM Users WHERE username = '" +owner + "';";
+    	String statement = "SELECT id FROM Users WHERE username = \"" +owner + "\";";
     	System.out.println(statement);
     	ResultSet rs = stmt.executeQuery(statement);
     	String ownerId = null;
     	while (rs.next()) {
 	    	ownerId = rs.getString("id");
     	}
-    	statement = "INSERT INTO GroupChats VALUES('" + groupChatName + "', " + ownerId + ");";
+    	statement = "INSERT INTO GroupChats VALUES(\"" + groupChatName + "', " + ownerId + ");";
     	System.out.println(statement);
     	int rs2 = stmt.executeUpdate(statement);
     	
@@ -58,7 +58,7 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
      * */
     public void deleteGroupChat(String groupChatName) throws SQLException {
     	Statement stmt = conn.createStatement();
-    	String checkStatement = "SELECT name FROM GroupChats WHERE name ='" + groupChatName + "';"; 
+    	String checkStatement = "SELECT name FROM GroupChats WHERE name =\"" + groupChatName + "\";"; 
     	System.out.println(checkStatement);
     	ResultSet rs = stmt.executeQuery(checkStatement);
     
@@ -68,7 +68,7 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
     	}
     	else {
 	    	
-	    	String statement = "DELETE FROM GroupChats WHERE name = '" + groupChatName + "';";
+	    	String statement = "DELETE FROM GroupChats WHERE name = \"" + groupChatName + "\";";
 	    	System.out.println(statement);
 	    	int rs2 = stmt.executeUpdate(statement);
 	    	
@@ -77,7 +77,7 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
 
     public String owner(String groupChatName) throws SQLException {
     	Statement stmt = conn.createStatement();
-    	String statement = "SELECT username FROM GroupChats, Users WHERE ownerId = id AND name ='" + groupChatName + "';"; 
+    	String statement = "SELECT username FROM GroupChats, Users WHERE ownerId = id AND name =\"" + groupChatName + "\";"; 
     	System.out.println(statement);
     	ResultSet rs = stmt.executeQuery(statement);
     	String ownerName = null;
@@ -89,7 +89,7 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
 
     public String[] history(String groupChatName) throws SQLException {
     	Statement stmt = conn.createStatement();
-    	String statement = "SELECT username, content  FROM Messages, Users WHERE senderId = id AND groupName = '" + groupChatName + "';";
+    	String statement = "SELECT username, content  FROM Messages, Users WHERE senderId = id AND groupName = \"" + groupChatName + "\";";
     	System.out.println(statement);
     	ResultSet rs = stmt.executeQuery(statement);
     	
@@ -106,7 +106,7 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
 
     public void addMessage(String message, String sender, String groupname) throws SQLException{
     	Statement stmt = conn.createStatement();
-    	String statement = "SELECT id FROM Users WHERE username = '" + sender + "';";
+    	String statement = "SELECT id FROM Users WHERE username = \"" + sender + "\";";
     	System.out.println(statement);
     	ResultSet rs = stmt.executeQuery(statement);
     	String senderId = null;
@@ -117,7 +117,7 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
     	Timestamp dateTime = new java.sql.Timestamp(date.getTime()); 
     	String dateTimeString = dateTime.toString(); 
     	dateTimeString = dateTimeString.substring(0, dateTimeString.length()-4); 
-    	statement = "INSERT INTO Messages(senderId, sentAt, content, groupName) VALUES (" + senderId + ", '" + dateTimeString + "', '" + message + "', '" + groupname + "');";
+    	statement = "INSERT INTO Messages(senderId, sentAt, content, groupName) VALUES (" + senderId + ", \"" + dateTimeString + "', \"" + message + "', \"" + groupname + "');";
     	System.out.println(statement);
     	int rs2 = stmt.executeUpdate(statement);
     
@@ -126,7 +126,7 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
 
     public String[] users(String groupChatName) throws SQLException {
     	Statement stmt = conn.createStatement();
-    	String statement = "SELECT username FROM GroupChats, Users WHERE name = '" + groupChatName + "' and ownerId = id;";
+    	String statement = "SELECT username FROM GroupChats, Users WHERE name = \"" + groupChatName + "' and ownerId = id;";
     	System.out.println(statement);
     	ResultSet rs = stmt.executeQuery(statement);
     	
@@ -142,14 +142,14 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
     @Override
     public void changeUserCurrentChat(String user, String chatname) throws SQLException {
     	Statement stmt = conn.createStatement();
-    	String statement = "SELECT id FROM Users WHERE username = '" + user + "';";
+    	String statement = "SELECT id FROM Users WHERE username = \"" + user + "\";";
     	System.out.println(statement);
     	ResultSet rs = stmt.executeQuery(statement);
     	String userId = null;
     	while (rs.next()) {
 	    	userId = rs.getString("id");
     	}
-    	statement = "UPDATE GroupMembers SET groupName = '" + chatname + "' WHERE userId = " + userId +";";
+    	statement = "UPDATE GroupMembers SET groupName = \"" + chatname + "' WHERE userId = " + userId +";";
     	System.out.println(statement);
     	int rs2 = stmt.executeUpdate(statement);
     	
@@ -158,7 +158,7 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
     @Override
     public String userCurrentChat(String user) throws SQLException {
     	Statement stmt = conn.createStatement();
-    	String statement = "SELECT groupName FROM GroupMembers, Users WHERE username = '" + user + "' AND userId = id;"; 
+    	String statement = "SELECT groupName FROM GroupMembers, Users WHERE username = \"" + user + "' AND userId = id;"; 
     	System.out.println(statement);
     	ResultSet rs = stmt.executeQuery(statement);
     	
@@ -172,14 +172,14 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
     @Override
     public void addUserToChat(String username, String groupChatName) throws SQLException {
      	Statement stmt = conn.createStatement();
-     	String statement = "SELECT id FROM Users WHERE username = '" + username + "';";
+     	String statement = "SELECT id FROM Users WHERE username = \"" + username + "\";";
     	System.out.println(statement);
     	ResultSet rs = stmt.executeQuery(statement);
     	String userId = null;
     	while (rs.next()) {
 	    	userId = rs.getString("id");
     	}
-    	statement = "INSERT INTO GroupMembers(userId, groupName) VALUES (" + userId + ", '" + groupChatName + "');"; 
+    	statement = "INSERT INTO GroupMembers(userId, groupName) VALUES (" + userId + ", \"" + groupChatName + "');"; 
     	System.out.println(statement);  
     	int rs2 = stmt.executeUpdate(statement);
     	
@@ -189,14 +189,14 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
     @Override
     public void removeUserFromChat(String username, String groupName) throws SQLException {
      	Statement stmt = conn.createStatement();
-     	String statement = "SELECT id FROM Users WHERE username = '" + username + "';";
+     	String statement = "SELECT id FROM Users WHERE username = \"" + username + "\";";
     	System.out.println(statement);
     	ResultSet rs = stmt.executeQuery(statement);
     	String userId = null;
     	while (rs.next()) {
 	    	userId = rs.getString("id");
     	}
-    	statement = "DELETE FROM GroupMembers WHERE userId = " + userId + " AND groupName = '" + groupName + "';"; 
+    	statement = "DELETE FROM GroupMembers WHERE userId = " + userId + " AND groupName = \"" + groupName + "\";"; 
     	System.out.println(statement);
     	int rs2 = stmt.executeUpdate(statement);
  
@@ -206,7 +206,7 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
     @Override
     public boolean chatExists(String groupName) throws SQLException {
     	Statement stmt = conn.createStatement();
-    	String statement = "SELECT name FROM GroupChats WHERE name = '" + groupName + "';"; 
+    	String statement = "SELECT name FROM GroupChats WHERE name = \"" + groupName + "\";"; 
     	System.out.println(statement);
     	ResultSet rs = stmt.executeQuery(statement);
     	
