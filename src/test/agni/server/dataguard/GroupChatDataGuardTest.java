@@ -125,4 +125,16 @@ public class GroupChatDataGuardTest {
     	String expectedCurrentChat = "TestChat"; 
     	assertEquals(actualCurrentChat, expectedCurrentChat);
     }
+    @Test
+    public void changeChatTest() throws SQLException {
+    	groupChatDataGuard.createGroupChat("EnochTsang", "newGroup");
+    	String actualCurrentChat = groupChatDataGuard.userCurrentChat("TestUser");
+    	String expectedCurrentChat = "TestChat"; 
+    	assertEquals(actualCurrentChat, expectedCurrentChat);
+    	groupChatDataGuard.changeUserCurrentChat("TestUser", "newGroup");
+    	actualCurrentChat = groupChatDataGuard.userCurrentChat("TestUser");
+    	expectedCurrentChat = "newGroup"; 
+    	assertEquals(actualCurrentChat, expectedCurrentChat);
+    	
+    }
 }

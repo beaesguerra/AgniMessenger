@@ -137,8 +137,20 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
     }
 
     @Override
-    public void changeUserCurrentChat(String user, String chatname) {
-        // TODO Auto-generated method stub
+    public void changeUserCurrentChat(String user, String chatname) throws SQLException {
+    	Statement stmt = conn.createStatement();
+    	String statement = "SELECT id FROM Users WHERE username = '" + user + "';";
+    	System.out.println(statement);
+    	ResultSet rs = stmt.executeQuery(statement);
+    	String userId = null;
+    	while (rs.next()) {
+	    	userId = rs.getString("id");
+    	}
+    	statement = "UPDATE GroupMembers SET groupName = '" + chatname + "' WHERE userId = " + userId +";";
+    	
+    	int rs2 = stmt.executeUpdate(statement);
+    	System.out.println(statement);
+    	
         
     }
 
@@ -146,8 +158,8 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
     public String userCurrentChat(String user) throws SQLException {
     	Statement stmt = conn.createStatement();
     	String statement = "SELECT groupName FROM GroupMembers, Users WHERE username = '" + user + "' AND userId = id;"; 
-    	System.out.println(statement);
     	ResultSet rs = stmt.executeQuery(statement);
+    	System.out.println(statement);
     	String currentChat = null;
     	while (rs.next()) {
 	    	currentChat = rs.getString("groupName");

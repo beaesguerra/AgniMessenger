@@ -23,7 +23,7 @@ public interface I_GroupChatDataGuard {
     public String[] users(String groupChatName) throws SQLException;
     
     
-    public void changeUserCurrentChat(String user, String chatname);
+    public void changeUserCurrentChat(String user, String chatname) throws SQLException;
 
     public String userCurrentChat(String user) throws SQLException;
     
