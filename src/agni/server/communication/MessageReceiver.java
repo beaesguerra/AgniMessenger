@@ -13,6 +13,7 @@ import java.nio.charset.CharsetDecoder;
 import java.util.Iterator;
 import java.util.Set;
 
+import agni.server.manager.HeartbeatManager;
 import agni.server.receiver.ChatReceiver;
 import agni.server.receiver.FileReceiver;
 import agni.server.receiver.HeartbeatReceiver;
@@ -31,7 +32,7 @@ public class MessageReceiver {
     InfoRequestReceiver infoRequestReceiver;
     LoginReceiver loginReceiver;
     UserReceiver userReceiver;
-
+    HeartbeatManager heartbeatManager;
     
     public MessageReceiver(ChannelList channels,
             LoginReceiver loginReceiver,
@@ -39,7 +40,8 @@ public class MessageReceiver {
             ChatReceiver chatReceiver,
             FileReceiver fileReceiver,
             InfoRequestReceiver infoRequestReceiver, 
-            HeartbeatReceiver heartbeatReceiver) {
+            HeartbeatReceiver heartbeatReceiver,
+            HeartbeatManager heartbeatManager) {
         
         this.loginReceiver = loginReceiver;
         this.userReceiver = userReceiver;
@@ -47,7 +49,13 @@ public class MessageReceiver {
         this.fileReceiver = fileReceiver;
         this.infoRequestReceiver = infoRequestReceiver; 
         this.heartBeatReceiver = heartbeatReceiver;
+        this.heartbeatManager = heartbeatManager;
         this.channelList = channels;
+        try {
+            channel = ServerSocketChannel.open();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     public enum MessageTypes {
@@ -166,6 +174,7 @@ public class MessageReceiver {
         //boolean terminated = false;
         while (!terminated) 
         {
+                heartbeatManager.update();
                 if (selector.select(errorCheck) < 0) {
                     System.out.println("select() failed");
                     System.exit(1);

@@ -76,14 +76,6 @@ public class AgniServer {
         InfoRequestReceiver infoRequestReceiver = new InfoRequestReceiver();
         HeartbeatReceiver heartbeatReceiver = new HeartbeatReceiver();
 
-        MessageReceiver messageReceiver = new MessageReceiver(channels,
-                                                              loginReceiver,
-                                                              userReceiver,
-                                                              chatReceiver,
-                                                              fileReceiver,
-                                                              infoRequestReceiver,
-                                                              heartbeatReceiver);
-
 
         ChatManager chatManager = new ChatManager(userDataGuard, chatDataGuard, infoSender, chatSender);
         FileManager fileManager = new FileManager(infoSender, fileSender, fileDataGuard, userDataGuard);
@@ -93,6 +85,15 @@ public class AgniServer {
         StatusManager statusManager = new StatusManager(statusSender, userDataGuard);
         LoginManager loginManager = new LoginManager(infoSender, userDataGuard, statusManager);
         UserManager userManager = new UserManager(infoSender, userDataGuard, chatDataGuard, statusManager);
+
+        MessageReceiver messageReceiver = new MessageReceiver(channels,
+                                                              loginReceiver,
+                                                              userReceiver,
+                                                              chatReceiver,
+                                                              fileReceiver,
+                                                              infoRequestReceiver,
+                                                              heartbeatReceiver,
+                                                              heartbeatManager);
         
         loginReceiver.register(loginManager);
         userReceiver.register(userManager);
@@ -101,6 +102,9 @@ public class AgniServer {
         infoRequestReceiver.register(infoRequestManager);
         heartbeatReceiver.register(heartbeatManager);
         
+        messageReceiver.initializeConnection(args[0]);
+        messageReceiver.waitForClients();
+
         // TODO:	
         //	while (true) {
         // 		receivePackets(); 
