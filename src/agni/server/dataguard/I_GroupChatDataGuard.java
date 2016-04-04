@@ -1,8 +1,10 @@
 package agni.server.dataguard;
 
+import java.sql.SQLException;
+
 public interface I_GroupChatDataGuard {
 
-    public String[] allGroupChats();
+    public String[] allGroupChats() throws SQLException;
     
     public void createGroupChat(String owner, String groupChatName);
 
