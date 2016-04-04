@@ -137,4 +137,5 @@ public class GroupChatDataGuardTest {
     	assertEquals(actualCurrentChat, expectedCurrentChat);
     	
     }
+   
 }

@@ -184,12 +184,5 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
         // TODO Auto-generated method stub
         return false;
     }
-    /*
-	 * should return name of chats available
-	 */
-	@Override
-	public String[] availableChats() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+  
 }

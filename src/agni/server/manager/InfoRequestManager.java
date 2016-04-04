@@ -3,6 +3,9 @@ package agni.server.manager;
 
 import agni.server.receiver.InfoListener;
 import agni.server.sender.HeartbeatSender;
+
+import java.sql.SQLException;
+
 import agni.server.AgniServer;
 import agni.server.dataguard.GroupChatDataGuard;
 import agni.server.dataguard.I_FileDataGuard;
@@ -45,7 +48,7 @@ public class InfoRequestManager implements InfoListener{
     }
 
     @Override
-    public void infoRequest(String ip, byte type) {
+    public void infoRequest(String ip, byte type) throws SQLException {
     	if (type == InfoRequestType.SERVER_IP.bytes()){
     		infoSender.sendInfo(ip, AgniServer.getServerIp());
     	}
@@ -64,7 +67,7 @@ public class InfoRequestManager implements InfoListener{
     	}
     	else if (type == InfoRequestType.CURRENT_CHATS.bytes()){
     		String chats = "";
-    		for(String chat : groupChatDataGuard.availableChats()) {
+    		for(String chat : groupChatDataGuard.allGroupChats()) {
     			chats.concat(chat + "\n");
     		}
     		infoSender.sendInfo(ip, "Available chats:\n" + chats);
