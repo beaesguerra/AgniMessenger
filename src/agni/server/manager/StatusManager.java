@@ -10,7 +10,6 @@ public class StatusManager implements StatusListener{
     private StatusSender statusSender;
     private I_UserDataGuard userDataGuard;
 
-
     public StatusManager(StatusSender statusSender,
                          UserDataGuard userDataGuard) {
         this.statusSender = statusSender;
