@@ -23,6 +23,7 @@ public class UserDataGuardTest {
         String[] commands =  new String[] {"mysql", "--user=" + dbUserName, dbName, "-e", "source " + source};
         try {
             Runtime.getRuntime().exec(commands);
+            Thread.sleep(100);
         } catch (IOException e) {
             e.printStackTrace();
         }
