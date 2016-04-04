@@ -120,13 +120,20 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
     	int rs2 = stmt.executeUpdate(statement);
     	System.out.println(statement);
     	
-    	
-    	
-		
     }
 
-    public String[] users(String groupChatName) {
-        return null;
+    public String[] users(String groupChatName) throws SQLException {
+    	Statement stmt = conn.createStatement();
+    	String statement = "SELECT username FROM GroupChats, Users WHERE name = '" + groupChatName + "' and ownerId = id;";
+    	ResultSet rs = stmt.executeQuery(statement);
+    	System.out.println(statement);
+    	ArrayList<String> messages = new ArrayList<String>(); 
+    	while (rs.next()) {
+    		messages.add(rs.getString("username"));
+    	}
+    	String [] users = new String[messages.size()];
+        users = messages.toArray(users);
+    	return users;
     }
 
     /*

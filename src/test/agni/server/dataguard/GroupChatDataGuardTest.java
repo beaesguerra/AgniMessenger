@@ -108,9 +108,11 @@ public class GroupChatDataGuardTest {
     }
 
 
-   // @Test
-    public void getGroupChatUsersTest() {
-        fail("Not yet implemented");
+   @Test
+    public void getGroupChatUsersTest() throws SQLException {
+        String [] actualGroupChatUsers = groupChatDataGuard.users("TestChat");
+        String [] expectedGroupChatUsers = { "TestUser" };
+        assertArrayEquals(actualGroupChatUsers, expectedGroupChatUsers);
     }
 
    // @Test
