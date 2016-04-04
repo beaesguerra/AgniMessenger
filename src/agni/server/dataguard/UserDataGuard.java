@@ -1,8 +1,6 @@
 package agni.server.dataguard;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,12 +10,13 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 public class UserDataGuard implements I_UserDataGuard {
 	private Connection database;
-	private 
+	private ArrayList<UserInfo> userInfo = null; 
 	
 //  private database;
     // private users, ips, and lastHeartBeat for each online user
 
     public UserDataGuard(String dbname, String username, String password) throws SQLException {
+		userInfo = new ArrayList<UserInfo>();
        	MysqlDataSource dataSource = new MysqlDataSource(); 
     	dataSource.setUser(username);
     	dataSource.setPassword(password); 
@@ -79,21 +78,17 @@ public class UserDataGuard implements I_UserDataGuard {
     	Statement stmtA = null;
     	Statement stmtB = null;
     	Statement stmtC = null;
-    	Statement stmtD = null;
     	ResultSet rsA = null;
     	ResultSet rsB = null;
     	ResultSet rsC = null;
-    	ResultSet rsD = null;
 
     	try {
     		stmtA = database.createStatement();
 			stmtB = database.createStatement();
 			stmtC = database.createStatement();
-			stmtD = database.createStatement();
-			rsA = stmtB.executeQuery("SELECT id FROM Users WHERE username == "+user);
+			rsA = stmtA.executeQuery("SELECT id FROM Users WHERE username == "+user);
 			rsB = stmtB.executeQuery("SELECT userIDTwo FROM Friends WHERE userIDOne == "+rsA.getString(1) );
 			rsC = stmtC.executeQuery("SELECT userIDOne FROM Friends WHERE userIDTwo == "+rsA.getString(1) );
-			rsD = stmtD.executeQuery("SELECT * FROM "+ rsB + "," + rsC + "WHERE userIDOne=" + rsB +".userIDTwo");
 		
 			while(rsB.next()) {
 				result.add(rsB.getString(1));
@@ -101,8 +96,6 @@ public class UserDataGuard implements I_UserDataGuard {
 			while(rsC.next()){
 				result.add(rsC.getString(1));
 			}
-			
-				
 
 			rsA.close();
 			stmtA.close();
@@ -114,254 +107,195 @@ public class UserDataGuard implements I_UserDataGuard {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        return null;
+        return 	(String[]) result.toArray();
     }
 
     public void createFriendship(String user1, String user2) {
-    	ResultSet rs = null;
-    	Statement stmt = null;
-    	
+     	Statement stmtA = null;
+    	Statement stmtB = null;
+    	Statement stmtC = null;
+    	ResultSet rsA = null;
+    	ResultSet rsB = null;
+    	ResultSet rsC = null;
+
     	try {
-    		stmt = database.createStatement();
-			stmt = database.createStatement();
-			rs = stmt.executeQuery("insert into Users (username, salt, passwordHash) values (" + username + ", " + salt + ", " + passwordHash + ")");
-			rs.close();
-			stmt.close();
+    		stmtA = database.createStatement();
+			stmtB = database.createStatement();
+			stmtC = database.createStatement();
+			rsA = stmtA.executeQuery("SELECT id FROM Users WHERE username == "+user1);
+			rsB = stmtB.executeQuery("SELECT id FROM Users WHERE username == "+user2);
+			rsC = stmtC.executeQuery("INSERT INTO Friends (userIdOne, userIdTwo) values (" + rsA.getString(1) + ", " + rsB.getString(1) +")");
+			rsA.close();
+			stmtA.close();
+			rsB.close();
+			stmtB.close();
+			rsC.close();
+			stmtC.close();
     	} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
     }
 
     /*
      * if ip == null, remove from data structure that keeps track of online users
      */
     public void changeUserCurrentIp(String user, String ip) {
-    	ResultSet rs = null;
-    	Statement stmt = null;
-    	
-    	try {
-    		stmt = database.createStatement();
-			stmt = database.createStatement();
-			rs = stmt.executeQuery("insert into Users (username, salt, passwordHash) values (" + username + ", " + salt + ", " + passwordHash + ")");
-			rs.close();
-			stmt.close();
-    	} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+    	for(int i = 0; i<userInfo.size(); i++){
+    		if(userInfo.get(i).username == user)
+    			if(ip == null) {
+        			userInfo.get(i).ip = null;	
+    			}
+    			else {
+    			userInfo.get(i).ip = ip;
+    			}
+    	}
     }
 
     /* return null if user not online */
     public String userCurrentIp(String user) {
-    	ResultSet rs = null;
-    	Statement stmt = null;
-    	
-    	try {
-    		stmt = database.createStatement();
-			stmt = database.createStatement();
-			rs = stmt.executeQuery("insert into Users (username, salt, passwordHash) values (" + username + ", " + salt + ", " + passwordHash + ")");
-			rs.close();
-			stmt.close();
-    	} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        return null;
+    	String currentIP = null;
+    	for(int i = 0; i < userInfo.size(); i++) {
+    		if(userInfo.get(i).username == user)
+    			currentIP = userInfo.get(i).ip;
+    	}
+		return currentIP;
     }
 
     @Override
     public void loginUser(String ip, String user) {
-        // TODO Auto-generated method stub
-        
+    	if(ip == null || user == null)
+    		throw new NullPointerException("loginUser received a null user/ip");
+        userInfo.add(new UserInfo(user, 0, ip));
     }
 
     @Override
     public boolean userExists(String user) {
-    	ResultSet rs = null;
-    	Statement stmt = null;
-    	
-    	try {
-    		stmt = database.createStatement();
-			stmt = database.createStatement();
-			rs = stmt.executeQuery("insert into Users (username, salt, passwordHash) values (" + username + ", " + salt + ", " + passwordHash + ")");
-			rs.close();
-			stmt.close();
-    	} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        // TODO Auto-generated method stub
-        return false;
+    	boolean userExists = false;
+    	for(int i = 0; i < userInfo.size(); i++) {
+    		if(user == userInfo.get(i).username) {
+    			userExists = true;
+    			break;
+    		}
+    	}
+         return userExists;
     }
     @Override
     public String getUsername(String ip) {
-    	ResultSet rs = null;
-    	Statement stmt = null;
-    	
-    	try {
-    		stmt = database.createStatement();
-			stmt = database.createStatement();
-			rs = stmt.executeQuery("insert into Users (username, salt, passwordHash) values (" + username + ", " + salt + ", " + passwordHash + ")");
-			rs.close();
-			stmt.close();
-    	} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        // TODO Auto-generated method stub
-        return null;
+    	if(ip == null)
+    		throw new NullPointerException("getUsername received a null ip");
+    	String userName = null;
+    	for(int i = 0; i < userInfo.size(); i++) {
+    		if(ip == userInfo.get(i).ip) {
+    			userName = userInfo.get(i).username;
+    		}
+    	}
+    	return userName;
     }
 
     
     @Override
     public boolean isOnline(String friend) {
-    	ResultSet rs = null;
-    	Statement stmt = null;
-    	
-    	try {
-    		stmt = database.createStatement();
-			stmt = database.createStatement();
-			rs = stmt.executeQuery("insert into Users (username, salt, passwordHash) values (" + username + ", " + salt + ", " + passwordHash + ")");
-			rs.close();
-			stmt.close();
-    	} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        // TODO Auto-generated method stub
-        return false;
+    	boolean isOnline = false;
+    	for(int i = 0; i < userInfo.size(); i++) {
+    		if(friend == userInfo.get(i).username) {
+    			if(userInfo.get(i).ip != null){
+    				isOnline = true;
+    				break;
+    			}
+    		}
+    	}
+    	return isOnline;
     }
 
     // set lastheartbeat for username to 0 
     @Override
     public void resetLastHeartbeat(String username) {
-    	ResultSet rs = null;
-    	Statement stmt = null;
-    	
-    	try {
-    		stmt = database.createStatement();
-			stmt = database.createStatement();
-			rs = stmt.executeQuery("insert into Users (username, salt, passwordHash) values (" + username + ", " + salt + ", " + passwordHash + ")");
-			rs.close();
-			stmt.close();
-    	} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        // TODO Auto-generated method stub
+    	for(int i = 0; i < userInfo.size(); i++) {
+    		if(username == userInfo.get(i).username) {
+    			userInfo.get(i).lastHeartbeat = 0;
+    		}
+    	}
         
     }
 
     @Override
     public String[] getOnlineUsernames() {
-    	ResultSet rs = null;
-    	Statement stmt = null;
-    	
-    	try {
-    		stmt = database.createStatement();
-			stmt = database.createStatement();
-			rs = stmt.executeQuery("insert into Users (username, salt, passwordHash) values (" + username + ", " + salt + ", " + passwordHash + ")");
-			rs.close();
-			stmt.close();
-    	} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        // TODO Auto-generated method stub
-        return null;
+    	ArrayList<String> onlineUsers = new ArrayList<String>();
+    	for(int i = 0; i < userInfo.size(); i++) {
+    		if(userInfo.get(i).ip != null) {
+    			onlineUsers.add(userInfo.get(i).username);
+    		}
+    	}
+    	return (String[]) onlineUsers.toArray();
     }
+    
     // add to a user's current lastheartbeat time
     @Override
     public void addToLastHeartbeat(String user, float elapsedTime) {
-    	ResultSet rs = null;
-    	Statement stmt = null;
-    	
-    	try {
-    		stmt = database.createStatement();
-			stmt = database.createStatement();
-			rs = stmt.executeQuery("insert into Users (username, salt, passwordHash) values (" + username + ", " + salt + ", " + passwordHash + ")");
-			rs.close();
-			stmt.close();
-    	} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        // TODO Auto-generated method stub
-        
+    	for(int i = 0; i < userInfo.size(); i++) {
+    		if(userInfo.get(i).username == user) {
+    			userInfo.get(i).lastHeartbeat += elapsedTime;
+    			break;
+    		}
+    	}
     }
     // return a user's current lastheartbeat
     @Override
     public int getLastHeartbeat(String user) {
-    	ResultSet rs = null;
-    	Statement stmt = null;
-    	
-    	try {
-    		stmt = database.createStatement();
-			stmt = database.createStatement();
-			rs = stmt.executeQuery("insert into Users (username, salt, passwordHash) values (" + username + ", " + salt + ", " + passwordHash + ")");
-			rs.close();
-			stmt.close();
-    	} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        // TODO Auto-generated method stub
-        return 0;
+    	int lastHeartBeat = -1;
+    	for(int i = 0; i < userInfo.size(); i++) {
+    		if(userInfo.get(i).username == user) {
+    			lastHeartBeat = (int) userInfo.get(i).lastHeartbeat;
+    			break;
+    		}
+    	}
+    	return lastHeartBeat;
     }
 
     @Override
-    public String[] getOnlineUserIps() {ResultSet rs = null;
-	Statement stmt = null;
-	
-	try {
-		stmt = database.createStatement();
-		stmt = database.createStatement();
-		rs = stmt.executeQuery("insert into Users (username, salt, passwordHash) values (" + username + ", " + salt + ", " + passwordHash + ")");
-		rs.close();
-		stmt.close();
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-		return null;
+    public String[] getOnlineUserIps() {
+    	ArrayList<String> onlineUsersIp = new ArrayList<String>();
+    	for(int i = 0; i < userInfo.size(); i++) {
+    		if(userInfo.get(i).ip != null) {
+    			onlineUsersIp.add(userInfo.get(i).ip);
+    		}
+    	}
+    	return (String[]) onlineUsersIp.toArray();
     }
+    
     @Override
-    public String getIp(String member) {
-    	ResultSet rs = null;
-    	Statement stmt = null;
-    	
-    	try {
-    		stmt = database.createStatement();
-			stmt = database.createStatement();
-			rs = stmt.executeQuery("insert into Users (username, salt, passwordHash) values (" + username + ", " + salt + ", " + passwordHash + ")");
-			rs.close();
-			stmt.close();
-    	} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        // TODO Auto-generated method stub
-        return null;
+    public String getIp(String user) {
+    	String userIp = null;
+    	for(int i = 0; i < userInfo.size(); i++) {
+    		if(userInfo.get(i).username == user) {
+    			userIp = userInfo.get(i).ip;
+    			break;
+    		}
+    	}
+    	return userIp;
     }
-    @Override
+    
+
 	public String[] usersOnline() {
-    	ResultSet rs = null;
-    	Statement stmt = null;
-    	
-    	try {
-    		stmt = database.createStatement();
-			stmt = database.createStatement();
-			rs = stmt.executeQuery("insert into Users (username, salt, passwordHash) values (" + username + ", " + salt + ", " + passwordHash + ")");
-			rs.close();
-			stmt.close();
-    	} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// TODO Auto-generated method stub
-		return null;
+    	ArrayList<String> onlineUsers = new ArrayList<String>();
+    	for(int i = 0; i < userInfo.size(); i++) {
+    		if(userInfo.get(i).ip != null) {
+    			onlineUsers.add(userInfo.get(i).username);
+    		}
+    	}
+    	return (String[]) onlineUsers.toArray();
 	}	
+    
+    private class UserInfo {
+    	protected String username = null;
+    	protected float lastHeartbeat = 0;
+    	protected String ip = null;
+    	
+    	protected UserInfo(String userName, float hb, String ip){
+    		this.username = userName;
+    		this.lastHeartbeat = hb;
+    		this.ip = ip;
+    	}
+    }
 }

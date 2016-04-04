@@ -3,6 +3,7 @@ package test.agni.server.dataguard;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Arrays;
 
 import org.junit.Before;
@@ -15,7 +16,7 @@ public class UserDataGuardTest {
     private UserDataGuard userDataGuard;
 
     @Before
-    public void setup() {
+    public void setup() throws SQLException {
         String dbName = "agni_test";
         String dbUserName = "agni_tester";
         String source = "AgniTest.sql";
