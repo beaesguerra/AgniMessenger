@@ -18,11 +18,13 @@ import agni.server.sender.InfoSender;
 public class LoginManager implements LoginListener{
     private InfoSender infoSender;
     private I_UserDataGuard userDataGuard;
+    private StatusManager statusManager; 
 
     public LoginManager(InfoSender infoSender,
-                        UserDataGuard userDataGuard) {
+                        UserDataGuard userDataGuard, StatusManager statusManager) {
         this.infoSender = infoSender;
         this.userDataGuard = userDataGuard;
+        this.statusManager = statusManager;
     }
     private byte [] generateSalt() {
         final Random r = new SecureRandom();
@@ -43,6 +45,7 @@ public class LoginManager implements LoginListener{
             if (generatePasswordHash(password, userDataGuard.salt(user).getBytes()) == userDataGuard.getPasswordHash(user)) {
                 userDataGuard.loginUser(ip, user);
                 infoSender.sendInfo(ip, "approved");
+                statusManager.receiveStatusChange(ip, (byte)0x01);
             }
             else {
                 infoSender.sendInfo(ip, "declined");
