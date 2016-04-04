@@ -293,12 +293,17 @@ public class UserDataGuard implements I_UserDataGuard {
 
 	public String[] usersOnline() {
     	ArrayList<String> onlineUsers = new ArrayList<String>();
+    	String[] result = null;
     	for(int i = 0; i < userInfo.size(); i++) {
     		if(userInfo.get(i).ip != null) {
     			onlineUsers.add(userInfo.get(i).username);
     		}
     	}
-    	return (String[]) onlineUsers.toArray();
+       	result = new String[onlineUsers.size()];
+    	for(int i = 0; i < onlineUsers.size(); i++) {
+    		result[i] = onlineUsers.get(i);
+    	}
+    	return result;
 	}	
     
     private class UserInfo {
