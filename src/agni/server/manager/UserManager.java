@@ -1,5 +1,6 @@
 package agni.server.manager;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 
 import agni.server.dataguard.GroupChatDataGuard;
@@ -13,6 +14,7 @@ public class UserManager implements UserListener {
     private InfoSender infoSender;
     private I_UserDataGuard userDataGuard;
     private I_GroupChatDataGuard groupChatDataGuard;
+    private StatusManager statusManager;
 
     public enum UserRequestType {
         JOIN_CHAT((byte) 0x00), 
@@ -35,10 +37,11 @@ public class UserManager implements UserListener {
         }
     }
 
-    public UserManager(InfoSender infoSender, UserDataGuard userDataGuard, GroupChatDataGuard groupChatDataGuard) {
+    public UserManager(InfoSender infoSender, UserDataGuard userDataGuard, GroupChatDataGuard groupChatDataGuard, StatusManager statusManager) {
         this.infoSender = infoSender;
         this.userDataGuard = userDataGuard;
         this.groupChatDataGuard = groupChatDataGuard;
+        this.statusManager = statusManager;
     }
 
     private boolean friendHasAccepted(String username, String friend) {
@@ -51,13 +54,13 @@ public class UserManager implements UserListener {
     }
 
     @Override
-    public void userRequest(String ip, byte type, String argument) {
+    public void userRequest(String ip, byte type, String argument) throws SQLException {
         // TODO Auto-generated method stub
         String username = userDataGuard.getUsername(ip);
         if(type == UserRequestType.JOIN_CHAT.bytes()) {             // join chat; argument = group to join
             String groupName = argument; 
             if (groupChatDataGuard.chatExists(groupName)) {
-                if (!groupChatDataGuard.userCurrentChat(username).equals(null)) {
+                if (groupChatDataGuard.userCurrentChat(username) != null) {
                     groupChatDataGuard.removeUserFromChat(username, groupChatDataGuard.userCurrentChat(username));
                 }
                 groupChatDataGuard.addUserToChat(username,groupName); 
@@ -69,7 +72,7 @@ public class UserManager implements UserListener {
         }
         else if (type == UserRequestType.LEAVE_CHAT.bytes()){   // leave chat 
             String groupName = groupChatDataGuard.userCurrentChat(username); 
-            if (!groupChatDataGuard.userCurrentChat(username).equals(null)) {
+            if (groupChatDataGuard.userCurrentChat(username) != null) {
                 groupChatDataGuard.removeUserFromChat(username,groupName); 
                 infoSender.sendInfo(ip, "success: leaving " + groupName);
             }
@@ -87,12 +90,12 @@ public class UserManager implements UserListener {
                 return;
             }
             for (int i = 0; i < friendList.length; i++) {
-                friends.concat(friendList[i] + " " );
+                friends += friendList[i] + " ";
                 if(userDataGuard.isOnline(friendList[i])) {
-                    friends.concat("online\n" );
+                    friends += "online\n";
                 }
                 else {
-                    friends.concat("offline\n" );
+                    friends += "offline\n";
                 }
             }
             infoSender.sendInfo(ip, "friends:\n" + friends);
@@ -138,12 +141,13 @@ public class UserManager implements UserListener {
         else if (type == UserRequestType.LOGOUT.bytes()){       // logout 
             userDataGuard.changeUserCurrentIp(username, null);
             infoSender.sendInfo(ip, "logged out");
+            statusManager.receiveStatusChange(ip, (byte)0x00);
         }
         else if (type == UserRequestType.CREATE_CHAT.bytes()){       // create chat 
             String groupName = argument; 
             if (!groupChatDataGuard.chatExists(groupName)){ 
                 groupChatDataGuard.createGroupChat(username, groupName);    //create chat
-                if(!groupChatDataGuard.userCurrentChat(username).equals(null)) {
+                if(groupChatDataGuard.userCurrentChat(username) != null) {
                     groupChatDataGuard.removeUserFromChat(username, groupChatDataGuard.userCurrentChat(username));
                 }
                 groupChatDataGuard.addUserToChat(username, groupName);

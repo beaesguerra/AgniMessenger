@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import agni.server.receiver.StatusListener;
+import agni.server.receiver.HeartbeatListener;
 import agni.server.receiver.HeartbeatReceiver;
 
 public class HeartBeatReceiverTest {
@@ -20,7 +21,7 @@ public class HeartBeatReceiverTest {
     byte[] bufferArray = null;
 
     Mockery context = new Mockery();
-    StatusListener mockStatusListener;
+    HeartbeatListener mockStatusListener;
     HeartbeatReceiver hbReceiver;
     
     @Before
@@ -42,7 +43,7 @@ public class HeartBeatReceiverTest {
         
         hbReceiver = new HeartbeatReceiver();
         
-        mockStatusListener = context.mock(StatusListener.class);
+        mockStatusListener = context.mock(HeartbeatListener.class);
         hbReceiver.register(mockStatusListener);
     }
 
@@ -51,35 +52,5 @@ public class HeartBeatReceiverTest {
 
     }
 
-    @Test
-    public void correctInputTest() {
-        context.checking(new Expectations() {{
-            oneOf(mockStatusListener).ReceivedHeartBeat("192.168.1.1", testStatus);
-        }});
-        hbReceiver.receiveMessage(testIp, bufferArray);
-        context.assertIsSatisfied();
-    }
-    
-    
-    @Test(expected = NullPointerException.class)
-    public void nullIpTest() {
-        context.checking(new Expectations() {{
-            final String expectedIp = "192.168.1.1";
-            oneOf(mockStatusListener).ReceivedHeartBeat(expectedIp, testStatus);
-        }});
-        hbReceiver.receiveMessage(null, bufferArray);
-        context.assertIsSatisfied();
-    }
-    
-    @Test(expected = NullPointerException.class)
-    public void nullMessageTest() {
-        context.checking(new Expectations() {{
-            final String expectedIp = "192.168.1.1";
-            oneOf(mockStatusListener).ReceivedHeartBeat(expectedIp, testStatus);
-        }});
-        hbReceiver.receiveMessage(testIp, null);
-        context.assertIsSatisfied();
-    }
-    
 }
 

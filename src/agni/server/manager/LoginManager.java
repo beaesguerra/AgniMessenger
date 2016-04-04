@@ -18,11 +18,13 @@ import agni.server.sender.InfoSender;
 public class LoginManager implements LoginListener{
     private InfoSender infoSender;
     private I_UserDataGuard userDataGuard;
+    private StatusManager statusManager; 
 
     public LoginManager(InfoSender infoSender,
-                        UserDataGuard userDataGuard) {
+                        UserDataGuard userDataGuard, StatusManager statusManager) {
         this.infoSender = infoSender;
         this.userDataGuard = userDataGuard;
+        this.statusManager = statusManager;
     }
     private byte [] generateSalt() {
         final Random r = new SecureRandom();
@@ -35,22 +37,37 @@ public class LoginManager implements LoginListener{
         KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
         SecretKeyFactory f = SecretKeyFactory.getInstance("pbkdf2withhmacsha1");
         byte[] hash = f.generateSecret(spec).getEncoded();
-        return new String(hash,StandardCharsets.US_ASCII);
+        // return new String(hash,StandardCharsets.US_ASCII);
+        return password;
     }
     @Override
     public void loginRequest(String ip, String user, String password) {
-        try {
-            if (generatePasswordHash(password, userDataGuard.salt(user).getBytes()) == userDataGuard.getPasswordHash(user)) {
-                userDataGuard.loginUser(ip, user);
-                infoSender.sendInfo(ip, "approved");
-            }
-            else {
-                infoSender.sendInfo(ip, "declined");
-            }
-        } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    	if(userDataGuard.userExists(user)){
+			try {
+				if (generatePasswordHash(password, userDataGuard.salt(user).getBytes())
+						.equals(userDataGuard.getPasswordHash(user))) {
+					userDataGuard.loginUser(ip, user);
+					infoSender.sendInfo(ip, "approved!");
+					statusManager.receiveStatusChange(ip, (byte) 0x01);
+				} else {
+					infoSender.sendInfo(ip, "declined!");
+				}
+			} catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(userDataGuard.isOnline(user)){
+				infoSender.sendInfo(ip, "successfully Logged in");
+			}
+			else{
+				infoSender.sendInfo(ip, "unsuccessful Log in attempt");
+
+			}
+				
+    	}
+    	else{
+    		infoSender.sendInfo(ip,  "user does not exist");
+    	}
     }
 
     @Override
@@ -67,6 +84,7 @@ public class LoginManager implements LoginListener{
                 e.printStackTrace();
             }
             String saltString = new String(salt, StandardCharsets.US_ASCII);
+            System.out.println(saltString);
             userDataGuard.registerUser(user, saltString, passwordHash);
             infoSender.sendInfo(ip, "success: " + user + " registered");
         }

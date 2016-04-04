@@ -4,6 +4,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 import agni.client.receiver.ChatReceiver;
 import agni.client.receiver.FileReceiver;
@@ -28,7 +29,9 @@ public class MessageSender {
     }
 
     public synchronized void sendMessage(byte[] message) {
-        int length = message.length;
+    	// System.out.println(new String(message, StandardCharsets.US_ASCII));
+        
+    	int length = message.length;
         try {
             dataOut.write(message, 0, length);
             dataOut.flush();

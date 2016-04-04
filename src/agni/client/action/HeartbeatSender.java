@@ -27,7 +27,7 @@ public class HeartbeatSender implements Runnable {
 
     public void run() {
         while (true) {
-            // send a heart beat
+            messageSender.sendMessage(hexStringToByteArray("000000060101"));
             try {
                 Thread.sleep(period);
             } catch (InterruptedException e) {
@@ -36,4 +36,13 @@ public class HeartbeatSender implements Runnable {
         }
     }
 
+    private static byte[] hexStringToByteArray(String s) {
+        int len = s.length();
+        byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                                  + Character.digit(s.charAt(i + 1), 16));
+        }
+        return data;
+    }
 }

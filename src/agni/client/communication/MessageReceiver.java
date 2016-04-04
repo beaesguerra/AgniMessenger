@@ -74,7 +74,7 @@ public class MessageReceiver implements Runnable {
             } catch (IOException e) {
                 System.exit(1);
             }
-
+            
             byte messageType = lineBytes[4];
             if (messageType == MessageTypes.HEARTBEAT.bytes()) {
                 // Pass to heartbeatReceiver

@@ -10,9 +10,12 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
+import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Set;
 
+import agni.server.manager.HeartbeatManager;
 import agni.server.receiver.ChatReceiver;
 import agni.server.receiver.FileReceiver;
 import agni.server.receiver.HeartbeatReceiver;
@@ -31,7 +34,7 @@ public class MessageReceiver {
     InfoRequestReceiver infoRequestReceiver;
     LoginReceiver loginReceiver;
     UserReceiver userReceiver;
-
+    HeartbeatManager heartbeatManager;
     
     public MessageReceiver(ChannelList channels,
             LoginReceiver loginReceiver,
@@ -39,7 +42,8 @@ public class MessageReceiver {
             ChatReceiver chatReceiver,
             FileReceiver fileReceiver,
             InfoRequestReceiver infoRequestReceiver, 
-            HeartbeatReceiver heartbeatReceiver) {
+            HeartbeatReceiver heartbeatReceiver,
+            HeartbeatManager heartbeatManager) {
         
         this.loginReceiver = loginReceiver;
         this.userReceiver = userReceiver;
@@ -47,7 +51,13 @@ public class MessageReceiver {
         this.fileReceiver = fileReceiver;
         this.infoRequestReceiver = infoRequestReceiver; 
         this.heartBeatReceiver = heartbeatReceiver;
+        this.heartbeatManager = heartbeatManager;
         this.channelList = channels;
+        try {
+            channel = ServerSocketChannel.open();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     public enum MessageTypes {
@@ -103,30 +113,40 @@ public class MessageReceiver {
  * @requires message buffer
  * @promises call appropriate 'receiverMessage(ip, buffer)' method
  */
-    private void selectReceiver(String ip, ByteBuffer buffer){
+    private void selectReceiver(String ip, ByteBuffer buffer) throws SQLException{
     	 buffer.flip();
          int length = buffer.remaining();
-         byte[] byteArray = new byte[length];
-         buffer.get(byteArray);
-         byte messageType = byteArray[4];
-        if (messageType == MessageTypes.HEARTBEAT.bytes()) {
-            // Pass to heartbeatReceiver
-            heartBeatReceiver.receiveMessage(ip, byteArray);
-        } else if (messageType == MessageTypes.INFO.bytes()) {
-            // Pass to informationReceiver
-            infoRequestReceiver.receiveMessage(ip, byteArray);
-        } else if (messageType == MessageTypes.CHAT.bytes()) {
-            // Pass to chatReceiver
-            chatReceiver.receiveMessage(ip, byteArray);
-        } else if (messageType == MessageTypes.FILE.bytes()) {
-            // Pass to fileReceiver
-            fileReceiver.receiveMessage(ip, byteArray);
-        } else if (messageType == MessageTypes.STATUS.bytes()) {
-            // Pass to statusReceiver
-            userReceiver.receiveMessage(ip, byteArray);
-        } else {
-            assert(false);
-        }
+         if(length > 0) {
+	         byte[] byteArray = new byte[length];
+	         buffer.get(byteArray);
+	         System.out.print("RECEIVING BYTE ARRAY ");
+	         for(int i = 0; i < byteArray.length; i++){
+	            System.out.print(byteArray[i] + ",");
+	         }
+	         System.out.println(" DONE RECEIVING BYTE ARRAY");
+	         
+	         byte messageType = byteArray[4];
+	        if (messageType == MessageTypes.HEARTBEAT.bytes()) {
+	            // Pass to heartbeatReceiver
+	            heartBeatReceiver.receiveMessage(ip, byteArray);
+	        } else if (messageType == MessageTypes.INFO.bytes()) {
+	            // Pass to informationReceiver
+	            infoRequestReceiver.receiveMessage(ip, byteArray);
+	        } else if (messageType == MessageTypes.CHAT.bytes()) {
+	            // Pass to chatReceiver
+	            chatReceiver.receiveMessage(ip, byteArray);
+	        } else if (messageType == MessageTypes.FILE.bytes()) {
+	            // Pass to fileReceiver
+	            fileReceiver.receiveMessage(ip, byteArray);
+	        } else if (messageType == MessageTypes.STATUS.bytes()) {
+	            // Pass to statusReceiver
+	            userReceiver.receiveMessage(ip, byteArray);
+	        } else if (messageType == MessageTypes.LOGIN.bytes()) {
+	            loginReceiver.receiveMessage(ip, byteArray);
+	        } else {
+	            assert(false);
+	        }
+         }
     }
     
     /*
@@ -154,9 +174,8 @@ public class MessageReceiver {
  * @requires the SocketChannel to be initialized
  * @promises to service ready channels by calling selectReceiver or registerNewClient
  */
-    public void waitForClients() {
+    public void waitForClients() throws SQLException {
         final int errorCheck = 500; 
-        boolean terminated = false;
         ByteBuffer inBuffer = null;
         ByteBuffer outBuffer = null;
         int BUFFERSIZE = 32000;
@@ -164,8 +183,9 @@ public class MessageReceiver {
        
         try {
         //boolean terminated = false;
-        while (!terminated) 
+        while (true) 
         {
+                heartbeatManager.update();
                 if (selector.select(errorCheck) < 0) {
                     System.out.println("select() failed");
                     System.exit(1);

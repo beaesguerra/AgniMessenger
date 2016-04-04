@@ -71,23 +71,60 @@ public class AgniClient {
         fileActionHandler = new FileActionHandler(messageSender);
         heartbeatSender = new HeartbeatSender(messageSender, 500);
 
+
+
         loginView = null;
         idleView = null;
         chatView = null;
     }
 
     public void changeState(AgniClientView.NextState nextState) {
+        if(loginView != null){
+            heartbeatReceiver.deregister(loginView);
+            informationReceiver.deregister(loginView);
+            statusReceiver.deregister(loginView);
+            chatReceiver.deregister(loginView);
+            fileReceiver.deregister(loginView);
+        }
+
+        if(idleView != null){
+            heartbeatReceiver.deregister(idleView);
+            informationReceiver.deregister(idleView);
+            statusReceiver.deregister(idleView);
+            chatReceiver.deregister(idleView);
+            fileReceiver.deregister(idleView);
+        }
+
+        if(chatView != null){
+            heartbeatReceiver.deregister(chatView);
+            informationReceiver.deregister(chatView);
+            statusReceiver.deregister(chatView);
+            chatReceiver.deregister(chatView);
+            fileReceiver.deregister(chatView);
+        }
+
         switch (nextState) {
         case LOGIN_VIEW:
             loginView = new LoginView(this,
                                       loginActionHandler,
                                       infoRequestActionHandler);
+            
+            heartbeatReceiver.register(loginView);
+            informationReceiver.register(loginView);
+            statusReceiver.register(loginView);
+            chatReceiver.register(loginView);
+            fileReceiver.register(loginView);
             loginView.show();
             break;
         case IDLE_VIEW:
             idleView = new IdleView(this,
                                     infoRequestActionHandler,
                                     userActionHandler);
+            heartbeatReceiver.register(idleView);
+            informationReceiver.register(idleView);
+            statusReceiver.register(idleView);
+            chatReceiver.register(idleView);
+            fileReceiver.register(idleView);
             idleView.show();
             break;
         case CHAT_VIEW:
@@ -96,17 +133,22 @@ public class AgniClient {
                                     userActionHandler,
                                     chatActionHandler,
                                     fileActionHandler);
+            heartbeatReceiver.register(chatView);
+            informationReceiver.register(chatView);
+            statusReceiver.register(chatView);
+            chatReceiver.register(chatView);
+            fileReceiver.register(chatView);
             chatView.show();
             break;
         }
     }
 
     public void runClient() {
-
-        (new Thread(heartbeatSender)).start();
+        (new Thread(messageReceiver)).start();
+        changeState(AgniClientView.NextState.LOGIN_VIEW);
+        heartbeatSender.run();
         // We need to run messageReceiver somewhere here
-        // messageReceiver.run();
-        loginView.displayUi();
+
         try {
             clientSocket.close();
         } catch (IOException e) {
