@@ -1,5 +1,6 @@
 package agni.server.receiver;
 
+import java.sql.SQLException;
 import java.util.Vector;
 
 public class InfoRequestReceiver implements MessageParser {
@@ -9,7 +10,7 @@ public class InfoRequestReceiver implements MessageParser {
         infoListeners = new Vector<InfoListener>();
     }
 
-    private void notifyInfoRequest(String ip, byte type) {
+    private void notifyInfoRequest(String ip, byte type) throws SQLException {
         for( InfoListener  iListener : infoListeners ) {
             iListener.infoRequest(ip, type);
         }
@@ -30,7 +31,7 @@ public class InfoRequestReceiver implements MessageParser {
     }
 
     @Override
-    public void receiveMessage(String ip, byte[] message) {
+    public void receiveMessage(String ip, byte[] message) throws SQLException {
         if(ip==null || message == null)
             throw new NullPointerException();
         byte parsedMessage = parseMessage(message);
