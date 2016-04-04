@@ -20,11 +20,13 @@ public class StatusManager implements StatusListener{
     public void receiveStatusChange(String ip, byte status) {
         String username = userDataGuard.getUsername(ip); 
     	for (String friend : userDataGuard.getFriends(username)) {
-    		if (status == Status.OFFLINE.bytes()) {
-    			 statusSender.sendStatus(userDataGuard.userCurrentIp(friend), Status.OFFLINE, username);  
-            }
-            else if (status == Status.ONLINE.bytes()) { 
-            	statusSender.sendStatus(userDataGuard.userCurrentIp(friend), Status.ONLINE, username);
+    		if(userDataGuard.isOnline(friend)){
+                if ( status == Status.OFFLINE.bytes()) {
+    		  	 statusSender.sendStatus(userDataGuard.userCurrentIp(friend), Status.OFFLINE, username);  
+                }
+                else if (status == Status.ONLINE.bytes()) { 
+                	statusSender.sendStatus(userDataGuard.userCurrentIp(friend), Status.ONLINE, username);
+                }
             }
     	}
     }

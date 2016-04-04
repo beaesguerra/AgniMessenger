@@ -61,16 +61,14 @@ public class InfoRequestManager implements InfoListener{
     	else if (type == InfoRequestType.CURRENT_USERS_ONLINE.bytes()){
     		String usersOnline = ""; 
     		for( String user : userDataGuard.getOnlineUsernames()) {
-    			usersOnline += user + "\n";
+    			infoSender.sendInfo(ip, user);
     		}
-    		infoSender.sendInfo(ip, "Online users:\n" + usersOnline);
     	}
     	else if (type == InfoRequestType.CURRENT_CHATS.bytes()){
     		String chats = "";
     		for(String chat : groupChatDataGuard.allGroupChats()) {
-    			chats += chat + "\n";
+    			infoSender.sendInfo(ip, chat);
     		}
-    		infoSender.sendInfo(ip, "Available chats:\n" + chats);
     	}
         
     }

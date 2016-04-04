@@ -83,22 +83,25 @@ public class UserManager implements UserListener {
             
         }
         else if (type == UserRequestType.FRIENDS_LIST.bytes()){     // see friends list 
-            String [] friendList = userDataGuard.getFriends(username); 
-            String friends = "";
+            String [] friendList = userDataGuard.getFriends(username);
+            // String friends = "";
             if (friendList.length == 0) {
-                infoSender.sendInfo(ip, "friends:\nYou have no friends (Enoch)"); 
+                infoSender.sendInfo(ip, "friends: You have no friends (Enoch)"); 
                 return;
             }
             for (int i = 0; i < friendList.length; i++) {
-                friends += friendList[i] + " ";
+                String friend = friendList[i] + " ";
                 if(userDataGuard.isOnline(friendList[i])) {
-                    friends += "online\n";
+                    friend += "online";
+                    infoSender.sendInfo(ip, friend);
                 }
                 else {
-                    friends += "offline\n";
+                    friend  += "offline";
+                    infoSender.sendInfo(ip, friend);
                 }
             }
-            infoSender.sendInfo(ip, "friends:\n" + friends);
+            // System.out.println("FUCKING FRIENDS IS " + friends);
+            // infoSender.sendInfo(ip, "friends:\n" + friends);
         }
         else if (type == UserRequestType.USER_STATUS.bytes()){        // check friend status ; argument = friend to check 
             String friend = argument;

@@ -24,13 +24,14 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
 
     public String[] allGroupChats() throws SQLException {
     	Statement stmt = conn.createStatement();
-    	String statement = "SELECT * FROM GroupChats";
+    	String statement = "SELECT name FROM GroupChats";
     	System.out.println(statement);
     	ResultSet rs = stmt.executeQuery(statement);
     	
     	ArrayList<String> groupChatsList = new ArrayList<String>(); 
     	while (rs.next()) {
-    		groupChatsList.add(rs.getString("name"));
+    		groupChatsList.add(rs.getString(1));
+            System.out.println("FOR A CHAT WE FOUND : " + rs.getString(1));
     	}
     	String [] groupChats = new String[groupChatsList.size()];
         groupChats = groupChatsList.toArray(groupChats);

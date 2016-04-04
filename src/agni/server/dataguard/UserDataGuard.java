@@ -108,7 +108,14 @@ public class UserDataGuard implements I_UserDataGuard {
             //System.out.println(rsB.getString(1));
             
             while(rsB.next()) {
-                resultList.add(rsB.getString(1));
+                Statement stmtD = database.createStatement();
+                System.out.println("rsB.getString(1) is " + rsB.getString(1));
+                ResultSet rsD = stmtD.executeQuery("SELECT username FROM Users where id = " + rsB.getString(1) + ";");
+                rsD.first();
+                System.out.println("rsD.getString(1) is " + rsD.getString(1)    );
+                resultList.add(rsD.getString(1));
+                stmtD.close();
+                rsD.close();
             }
 
             rsA.close();
@@ -121,40 +128,47 @@ public class UserDataGuard implements I_UserDataGuard {
         }
         result = new String[resultList.size()];
         for(int i = 0; i < resultList.size(); i++) {
+            // System.out.println("ADDING FRIEND USERNAME " resultList.get(i)));
             result[i] = resultList.get(i);
         }
         return result;
     }
 
     public void createFriendship(String user1, String user2) {
+        if(user1.equals(user2)){
+            return;
+        }
         Statement stmtA = null;
         Statement stmtB = null;
-        Statement stmtC = null;
         ResultSet rsA = null;
         ResultSet rsB = null;
-        ResultSet rsC = null;
 
         try {
             stmtA = database.createStatement();
             stmtB = database.createStatement();
-            stmtC = database.createStatement();
-            String query = "SELECT id FROM Users WHERE username = "+user1;
+//            stmtC = database.createStatement();
+            String query = "SELECT id FROM Users WHERE username = \"" +user1 +"\";";
             System.out.println(query);
             rsA = stmtA.executeQuery(query);
-            
-            query = "SELECT id FROM Users WHERE username = "+user2; 
+            rsA.first();
+
+            query = "SELECT id FROM Users WHERE username = \""+user2 + "\""; 
             System.out.println(query);
             rsB = stmtB.executeQuery(query);
-            
-            query = "INSERT INTO Friends (userIdOne, userIdTwo) values (" + rsA.getString(1) + ", " + rsB.getString(1) +")";
+            rsB.first();
+
+            query = "INSERT INTO Friends (userIdOne, userIdTwo) values (\"" + rsA.getString(1) + "\", \"" + rsB.getString(1) +"\")";
             System.out.println(query);
-            rsC = stmtC.executeQuery(query);
+            PreparedStatement stmtC = database.prepareStatement("INSERT INTO Friends (userIdOne, userIdTwo) values (?, ?)");
+            stmtC.setString(1, rsA.getString(1));
+            stmtC.setString(2, rsB.getString(1));
+            stmtC.executeUpdate();
+//            rsC = stmtC.executeQuery(query);
             
             rsA.close();
             stmtA.close();
             rsB.close();
             stmtB.close();
-            rsC.close();
             stmtC.close();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
