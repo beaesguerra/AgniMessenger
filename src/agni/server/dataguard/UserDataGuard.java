@@ -93,6 +93,10 @@ public class UserDataGuard implements I_UserDataGuard {
 
     @Override
     public String[] getOnlineUserIps() {
+		return null;
+    }
+    @Override
+    public String getIp(String member) {
         // TODO Auto-generated method stub
         return null;
     }

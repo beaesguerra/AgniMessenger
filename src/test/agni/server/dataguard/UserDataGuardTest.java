@@ -35,7 +35,7 @@ public class UserDataGuardTest {
 
     @Test
     public void getPasswordHashTest() {
-        assertTrue(userDataGuard.passwordHash("TestUser").equals("T35TH45H"));
+        assertTrue(userDataGuard.getPasswordHash("TestUser").equals("T35TH45H"));
     }
 
 //    @Test

@@ -33,5 +33,7 @@ public interface I_UserDataGuard {
     public int getLastHeartbeat(String user);
 
     public String [] getOnlineUserIps();
+
+    public String getIp(String member);
         
 }

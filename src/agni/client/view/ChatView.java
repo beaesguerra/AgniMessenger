@@ -6,7 +6,7 @@ import agni.client.action.InfoRequestActionHandler;
 import agni.client.action.UserActionHandler;
 import agni.client.action.ChatActionHandler;
 import agni.client.action.FileActionHandler;
-import agni.client.action.HearbeatSender;
+import agni.client.action.HeartbeatSender;
 import agni.server.sender.StatusSender.Status;
 import charva.awt.BorderLayout;
 import charva.awt.Container;
