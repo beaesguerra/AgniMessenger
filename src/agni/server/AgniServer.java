@@ -68,7 +68,6 @@ public class AgniServer {
         UserDataGuard userDataGuard = new UserDataGuard(null, null, null);
         GroupChatDataGuard chatDataGuard = new GroupChatDataGuard(null, null, null);
         FileDataGuard fileDataGuard = new FileDataGuard(null, null, null);
-        InfoDataGuard infoDataGuard = new InfoDataGuard(null, null, null);
 
         LoginReceiver loginReceiver = new LoginReceiver();
         UserReceiver userReceiver = new UserReceiver();
