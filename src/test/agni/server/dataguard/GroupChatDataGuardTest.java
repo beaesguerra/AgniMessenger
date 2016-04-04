@@ -119,4 +119,10 @@ public class GroupChatDataGuardTest {
     public void addUserTest() {
         fail("Not yet implemented");
     }
+    @Test
+    public void currentChatTest() throws SQLException {
+    	String actualCurrentChat = groupChatDataGuard.userCurrentChat("TestUser");
+    	String expectedCurrentChat = "TestChat"; 
+    	assertEquals(actualCurrentChat, expectedCurrentChat);
+    }
 }

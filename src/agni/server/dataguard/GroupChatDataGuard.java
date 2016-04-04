@@ -136,8 +136,6 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
     	return users;
     }
 
-    /*
-     */
     @Override
     public void changeUserCurrentChat(String user, String chatname) {
         // TODO Auto-generated method stub
@@ -145,9 +143,16 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
     }
 
     @Override
-    public String userCurrentChat(String user) {
-        // TODO Auto-generated method stub
-        return null;
+    public String userCurrentChat(String user) throws SQLException {
+    	Statement stmt = conn.createStatement();
+    	String statement = "SELECT groupName FROM GroupMembers, Users WHERE username = '" + user + "' AND userId = id;"; 
+    	System.out.println(statement);
+    	ResultSet rs = stmt.executeQuery(statement);
+    	String currentChat = null;
+    	while (rs.next()) {
+	    	currentChat = rs.getString("groupName");
+    	}
+		return currentChat;
     }
 
     @Override
