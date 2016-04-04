@@ -155,7 +155,7 @@ public class MessageReceiver {
  * @requires the SocketChannel to be initialized
  * @promises to service ready channels by calling selectReceiver or registerNewClient
  */
-    public void waitForClients() {
+    public void waitForClients() throws SQLException {
         final int errorCheck = 500; 
         boolean terminated = false;
         ByteBuffer inBuffer = null;
