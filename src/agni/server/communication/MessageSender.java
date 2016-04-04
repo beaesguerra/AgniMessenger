@@ -8,20 +8,25 @@ import java.nio.charset.StandardCharsets;
 
 public class MessageSender implements I_MessageSender {
     private ChannelList channelList;
-  
+
     public MessageSender(ChannelList channels) {
-      channelList = channels;
+        channelList = channels;
     }
 
     public void sendMessage(String ipAddress, byte[] message) {
-    	System.out.println(new String(message, StandardCharsets.US_ASCII));
-       SocketChannel currentChannel = channelList.getChannel(ipAddress);
-       ByteBuffer outBuffer = ByteBuffer.wrap(message);
-       try {
-        currentChannel.write(outBuffer);
-       } catch (IOException e) {
-        System.out.println("IOException caught while writing to Client MessageSender outBuffer ");
-        e.printStackTrace();
-       }
+        System.out.print("SENDING BYTE ARRAY ");
+        for (int i = 0; i < message.length; i++) {
+            System.out.print(message[i] + ",");
+        }
+        System.out.println(" DONE SENDING BYTE ARRAY");
+        // System.out.println(new String(message, StandardCharsets.US_ASCII));
+        SocketChannel currentChannel = channelList.getChannel(ipAddress);
+        ByteBuffer outBuffer = ByteBuffer.wrap(message);
+        try {
+            currentChannel.write(outBuffer);
+        } catch (IOException e) {
+            System.out.println("IOException caught while writing to Client MessageSender outBuffer ");
+            e.printStackTrace();
+        }
     }
 }

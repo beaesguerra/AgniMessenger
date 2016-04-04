@@ -119,11 +119,11 @@ public class MessageReceiver {
          if(length > 0) {
 	         byte[] byteArray = new byte[length];
 	         buffer.get(byteArray);
-	         System.out.print("PRINTING BYTE ARRAY ");
+	         System.out.print("RECEIVING BYTE ARRAY ");
 	         for(int i = 0; i < byteArray.length; i++){
 	            System.out.print(byteArray[i] + ",");
 	         }
-	         System.out.println(" DONE PRINTING BYTE ARRAY");
+	         System.out.println(" DONE RECEIVING BYTE ARRAY");
 	         
 	         byte messageType = byteArray[4];
 	        if (messageType == MessageTypes.HEARTBEAT.bytes()) {
