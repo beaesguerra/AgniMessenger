@@ -4,14 +4,19 @@ package agni.server.manager;
 import agni.server.receiver.InfoListener;
 import agni.server.sender.HeartbeatSender;
 import agni.server.AgniServer;
+import agni.server.dataguard.GroupChatDataGuard;
 import agni.server.dataguard.I_FileDataGuard;
+import agni.server.dataguard.I_GroupChatDataGuard;
 import agni.server.dataguard.I_InfoDataGuard;
+import agni.server.dataguard.I_UserDataGuard;
 import agni.server.dataguard.InfoDataGuard;
+import agni.server.dataguard.UserDataGuard;
 import agni.server.sender.InfoSender;
 
 public class InfoRequestManager implements InfoListener{
     private InfoSender infoSender;
-    private I_InfoDataGuard infoDataGuard;
+    private I_UserDataGuard userDataGuard; 
+    private I_GroupChatDataGuard groupChatDataGuard; 
 
     public enum InfoRequestType {
         SERVER_IP((byte) 0x00), 
@@ -33,10 +38,12 @@ public class InfoRequestManager implements InfoListener{
     
     public InfoRequestManager(InfoSender infoSender,
                               HeartbeatSender heartbeatSender, 
-                              InfoDataGuard infoDataGuard) {
+                              UserDataGuard userDataGuard,
+                              GroupChatDataGuard groupChatDataGuard) {
 
         this.infoSender = infoSender;
-        this.infoDataGuard = infoDataGuard;
+        this.userDataGuard = userDataGuard;
+        this.groupChatDataGuard = groupChatDataGuard; 
     }
 
     @Override
@@ -48,18 +55,18 @@ public class InfoRequestManager implements InfoListener{
     		infoSender.sendInfo(ip, AgniServer.getServerPort());
     	}
     	else if (type == InfoRequestType.NAME.bytes()){
-    		infoSender.sendInfo(ip, infoDataGuard.serverName());
+    		infoSender.sendInfo(ip, AgniServer.getServerName());
     	}
     	else if (type == InfoRequestType.CURRENT_USERS_ONLINE.bytes()){
     		String usersOnline = ""; 
-    		for( String user : infoDataGuard.usersOnline()) {
+    		for( String user : userDataGuard.usersOnline()) {
     			usersOnline.concat(user + "\n");
     		}
     		infoSender.sendInfo(ip, "Online users:\n" + usersOnline);
     	}
     	else if (type == InfoRequestType.CURRENT_CHATS.bytes()){
     		String chats = "";
-    		for(String chat : infoDataGuard.availableChats()) {
+    		for(String chat : groupChatDataGuard.availableChats()) {
     			chats.concat(chat + "\n");
     		}
     		infoSender.sendInfo(ip, "Available chats:\n" + chats);
