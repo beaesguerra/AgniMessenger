@@ -108,7 +108,6 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
     	while (rs.next()) {
 	    	senderId = rs.getString("id");
     	}
-    	System.out.println(senderId);
     	java.util.Date date = new Date();
     	Timestamp dateTime = new java.sql.Timestamp(date.getTime()); 
     	String dateTimeString = dateTime.toString(); 
@@ -179,8 +178,19 @@ public class GroupChatDataGuard implements I_GroupChatDataGuard {
     }
 
     @Override
-    public void removeUserFromChat(String username, String groupName) {
-        // TODO Auto-generated method stub
+    public void removeUserFromChat(String username, String groupName) throws SQLException {
+     	Statement stmt = conn.createStatement();
+     	String statement = "SELECT id FROM Users WHERE username = '" + username + "';";
+    	System.out.println(statement);
+    	ResultSet rs = stmt.executeQuery(statement);
+    	String userId = null;
+    	while (rs.next()) {
+	    	userId = rs.getString("id");
+    	}
+    	statement = "DELETE FROM GroupMembers WHERE userId = " + userId + " AND groupName = '" + groupName + "';"; 
+    	System.out.println(statement);
+    	int rs2 = stmt.executeUpdate(statement);
+ 
         
     }
 

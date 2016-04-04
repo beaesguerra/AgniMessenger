@@ -29,7 +29,7 @@ public interface I_GroupChatDataGuard {
     
     public void addUserToChat(String username, String groupName) throws SQLException;
 
-    public void removeUserFromChat(String username, String groupName);
+    public void removeUserFromChat(String username, String groupName) throws SQLException;
 
     public boolean chatExists(String groupName) throws SQLException;
 

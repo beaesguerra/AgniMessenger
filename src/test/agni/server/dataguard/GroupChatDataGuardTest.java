@@ -152,4 +152,12 @@ public class GroupChatDataGuardTest {
 	   String expectedChat = "TestChat"; 
 	   assertEquals(actualChat, expectedChat);
    }
+   @Test
+   public void removeUserToChat() throws SQLException {
+	   groupChatDataGuard.removeUserFromChat("TestUser", "TestChat");
+	   String actualChat = groupChatDataGuard.userCurrentChat("TestUser");
+	   String expectedChat = null; 
+	   assertEquals(actualChat, expectedChat);
+	   
+   }
 }
