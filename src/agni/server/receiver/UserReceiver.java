@@ -1,6 +1,7 @@
 package agni.server.receiver;
 
 import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Vector;
 
@@ -13,7 +14,12 @@ public class UserReceiver implements MessageParser {
 
     private void notifyUserRequest(String ip, byte type, String message) {
         for ( UserListener  uListener : userListeners ) {
-            uListener.userRequest(ip, type, message);
+            try {
+				uListener.userRequest(ip, type, message);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
     }
 

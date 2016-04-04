@@ -2,6 +2,9 @@ package agni.server.manager;
 
 import agni.server.dataguard.UserDataGuard;
 import agni.server.receiver.ChatListener;
+
+import java.sql.SQLException;
+
 import agni.server.dataguard.I_GroupChatDataGuard;
 import agni.server.dataguard.I_UserDataGuard;
 import agni.server.sender.ChatSender;
@@ -25,7 +28,7 @@ public class ChatManager implements ChatListener{
     }
 
     @Override
-    public void chatRequest(String ip, String message) {
+    public void chatRequest(String ip, String message) throws SQLException {
         String sender = userDataGuard.getUsername(ip);
         String groupChatName = groupChatDataGuard.userCurrentChat(sender);
         String [] membersOfChat = groupChatDataGuard.users(groupChatName);
