@@ -12,7 +12,7 @@ public interface I_GroupChatDataGuard {
      * Should remove group, remove messages associated with it, and 
      * remove all tuples in GroupMembers table with the same groupChatName
      * */
-    public void deleteGroupChat(String groupChatName);
+    public void deleteGroupChat(String groupChatName) throws SQLException;
 
     public String owner(String groupChatName);
 

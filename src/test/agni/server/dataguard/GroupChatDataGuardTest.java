@@ -59,7 +59,7 @@ public class GroupChatDataGuardTest {
         assertArrayEquals(actualChats, expectedChats);
     }
 
-   // @Test
+   @Test
     public void deleteGroupChatsTest() throws SQLException {
         groupChatDataGuard.deleteGroupChat("AnotherChat");
 
