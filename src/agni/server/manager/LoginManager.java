@@ -37,7 +37,8 @@ public class LoginManager implements LoginListener{
         KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
         SecretKeyFactory f = SecretKeyFactory.getInstance("pbkdf2withhmacsha1");
         byte[] hash = f.generateSecret(spec).getEncoded();
-        return new String(hash,StandardCharsets.US_ASCII);
+        // return new String(hash,StandardCharsets.US_ASCII);
+        return password;
     }
     @Override
     public void loginRequest(String ip, String user, String password) {
@@ -46,10 +47,10 @@ public class LoginManager implements LoginListener{
 				if (generatePasswordHash(password, userDataGuard.salt(user).getBytes())
 						.equals(userDataGuard.getPasswordHash(user))) {
 					userDataGuard.loginUser(ip, user);
-					infoSender.sendInfo(ip, "approved");
+					infoSender.sendInfo(ip, "approved!");
 					statusManager.receiveStatusChange(ip, (byte) 0x01);
 				} else {
-					infoSender.sendInfo(ip, "declined");
+					infoSender.sendInfo(ip, "declined!");
 				}
 			} catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
 				// TODO Auto-generated catch block
