@@ -56,7 +56,6 @@ public class InfoRequestManager implements InfoListener{
     			usersOnline.concat(user + "\n");
     		}
     		infoSender.sendInfo(ip, "Online users:\n" + usersOnline);
-    		
     	}
     	else if (type == InfoRequestType.CURRENT_CHATS.bytes()){
     		String chats = "";
