@@ -29,6 +29,7 @@ public class ChatManager implements ChatListener{
 
     @Override
     public void chatRequest(String ip, String message) throws SQLException {
+        message = message.replace("\"", "^");
         String sender = userDataGuard.getUsername(ip);
         String groupChatName = groupChatDataGuard.userCurrentChat(sender);
         String [] membersOfChat = groupChatDataGuard.users(groupChatName);

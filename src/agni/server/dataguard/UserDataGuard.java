@@ -138,11 +138,11 @@ public class UserDataGuard implements I_UserDataGuard {
     		stmtA = database.createStatement();
 			stmtB = database.createStatement();
 			stmtC = database.createStatement();
-			String query = "SELECT id FROM Users WHERE username == "+user1;
+			String query = "SELECT id FROM Users WHERE username = "+user1;
 			System.out.println(query);
 			rsA = stmtA.executeQuery(query);
 			
-			query = "SELECT id FROM Users WHERE username == "+user2; 
+			query = "SELECT id FROM Users WHERE username = "+user2; 
 			System.out.println(query);
 			rsB = stmtB.executeQuery(query);
 			
